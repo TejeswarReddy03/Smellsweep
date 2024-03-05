@@ -6,7 +6,7 @@ import './App.css';
 function App() {
   const [csvData, setCsvData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(800); // Updated rows per page
+  const [rowsPerPage, setRowsPerPage] = useState(1000); // Updated rows per page
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [backendResponse, setBackendResponse] = useState(null);
@@ -43,13 +43,14 @@ function App() {
       setLoading(false);
     }
   };
-
+  
   const parseCSV = (file) => {
     Papa.parse(file, {
       header: true,
       skipEmptyLines: true,
       complete: (result) => {
         setCsvData(result.data);
+        sendFileToBackend(result.data); // Call sendFileToBackend after setting CSV data
       },
       error: (error) => {
         console.error('Error parsing CSV:', error);
