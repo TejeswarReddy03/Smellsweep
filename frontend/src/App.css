@@ -30,3 +30,21 @@
 .csv-table tbody tr:hover {
   background-color: #ebebeb;
 }
+.pagination {
+  margin-top: 10px;
+}
+
+.pagination button {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  color: #666;
+  padding: 5px 10px;
+  margin: 0 2px;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
