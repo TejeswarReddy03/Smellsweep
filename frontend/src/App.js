@@ -1,82 +1,169 @@
-import React, { useState } from 'react';
-import CSVReader from 'react-csv-reader';
-import axios from 'axios'; // Import Axios for making HTTP requests
-import './App.css'; // Import your CSS file for styling
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Papa from 'papaparse'; 
+import './App.css'; 
 
 function App() {
   const [csvData, setCsvData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(800); // Updated rows per page
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [backendResponse, setBackendResponse] = useState(null);
+  const [pageInput, setPageInput] = useState(''); // New state for page input
 
-  const handleOnDrop = (data, fileInfo) => {
+  useEffect(() => {
+    if (csvData.length === 0) return;
+
+    const fetchBackendData = async () => {
+      setLoading(true);
+      const start = (currentPage - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+      const slicedData = csvData.slice(start, end);
+      setLoading(false);
+    };
+
+    fetchBackendData();
+  }, [currentPage, csvData, rowsPerPage]);
+
+  const handleFileUpload = (event) => {
     setLoading(true);
-    if (fileInfo.type === 'text/csv' || fileInfo.name.endsWith('.csv')) {
-      setCsvData(data);
-      setErrorMessage('');
-      sendFileToBackend(data); // Send the CSV file to the backend
+    const file = event.target.files[0];
+    
+    if (file) {
+      if (file.type === 'text/csv' || file.name.endsWith('.csv')) {
+        parseCSV(file);
+        setErrorMessage('');
+      } else {
+        setErrorMessage('Invalid file format. Please upload a CSV file.');
+        setLoading(false);
+      }
     } else {
-      setCsvData([]);
-      setErrorMessage('Invalid file format. Please upload a CSV file.');
+      setErrorMessage('No file selected.');
       setLoading(false);
     }
+  };
+
+  const parseCSV = (file) => {
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: (result) => {
+        setCsvData(result.data);
+      },
+      error: (error) => {
+        console.error('Error parsing CSV:', error);
+        setErrorMessage('Error parsing CSV. Please try again.');
+        setLoading(false);
+      },
+    });
   };
 
   const sendFileToBackend = async (data) => {
     try {
       const formData = new FormData();
-      formData.append('file', new Blob([data], { type: 'text/csv' }), 'filename.csv');
+      formData.append('file', new Blob([Papa.unparse(data)], { type: 'text/csv' }), 'filename.csv');
 
-      const response = await axios.post(' http://127.0.0.1:5000/upload', formData, {
+      const response = await axios.post('http://127.0.0.1:5000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
 
-      setBackendResponse(response.data); // Store the backend response in state
+      setBackendResponse(response.data);
     } catch (error) {
       console.error('Error uploading file:', error);
       setErrorMessage('Error uploading file. Please try again.');
-    } finally {
-      setLoading(false);
     }
+  };
+
+  const totalPages = Math.ceil(csvData.length / rowsPerPage);
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handlePageInputChange = (event) => {
+    setPageInput(event.target.value);
+  };
+
+  const handleGoToPage = () => {
+    const pageNumber = parseInt(pageInput);
+    if (!isNaN(pageNumber) && pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    } else {
+      setErrorMessage('Invalid page number.');
+    }
+    setPageInput('');
   };
 
   return (
     <div>
       <h1>CSV File Reader</h1>
-      <CSVReader
-        onFileLoaded={handleOnDrop}
-        parserOptions={{ header: true }}
+      <input
+        type="file"
+        accept=".csv"
+        onChange={handleFileUpload}
       />
-      {loading && <p>Loading...</p>} {/* Conditionally render "Loading..." text */}
+      {loading && <p>Loading...</p>}
       {errorMessage && <p>{errorMessage}</p>}
      
       <div className="table-container">
-        {csvData.length > 0 && (
-          <>
-            <h2>Uploaded CSV Data</h2>
-            <table className="csv-table">
-              <thead>
-                <tr>
-                  {Object.keys(csvData[0]).map((header, index) => (
-                    <th key={index}>{header}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {csvData.map((row, rowIndex) => (
-                  <tr key={rowIndex}>
+        <h2>Uploaded CSV Data</h2>
+        <table className="csv-table">
+          <thead>
+            <tr>
+              <th>S.No.</th>
+              {Object.keys(csvData[0] || {}).map((header, index) => (
+                <th key={index}>{header}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {csvData
+              .slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)
+              .map((row, index) => {
+                const serialNumber = (currentPage - 1) * rowsPerPage + index + 1;
+                return (
+                  <tr key={index}>
+                    <td>{serialNumber}</td>
                     {Object.values(row).map((cell, cellIndex) => (
                       <td key={cellIndex}>{cell}</td>
                     ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        )}
+                );
+              })}
+          </tbody>
+        </table>
+      </div>
 
+      <div className="pagination">
+        <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>&lt;</button>
+        {pageNumbers.map(number => {
+          if (number === 1 || number === totalPages || (number >= currentPage - 6 && number <= currentPage + 7)) {
+            return (
+              <button key={number} onClick={() => paginate(number)} className={currentPage === number ? 'active' : ''}>
+                {number}
+              </button>
+            );
+          } else if (number === currentPage - 7 || number === currentPage + 8) {
+            return (
+              <span key={number}>...</span>
+            );
+          }
+          return null;
+        })}
+        <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>&gt;</button>
+      </div>
+
+      <div className="page-input">
+        <input type="text" value={pageInput} onChange={handlePageInputChange} placeholder="Enter page number" />
+        <button onClick={handleGoToPage}>Go</button>
+      </div>
+
+      <div className="backend-container">
         {backendResponse && (
           <>
             <h2>Backend Response</h2>
