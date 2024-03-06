@@ -2,7 +2,7 @@
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from dummy_values_detector import detect_dummy_values
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -25,12 +25,15 @@ def upload_file():
             # Specify the dummy value used in your dataset
             dummy_value = 0  # Replace with the actual dummy value in your dataset
 
-            # Detect dummy values using the separate file
-            result = detect_dummy_values(file_path, dummy_value)
+            # Check if the DataFrame has at least one column
+            if df.empty or len(df.columns) == 0:
+                return jsonify({'error': 'No columns to parse'})
+
+            # Process the DataFrame as needed
+            # For example, you can perform data cleaning, analysis, etc.
 
             # Optionally, you can delete the temporary file
-            # import os
-            # os.remove(file_path)
+            os.remove(file_path)
 
             return jsonify(result)
         except Exception as e:
