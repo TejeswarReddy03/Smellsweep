@@ -1,10 +1,7 @@
 import pandas as pd
 from sklearn.ensemble import IsolationForest
 
-def detect_unexpected_signs_metrics(csv_file_path):
-    # Load CSV file into a pandas DataFrame
-    df = pd.read_csv(csv_file_path)
-
+def detect_unexpected_signs_metrics(df):
     # Extract the row names (assuming they are in the first column)
     row_names = df.iloc[:, 0]
 
@@ -27,7 +24,7 @@ def detect_unexpected_signs_metrics(csv_file_path):
     percentage_per_attribute = (df_values < 0).mean() * 100
 
     # Metric: Distribution of unexpected signs
-    distribution_of_signs = df_values[rows_with_unexpected_signs.index].apply(lambda x: '+' if x > 0 else '-', axis=1).value_counts()
+    distribution_of_signs = df_values.applymap(lambda x: '+' if x > 0 else ('-' if x < 0 else '0')).stack().value_counts()
 
     return {
         "Number of data points with unexpected signs": num_unexpected_signs,
@@ -35,3 +32,7 @@ def detect_unexpected_signs_metrics(csv_file_path):
         "Distribution of unexpected signs": distribution_of_signs.to_dict(),
         "Rows with unexpected signs": list(rows_with_unexpected_signs)
     }
+
+
+
+

@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 from datasmells_algorithms.dummy_value import identify_dummy_values
+from datasmells_algorithms.suspect_sign_datasmell import detect_unexpected_signs_metrics
 
 app = Flask(__name__)
 CORS(app)
