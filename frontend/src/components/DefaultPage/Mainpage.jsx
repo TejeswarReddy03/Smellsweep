@@ -63,9 +63,9 @@ export default function MainPage() {
         // setBargraph_binning_cat(response.data.binning_cat.plot);
         // setBargraph_class_imbal(response.data.imbalance.plot);
         console.log("hiii");
-        const { dataframe, metrics } = response.data;
-        console.log(response["data"]["metrics"]);
-        setdummy(response["data"]["metrics"]);
+       // const { dataframe, metrics } = response.data;
+        console.log(response["data"]["metrics"]["dummy_values"]);
+        setdummy(response["data"]["metrics"]["dummy_values"]);
         setIsLoading(false);
       })
       .catch((error) => {

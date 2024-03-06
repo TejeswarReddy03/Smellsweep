@@ -11,12 +11,15 @@ CORS(app)
 def process_dataframe(df):
     try:
         # Call the identify_dummy_values function
-        metrics = identify_dummy_values(df)
-        suspectSign_metrics=detect_unexpected_signs_metrics(df)
+        aggregated_metrics = {
+            'dummy_values':  identify_dummy_values(df),
+            # Add metrics from other algorithms here
+        }
+
         # Optionally, you can include additional processing steps here
         # For example, data cleaning, analysis, etc.
 
-        return suspectSign_metrics
+        return aggregated_metrics
     except Exception as e:
         return {'error': str(e)}
 
@@ -47,8 +50,7 @@ def upload_file():
 
             # Optionally, you can delete the temporary file
             os.remove(file_path)
-            # the below line can be used for release2 when coding for refactoring
-            # return jsonify({'message': 'File uploaded successfully', 'dataframe': df.to_dict(), 'metrics': metrics})
+
             return jsonify({'metrics': metrics})
         except Exception as e:
             return jsonify({'error': str(e)})
