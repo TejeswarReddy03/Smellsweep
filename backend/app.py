@@ -1,9 +1,12 @@
+# app.py
+
 from flask import Flask, request, jsonify
-import pandas as pd
 from flask_cors import CORS
+from dummy_values_detector import detect_dummy_values
 
 app = Flask(__name__)
 CORS(app)
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -19,17 +22,17 @@ def upload_file():
             file_path = 'temp.csv'
             file.save(file_path)
 
-            # Read the CSV file into a DataFrame
-            df = pd.read_csv(file_path)
+            # Specify the dummy value used in your dataset
+            dummy_value = 0  # Replace with the actual dummy value in your dataset
 
-            # Process the DataFrame as needed
-            # For example, you can perform data cleaning, analysis, etc.
+            # Detect dummy values using the separate file
+            result = detect_dummy_values(file_path, dummy_value)
 
             # Optionally, you can delete the temporary file
             # import os
             # os.remove(file_path)
 
-            return jsonify({'message': 'File uploaded successfully', 'dataframe': df.to_dict()})
+            return jsonify(result)
         except Exception as e:
             return jsonify({'error': str(e)})
 

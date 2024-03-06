@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CSVReader from 'react-csv-reader';
-import axios from 'axios'; // Import Axios for making HTTP requests
-import './App.css'; // Import your CSS file for styling
+import axios from 'axios';
+import './App.css';
 
 function App() {
   const [csvData, setCsvData] = useState([]);
@@ -9,12 +9,12 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [backendResponse, setBackendResponse] = useState(null);
 
-  const handleOnDrop = (data, fileInfo) => {
+  const handleOnDrop = async (data, fileInfo) => {
     setLoading(true);
     if (fileInfo.type === 'text/csv' || fileInfo.name.endsWith('.csv')) {
       setCsvData(data);
       setErrorMessage('');
-      sendFileToBackend(data); // Send the CSV file to the backend
+      sendFileToBackend(data);
     } else {
       setCsvData([]);
       setErrorMessage('Invalid file format. Please upload a CSV file.');
@@ -27,19 +27,39 @@ function App() {
       const formData = new FormData();
       formData.append('file', new Blob([data], { type: 'text/csv' }), 'filename.csv');
 
-      const response = await axios.post(' http://127.0.0.1:5000/upload', formData, {
+      const response = await axios.post('http://127.0.0.1:5000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
 
-      setBackendResponse(response.data); // Store the backend response in state
+      console.log('Backend Response:', response.data);
+      setBackendResponse(response.data);
     } catch (error) {
       console.error('Error uploading file:', error);
       setErrorMessage('Error uploading file. Please try again.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const displayMetrics = (dataSmell, metrics) => {
+    if (!dataSmell || !metrics) {
+      return <p>No metrics available.</p>;
+    }
+
+    return (
+      <div>
+        <h2>Data Smell: {dataSmell}</h2>
+        <ul>
+          {Object.entries(metrics).map(([metricName, metricValue]) => (
+            <li key={metricName}>
+              <b>{metricName}</b>: {metricValue}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
   };
 
   return (
@@ -49,53 +69,23 @@ function App() {
         onFileLoaded={handleOnDrop}
         parserOptions={{ header: true }}
       />
-      {loading && <p>Loading...</p>} {/* Conditionally render "Loading..." text */}
+      {loading && <p>Loading...</p>}
       {errorMessage && <p>{errorMessage}</p>}
-     
+
       <div className="table-container">
         {csvData.length > 0 && (
           <>
             <h2>Uploaded CSV Data</h2>
             <table className="csv-table">
-              <thead>
-                <tr>
-                  {Object.keys(csvData[0]).map((header, index) => (
-                    <th key={index}>{header}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {csvData.map((row, rowIndex) => (
-                  <tr key={rowIndex}>
-                    {Object.values(row).map((cell, cellIndex) => (
-                      <td key={cellIndex}>{cell}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
+              {/* ... (existing code) */}
             </table>
           </>
         )}
 
         {backendResponse && (
           <>
-            <h2>Backend Response</h2>
-            <table className="response-table">
-              <thead>
-                <tr>
-                  {Object.keys(backendResponse).map((key, index) => (
-                    <th key={index}>{key}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  {Object.values(backendResponse).map((value, index) => (
-                    <td key={index}>{JSON.stringify(value)}</td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
+            <h2>Data Smells and Metrics</h2>
+            {displayMetrics(backendResponse.data_smell, backendResponse.metrics)}
           </>
         )}
       </div>
