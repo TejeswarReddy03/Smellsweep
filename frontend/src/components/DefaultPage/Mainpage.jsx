@@ -121,7 +121,7 @@ export default function MainPage() {
 
         </Button>
       </div>
-      {selectedFile && fileChosen && jsonData && <Excel myjson={jsonData} />}
+      {fileChosen && jsonData && <Excel myjson={jsonData} />}
       {analysisData && (
         <div className="analysis-container">
           {/* Rest of your code */}
