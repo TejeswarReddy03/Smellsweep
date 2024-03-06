@@ -3,7 +3,7 @@ import pandas as pd
 from flask_cors import CORS
 import os
 from datasmells_algorithms.dummy_value import identify_dummy_values
-from datasmells_algorithms.suspect_sign_datasmell import 
+from datasmells_algorithms.suspect_sign_datasmell import detect_unexpected_signs_metrics
 
 app = Flask(__name__)
 CORS(app)
@@ -12,11 +12,11 @@ def process_dataframe(df):
     try:
         # Call the identify_dummy_values function
         metrics = identify_dummy_values(df)
-
+        suspectSign_metrics=detect_unexpected_signs_metrics(df)
         # Optionally, you can include additional processing steps here
         # For example, data cleaning, analysis, etc.
 
-        return metrics
+        return suspectSign_metrics
     except Exception as e:
         return {'error': str(e)}
 
