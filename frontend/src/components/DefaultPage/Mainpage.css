@@ -1,0 +1,234 @@
+.heading-text {
+  margin-top: 7rem;
+  font-weight: bold;
+  color: #066;
+  text-align: center;
+}
+
+.head-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.analysis-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+  width: 70vw;
+}
+
+.analysis-title {
+  color: #066;
+  text-align: center;
+}
+.results-container {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 1rem;
+  padding: 60px;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.analysis-details {
+  margin-bottom: 2rem;
+}
+
+.fig-text {
+  margin-left: 15rem;
+  font-size: larger;
+  font-weight: 500;
+}
+
+.Intput-and-Btn {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.Intput-and-Btn h1 {
+  color: #066;
+  font-weight: bold;
+}
+
+.input-file {
+  margin-right: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 2px solid teal;
+  background-color: #fff;
+  color: teal;
+  font-size: 1rem;
+  cursor: pointer;
+  /* animation: pulse 4s ease-in-out infinite;
+    -webkit-animation: pulse 4s ease-in-out infinite; */
+}
+
+/* @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+      -webkit-transform: scale(1.05);
+      -moz-transform: scale(1.05);
+      -ms-transform: scale(1.05);
+      -o-transform: scale(1.05);
+  }
+    100% {
+      transform: scale(1);
+    }
+  } */
+.input-file:before {
+  position: relative;
+  display: inline-block;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 2px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  font-size: 1rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.input-file input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.input-file:hover {
+  background-color: #f2f2f2;
+}
+
+.input-file:hover:before {
+  color: #666;
+}
+
+.input-file:active:before {
+  color: #333;
+}
+
+.input-file:focus-within {
+  border-color: #06c;
+  box-shadow: 0 0 0 2px #06c;
+}
+
+.input-file:focus-within:before {
+  color: #06c;
+}
+
+.analyze-btn:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgb(17, 97, 73);
+  box-shadow: rgb(19 170 82 / 40%) 0px 2px 3px, rgb(195 231 202) 0px 0px 0px 3px;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 2rem;
+}
+.loading-spinner .spinner-border {
+  width: 4rem;
+  height: 4rem;
+  color: teal;
+}
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid teal;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.download-btn {
+  display: block;
+  margin: auto;
+  padding: 1rem;
+  border-radius: 4px;
+  background-color: teal;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 1.5rem;
+}
+
+.download-btn:hover {
+  background-color: #066;
+}
+@media screen and (max-width: 600px) {
+  .App {
+    margin: 0 0.2rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  .input-file {
+    font-size: 0.8rem;
+  }
+  .analyze-btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+  .results-container {
+    padding: 1rem;
+  }
+  .results-container h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  .results-container p {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+  .results-container ul {
+    font-size: 1rem;
+    margin-left: 1rem;
+  }
+  .results-container li {
+    margin-bottom: 0.3rem;
+  }
+}
+@media screen and (min-width: 600px) {
+  .App-header {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  #input-file-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
