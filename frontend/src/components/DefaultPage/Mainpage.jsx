@@ -31,6 +31,9 @@ export default function MainPage() {
 
   const handleFileUpload = (event) => {
     setFileChosen(true);
+    if(event.target.files.length==0){
+      return
+    }
     setSelectedFile(event.target.files[0]);
     Papa.parse(event.target.files[0], {
       header: true,
@@ -118,7 +121,7 @@ export default function MainPage() {
 
         </Button>
       </div>
-      {fileChosen && jsonData && <Excel myjson={jsonData} />}
+      {selectedFile && fileChosen && jsonData && <Excel myjson={jsonData} />}
       {analysisData && (
         <div className="analysis-container">
           {/* Rest of your code */}

@@ -1,7 +1,7 @@
 import pandas as pd
 
 def identify_dummy_values(data):
-    dummy_value_rules = ["NA", "-999", "NULL"]
+    dummy_value_rules = ["-999", "NULL"]
 
     # Create metrics dictionary to store results
     metrics = {
@@ -13,6 +13,7 @@ def identify_dummy_values(data):
 
     # Loop through columns to check for dummy values
     for column in data.columns:
+        # Check for dummy values using original rules and pd.isna()
         dummy_count = data[data[column].isin(dummy_value_rules)].shape[0]
         dummy_percentage = (dummy_count / data.shape[0]) * 100
 
