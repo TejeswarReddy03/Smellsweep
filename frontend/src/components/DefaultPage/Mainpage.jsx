@@ -27,6 +27,7 @@ export default function MainPage() {
   const [boxplot, setBoxplot] = useState(null);
   const [click, setClick] = useState(false);
   const [fileChosen, setFileChosen] = useState(false);
+  const [dummy_value_metrics,setdummy]=useState(false);
 
   const handleFileUpload = (event) => {
     setFileChosen(true);
@@ -47,24 +48,27 @@ export default function MainPage() {
     setIsLoading(true);
     const formData = new FormData();
     formData.append("file", selectedFile);
-    setIsLoading(false);
-    // axios
-    //   .post("http://localhost:5000/upload", formData)
-    //   .then((response) => {
-    //     setAnalysisData(response.data);
-    //     setHeatmapData(response.data.heatmap);
-    //     setBargraph_sp_miss(response.data.bargraph_sp_miss);
-    //     setBargraph_nan(response.data.bargraph_nan);
-    //     setBoxplot(response.data.outliers.plot);
-    //     setBargraph_binning_cat(response.data.binning_cat.plot);
-    //     setBargraph_class_imbal(response.data.imbalance.plot);
-    //     console.log(response.data);
-    //     setIsLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     setIsLoading(false);
-    //   });
+  
+    axios
+      .post("http://localhost:5001/upload", formData)  // Update the URL accordingly
+      .then((response) => {
+        // setAnalysisData(response.data);
+        // setHeatmapData(response.data.heatmap);
+        // setBargraph_sp_miss(response.data.bargraph_sp_miss);
+        // setBargraph_nan(response.data.bargraph_nan);
+        // setBoxplot(response.data.outliers.plot);
+        // setBargraph_binning_cat(response.data.binning_cat.plot);
+        // setBargraph_class_imbal(response.data.imbalance.plot);
+        console.log("hiii");
+        const { dataframe, metrics } = response.data;
+        console.log(response["data"]["metrics"]);
+        setdummy(response["data"]["metrics"]);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
   };
 
   const handleDownload = () => {
@@ -85,7 +89,7 @@ export default function MainPage() {
       )}
 
       <div className="heading-text">
-        <h1>SniffCSV DataSmell Detector</h1>
+        <h1>SmellSweep-DataSmell Detector</h1>
       </div>
       <div className="Intput-and-Btn">
         <br />
@@ -102,13 +106,23 @@ export default function MainPage() {
           size="lg"
           onClick={handleUpload}
         >
+
           Analysis
+          {dummy_value_metrics && (
+        <div className="dummy-value-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(dummy_value_metrics, null, 2)}</pre>
+        </div>
+      )}
+
+
         </Button>
       </div>
       {fileChosen && jsonData && <Excel myjson={jsonData} />}
       {analysisData && (
         <div className="analysis-container">
           {/* Rest of your code */}
+         
         </div>
       )}
     </div>
