@@ -2,8 +2,7 @@ from flask import Flask, request, jsonify
 import pandas as pd
 from flask_cors import CORS
 import os
-from datasmells_algorithms.dummy_value import identify_dummy_values
-from datasmells_algorithms.suspect_sign_datasmell import detect_unexpected_signs_metrics
+from datasmells_algorithms.Tejeswar_smells.dummy_value import identify_dummy_values
 
 app = Flask(__name__)
 CORS(app)
