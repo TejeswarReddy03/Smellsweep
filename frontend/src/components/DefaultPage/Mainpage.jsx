@@ -8,7 +8,7 @@ import { Button } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import Codebox from "../Codebox";
 import Table from "./Table";
-
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 const language = "python";
 
 export default function MainPage() {
@@ -28,6 +28,16 @@ export default function MainPage() {
   const [click, setClick] = useState(false);
   const [fileChosen, setFileChosen] = useState(false);
   const [dummy_value_metrics,setdummy]=useState(false);
+  const [duplicate_value_metrics,setduplicate]=useState(false);
+  const [missing_value_metrics,setmissing]=useState(false);
+  const [extreme_value_metrics,setextreme]=useState(false);
+  const [mis_spelling_metrics,setmisspell]=useState(false);
+  const [suspect_class_metrics,setsuspect]=useState(false);
+  const [casing_value_metrics,setcasing]=useState(false);
+  const [longdata_value_metrics,setlong]=useState(false);
+  const [ambiguous_value_metrics,setambiguous]=useState(false);
+  
+
 
   const handleFileUpload = (event) => {
     setFileChosen(true);
@@ -64,8 +74,16 @@ export default function MainPage() {
         // setBargraph_class_imbal(response.data.imbalance.plot);
         console.log("hiii");
        // const { dataframe, metrics } = response.data;
-        console.log(response["data"]["metrics"]["dummy_values"]);
+        console.log(response["data"]);
         setdummy(response["data"]["metrics"]["dummy_values"]);
+        setduplicate(response["data"]["metrics"]["duplicate_values"]);
+        setmissing(response["data"]["metrics"]["missing_value"]);
+        setextreme(response["data"]["metrics"]["extreme_value"]);
+        setmisspell(response["data"]["metrics"]["mis_spelling"]);
+        setsuspect(response["data"]["metrics"]["suspect_class"]);
+        setcasing(response["data"]["metrics"],["casing_value"]);
+        setlong(response["data"]["metrics"],["longdata_value"]);
+        setambiguous(response["data"]["metrics"],["ambiguous_value"]);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -82,6 +100,8 @@ export default function MainPage() {
       pdf.save("page-content.pdf");
     });
   };
+
+ 
 
   return (
     <div className="App">
@@ -118,6 +138,61 @@ export default function MainPage() {
         </div>
       )}
 
+          {duplicate_value_metrics && (
+        <div className="duplicate-value-metrics-container">
+          {/* Display your duplicate value metrics here */}
+          <pre>{JSON.stringify(duplicate_value_metrics, null, 2)}</pre>
+        </div>
+      )} 
+
+          {missing_value_metrics && (
+        <div className="missing-value-metrics-container">
+          {/* Display your missing value metrics here */}
+          <pre>{JSON.stringify(missing_value_metrics, null, 2)}</pre>
+        </div>
+      )} 
+
+          {extreme_value_metrics && (
+        <div className="extreme-value-metrics-container">
+          {/* Display your extreme value metrics here */}
+          <pre>{JSON.stringify(extreme_value_metrics, null, 2)}</pre>
+        </div>
+      )} 
+
+          {mis_spelling_metrics && (
+        <div className="mis-spelling-metrics-container">
+          {/* Display your mis spelling metrics here */}
+          <pre>{JSON.stringify(mis_spelling_metrics, null, 2)}</pre>
+        </div>
+      )} 
+
+          {suspect_class_metrics && (
+        <div className="Suspect-class-metrics-container">
+          {/* Display your suspectclass metrics here */}
+          <pre>{JSON.stringify(suspect_class_metrics, null, 2)}</pre>
+        </div>
+      )} 
+
+          {casing_value_metrics && (
+        <div className="Casing_value-metrics-container">
+          {/* Display your casingvalue metrics here */}
+          <pre>{JSON.stringify(casing_value_metrics, null, 2)}</pre>
+        </div>
+      )} 
+
+          {ambiguous_value_metrics && (
+        <div className="ambiguous_value-metrics-container">
+          {/* Display your ambiguousvalue metrics here */}
+          <pre>{JSON.stringify(ambiguous_value_metrics, null, 2)}</pre>
+        </div>
+      )}
+
+          {longdata_value_metrics && (
+        <div className="longdata_value-metrics-container">
+          {/* Display your longvalue metrics here */}
+          <pre>{JSON.stringify(longdata_value_metrics, null, 2)}</pre>
+        </div>
+      )}
 
         </Button>
       </div>
