@@ -1,35 +1,46 @@
+import Excel from "../ExcelSheet/Excel";
 import React, { useState } from "react";
+import { useNavigate,useLocation } from 'react-router-dom';
 import Papa from "papaparse";
 import axios from "axios";
 import "./Mainpage.css";
 import jsPDF from "jspdf";
 import { Button } from "react-bootstrap";
 import html2canvas from "html2canvas";
-import Excel from "../ExcelSheet/Excel";
-import FloatAsStringChart from "./thirdsection/float_as_string";
-import Datetimefun from "./thirdsection/datetime";
-import IntegerAsFloatChart from "./thirdsection/int_as_float";
-import IntegerAsStringChart from "./thirdsection/integer_as_string";
+import Codebox from "../Codebox";
+import Table from "./Table";
+import OutliersBarChart from "../../reactGraphs/outliers.jsx"
+
+// import MyBarChart from "../../reactGraphs/MyBarChart.jsx";
+
 const language = "python";
 
 export default function MainPage() {
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [jsonData, setJsonData] = useState(null);
+  const [analysisData, setAnalysisData] = useState(null);
+  const [heatmapData, setHeatmapData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [dummyValueMetrics, setDummyValueMetrics] = useState(null);
-  const [suspectCharacter, setSuspectCharacter] = useState(null);
-  const [dateTime, setDateTime] = useState(null);
-  const [floatstring,setfloatstring]=useState(null);
-  const [integerasfloat,setintegerasfloat]=useState(null);
-  const [integerasstring,setintegerasstring]=useState(null);
-
-  // const [graphsDateTime, setGraphsDateTime] = useState(null);
+  const [bargraph_sp_miss, setBargraph_sp_miss] = useState(null);
+  const [bargraph_nan, setBargraph_nan] = useState(null);
+  const [bargraph_binning_cat, setBargraph_binning_cat] = useState(null);
+  const [bargraph_class_imbal, setBargraph_class_imbal] = useState(null);
+  const bargraph_sp_char = null;
+  const bargraph_hum_friendly = null;
+  const bargraph_tr_spaces = null;
+  const [boxplot, setBoxplot] = useState(null);
+  const [click, setClick] = useState(false);
   const [fileChosen, setFileChosen] = useState(false);
+  const [dummy_value_metrics,setdummy]=useState(false);
+
+  
+
 
   const handleFileUpload = (event) => {
     setFileChosen(true);
-    if (event.target.files.length === 0) {
-      return;
+    if(event.target.files.length==0){
+      return
     }
     setSelectedFile(event.target.files[0]);
     Papa.parse(event.target.files[0], {
@@ -44,23 +55,28 @@ export default function MainPage() {
   };
 
   const handleUpload = () => {
+    setClick(true);
     setIsLoading(true);
     const formData = new FormData();
     formData.append("file", selectedFile);
   
     axios
-      .post("http://localhost:5001/upload", formData)
+      .post("http://localhost:5001/upload", formData)  // Update the URL accordingly
       .then((response) => {
+        // setAnalysisData(response.data);
+        // setHeatmapData(response.data.heatmap);
+        // setBargraph_sp_miss(response.data.bargraph_sp_miss);
+        // setBargraph_nan(response.data.bargraph_nan);
+        // setBoxplot(response.data.outliers.plot);
+        // setBargraph_binning_cat(response.data.binning_cat.plot);
+        // setBargraph_class_imbal(response.data.imbalance.plot);
+        navigate('/datasmells',{ state: { ok:JSON.stringify(response) } });
+     
+        console.log("hiii");
+       // const { dataframe, metrics } = response.data;
         console.log(response["data"]);
-        const { metrics } = response.data;
-        setDummyValueMetrics(metrics.dummy_values);
-        setSuspectCharacter(metrics.suspect_character_encoding);
-        setDateTime(metrics.date_time_smell);
+        // setdummy(response["data"]["metrics"]["outliers"]);
         setIsLoading(false);
-        setfloatstring(metrics.float_as_string);
-        setintegerasfloat(metrics.integer_as_float);
-        setintegerasstring(metrics.integer_as_string);
-        // setGraphsDateTime(metrics.date_time_smell);
       })
       .catch((error) => {
         console.log(error);
@@ -79,6 +95,7 @@ export default function MainPage() {
 
   return (
     <div className="App">
+<div className="inside"> 
       {isLoading && (
         <div className="loading-overlay">
           <div className="spinner"></div>
@@ -103,28 +120,35 @@ export default function MainPage() {
           size="lg"
           onClick={handleUpload}
         >
+ 
           Analysis
+
+
         </Button>
+        {dummy_value_metrics && (
+        <div className="dummy-value-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(dummy_value_metrics, null, 2)}</pre>
+          
+        </div>
+      )}
+
       </div>
-      {selectedFile && fileChosen && jsonData && (
-        <Excel myjson={jsonData} />
-      )}
-      {dummyValueMetrics && (
-        <div className="dummy-value-metrics-container">
-          <pre>{JSON.stringify(dummyValueMetrics, null, 2)}</pre>
+      {fileChosen && jsonData && <Excel myjson={jsonData} />}
+      {analysisData && (
+        <div className="analysis-container">
+          {/* Rest of your code */}
+         
         </div>
       )}
-      {suspectCharacter && (
-        <div className="dummy-value-metrics-container">
-          <pre>{JSON.stringify(suspectCharacter, null, 2)}</pre>
-        </div>
-      )}
-      {dateTime && <Datetimefun datetime_obj={dateTime}/>}
-      {floatstring && <FloatAsStringChart obj={floatstring}/>}
-      {integerasfloat && <IntegerAsFloatChart obj={integerasfloat}/>}
-      {integerasstring && <IntegerAsStringChart obj={integerasstring}/>}
-      
+
+</div>
 
     </div>
   );
+}
+
+function splitIntoSentences(text) {
+  const sentences = text.split("\n");
+  return sentences.filter((sentence) => sentence.length > 0);
 }
