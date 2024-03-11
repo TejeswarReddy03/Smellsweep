@@ -1,0 +1,22 @@
+body{
+margin: 0;
+padding: 0;
+
+}
+.total-main {
+    /* background-image: url("./assets/h5.png"); */
+
+    font-family: 'Roboto', sans-serif; /* Optional: Choose a font you prefer */
+overflow: hidden; /* Prevents background color from overflowing */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    /* min-width: 100vw; */
+    backdrop-filter: blur(7px); /* Adjust the blur intensity as needed */
+  }
+  
+  .total-main:hover {
+    backdrop-filter: blur(7px); /* Adjust the blur intensity on hover */
+  }

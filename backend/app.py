@@ -3,6 +3,12 @@ import pandas as pd
 from flask_cors import CORS
 import os
 from datasmells_algorithms.Tejeswar_smells.dummy_value import identify_dummy_values
+from datasmells_algorithms.Tejeswar_smells.outliers import detect_outliers
+from datasmells_algorithms.Tejeswar_smells.empty_strings import detect_and_analyze_empty_strings_rule_based
+from datasmells_algorithms.Tejeswar_smells.timestamp import detect_timestamp_inconsistency
+from datasmells_algorithms.Tejeswar_smells.unnecessary_character import detect_and_analyze_unnecessary_characters
+from datasmells_algorithms.Tejeswar_smells.inconsistent_unit import detect_and_analyze_units_rule_based
+
 
 app = Flask(__name__)
 CORS(app)
@@ -12,6 +18,14 @@ def process_dataframe(df):
         # Call the identify_dummy_values function
         aggregated_metrics = {
             'dummy_values':  identify_dummy_values(df),
+            'outliers':detect_outliers(df),
+            'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
+            'timestamps':detect_timestamp_inconsistency(df,timestamp_format='%m/%d/%Y %H:%M:%S'),
+            # 'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
+            'incosistent_unit':detect_and_analyze_units_rule_based(df),
+            
+            
+            
             # Add metrics from other algorithms here
         }
 
@@ -50,7 +64,7 @@ def upload_file():
             # Optionally, you can delete the temporary file
             os.remove(file_path)
 
-            return jsonify({'metrics': metrics})
+            return jsonify({'metrics': "metrics"})
         except Exception as e:
             return jsonify({'error': str(e)})
 

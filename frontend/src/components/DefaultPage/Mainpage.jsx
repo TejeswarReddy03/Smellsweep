@@ -1,5 +1,6 @@
 import Excel from "../ExcelSheet/Excel";
 import React, { useState } from "react";
+import { useNavigate,useLocation } from 'react-router-dom';
 import Papa from "papaparse";
 import axios from "axios";
 import "./Mainpage.css";
@@ -8,10 +9,14 @@ import { Button } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import Codebox from "../Codebox";
 import Table from "./Table";
+import OutliersBarChart from "../../reactGraphs/outliers.jsx"
+
+// import MyBarChart from "../../reactGraphs/MyBarChart.jsx";
 
 const language = "python";
 
 export default function MainPage() {
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [jsonData, setJsonData] = useState(null);
   const [analysisData, setAnalysisData] = useState(null);
@@ -28,6 +33,9 @@ export default function MainPage() {
   const [click, setClick] = useState(false);
   const [fileChosen, setFileChosen] = useState(false);
   const [dummy_value_metrics,setdummy]=useState(false);
+
+  
+
 
   const handleFileUpload = (event) => {
     setFileChosen(true);
@@ -62,10 +70,12 @@ export default function MainPage() {
         // setBoxplot(response.data.outliers.plot);
         // setBargraph_binning_cat(response.data.binning_cat.plot);
         // setBargraph_class_imbal(response.data.imbalance.plot);
+        navigate('/datasmells',{ state: { ok:JSON.stringify(response) } });
+     
         console.log("hiii");
        // const { dataframe, metrics } = response.data;
-        console.log(response["data"]["metrics"]["dummy_values"]);
-        setdummy(response["data"]["metrics"]["dummy_values"]);
+        console.log(response["data"]);
+        // setdummy(response["data"]["metrics"]["outliers"]);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -85,6 +95,7 @@ export default function MainPage() {
 
   return (
     <div className="App">
+<div className="inside"> 
       {isLoading && (
         <div className="loading-overlay">
           <div className="spinner"></div>
@@ -109,17 +120,19 @@ export default function MainPage() {
           size="lg"
           onClick={handleUpload}
         >
-
+ 
           Analysis
-          {dummy_value_metrics && (
-        <div className="dummy-value-metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(dummy_value_metrics, null, 2)}</pre>
-        </div>
-      )}
 
 
         </Button>
+        {dummy_value_metrics && (
+        <div className="dummy-value-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(dummy_value_metrics, null, 2)}</pre>
+          
+        </div>
+      )}
+
       </div>
       {fileChosen && jsonData && <Excel myjson={jsonData} />}
       {analysisData && (
@@ -128,6 +141,9 @@ export default function MainPage() {
          
         </div>
       )}
+
+</div>
+
     </div>
   );
 }
