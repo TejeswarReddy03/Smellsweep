@@ -27,7 +27,10 @@ export default function MainPage() {
   const [boxplot, setBoxplot] = useState(null);
   const [click, setClick] = useState(false);
   const [fileChosen, setFileChosen] = useState(false);
-  const [dummy_value_metrics,setdummy]=useState(false);
+  const[suspect_sign_metrics,setsuspect]=useState(false);
+  const[suspect_detection_metrics,setsuspectt]=useState(false);
+  const[amb_datetime_metrics,setdatetimee]=useState(false);
+  const[contractions_metrics,setcontractions]=useState(false);
 
   const handleFileUpload = (event) => {
     setFileChosen(true);
@@ -64,8 +67,12 @@ export default function MainPage() {
         // setBargraph_class_imbal(response.data.imbalance.plot);
         console.log("hiii");
        // const { dataframe, metrics } = response.data;
-        console.log(response["data"]["metrics"]["dummy_values"]);
-        setdummy(response["data"]["metrics"]["dummy_values"]);
+        //console.log(response["data"]);
+        console.log(response["data"]);
+        setsuspect(response["data"]["metrics"]["suspect_sign"]);
+        setsuspectt(response["data"]["metrics"]["suspect_detection"]);
+        setdatetimee(response["data"]["metrics"]["amb_d_t"]);
+        setcontractions(response["data"]["metrics"]["conte"]);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -111,12 +118,31 @@ export default function MainPage() {
         >
 
           Analysis
-          {dummy_value_metrics && (
-        <div className="dummy-value-metrics-container">
+      {suspect_sign_metrics && (
+        <div className="suspect-sign-metrics-container">
           {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(dummy_value_metrics, null, 2)}</pre>
+          <pre>{JSON.stringify(suspect_sign_metrics, null, 2)}</pre>
         </div>
       )}
+       {amb_datetime_metrics && (
+        <div className="amb-datetime_metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(amb_datetime_metrics, null, 2)}</pre>
+        </div>
+      )}
+      {suspect_detection_metrics && (
+        <div className="suspect-detection-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(suspect_detection_metrics, null, 2)}</pre>
+        </div>
+      )}
+      {contractions_metrics && (
+        <div className="contraction-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(contractions_metrics, null, 2)}</pre>
+        </div>
+      )}
+
 
 
         </Button>
@@ -131,6 +157,7 @@ export default function MainPage() {
     </div>
   );
 }
+
 
 function splitIntoSentences(text) {
   const sentences = text.split("\n");
