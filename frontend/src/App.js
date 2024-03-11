@@ -7,18 +7,25 @@
 import React from "react";
 // import { useState } from "react";
 // import axios from "axios";
-
+import "./App.css"
 import MainPage from "./components/DefaultPage/Mainpage";
-
-
+import DataSmells from "./components/DefaultPage/datasmells";
+// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter ,Route,Routes,Navigate } from 'react-router-dom';
 // @Description: This function returns the key components of the frontend.
 function App() {
   return (
+    <>
     <div className="total-main">
-     
-      <MainPage />
+      <BrowserRouter>
+        <Routes>
+        {<Route index element ={<MainPage />} />}
+      {<Route path='/datasmells'  element={< DataSmells/>} />}
+      </Routes>
+      </BrowserRouter>
       {/* <RegExForm/> */}
     </div>
+    </>
   );
 }
 
