@@ -4,21 +4,12 @@ from collections import defaultdict
 
 def detect_and_analyze_unnecessary_characters(dataframe):
     # Display the original DataFrame
-    print("Original DataFrame:")
-    print(dataframe)
+   
 
     # Detect and analyze unnecessary characters
     unnecessary_characters = detect_and_clean_unnecessary_characters(dataframe)
 
-    if unnecessary_characters:
-        print("\nUnnecessary Character Metrics:")
-        for char, occurrences in unnecessary_characters.items():
-            print(f"{char}: {occurrences} occurrences")
-    else:
-        print("\nNo unnecessary characters found.")
-
-    # Return the original DataFrame
-    return dataframe
+    return unnecessary_characters
 
 def detect_and_clean_unnecessary_characters(dataframe):
     unnecessary_characters = defaultdict(int)

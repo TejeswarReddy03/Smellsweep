@@ -72,7 +72,7 @@ export default function MainPage() {
         // setBargraph_class_imbal(response.data.imbalance.plot);
         navigate('/datasmells',{ state: { ok:JSON.stringify(response) } });
      
-        console.log("hiii");
+        console.log(response);
        // const { dataframe, metrics } = response.data;
         console.log(response["data"]);
         // setdummy(response["data"]["metrics"]["outliers"]);
