@@ -25,6 +25,29 @@ def identify_dummy_values(data):
         metrics['Distribution of dummy values'][column] = dummy_distribution
 
     # Update the impact on analysis based on your specific considerations
-    metrics['Impact on analysis (qualitative)'] = "To be assessed based on specific use case"
-
+    # metrics['Impact on analysis (qualitative)'] = "To be assessed based on specific use case"
+    plot_dummy_distribution(metrics)
     return metrics
+import matplotlib
+matplotlib.use('agg')
+import matplotlib.pyplot as plt
+
+def plot_dummy_distribution(metrics):
+    val = metrics["Number of data points with dummy values"]
+    metrics = metrics["Percentage of dummy values per attribute"]
+
+    # Plotting the histogram
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    ax.bar(metrics.keys(), metrics.values(), color='skyblue')
+    ax.set_ylabel('number of dummy values')
+    ax.set_xlabel('column name')
+    ax.set_title('Histogram of Metrics')
+    equation = "total number of dummy values are " + str(val)  # Convert val to string
+    plt.text(0.5, 20, equation, fontsize=12, color='blue')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+
+    # Save the figure as an image file
+    plt.savefig('./histogram.png')
+        

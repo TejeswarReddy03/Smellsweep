@@ -9,7 +9,6 @@ import { Button } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import Codebox from "../Codebox";
 import Table from "./Table";
-import OutliersBarChart from "../../reactGraphs/outliers.jsx"
 
 // import MyBarChart from "../../reactGraphs/MyBarChart.jsx";
 
@@ -32,7 +31,9 @@ export default function MainPage() {
   const [boxplot, setBoxplot] = useState(null);
   const [click, setClick] = useState(false);
   const [fileChosen, setFileChosen] = useState(false);
-  const [dummy_value_metrics,setdummy]=useState(false);
+  const [dummy_value_metrics,setdummy]=useState(0);
+  const [dummy_value_metrics2,setdummy2]=useState(0);
+
 
   
 
@@ -70,12 +71,17 @@ export default function MainPage() {
         // setBoxplot(response.data.outliers.plot);
         // setBargraph_binning_cat(response.data.binning_cat.plot);
         // setBargraph_class_imbal(response.data.imbalance.plot);
-        navigate('/datasmells',{ state: { ok:JSON.stringify(response) } });
+       
      
         console.log(response);
        // const { dataframe, metrics } = response.data;
         console.log(response["data"]);
-        // setdummy(response["data"]["metrics"]["outliers"]);
+        setdummy(response["data"]["metrics"]["outliers"]);
+        setdummy2(response["data"]["metrics"]["outliers"]);
+        console.log(response["data"]["metrics"]["outliers"][0])
+        navigate('/charts',{ state: { ok:response["data"]["metrics"]["outliers"][0],ok2:response["data"]["metrics"]["outliers"][1] } });
+
+
         setIsLoading(false);
       })
       .catch((error) => {
@@ -125,13 +131,7 @@ export default function MainPage() {
 
 
         </Button>
-        {dummy_value_metrics && (
-        <div className="dummy-value-metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(dummy_value_metrics, null, 2)}</pre>
-          
-        </div>
-      )}
+        
 
       </div>
       {fileChosen && jsonData && <Excel myjson={jsonData} />}

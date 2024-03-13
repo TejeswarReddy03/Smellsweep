@@ -27,10 +27,10 @@ def process_dataframe(df,csv_file):
         aggregated_metrics = {
             'dummy_values':  identify_dummy_values(df),
             #'suspect_character_encoding':detect_suspect_encoding(csv_file),
-            'date_time_smell':detect_datetime_smell(df),
+            # 'date_time_smell':detect_datetime_smell(df),
             'float_as_string':detect_float_as_string(df),
-            'integer_as_float':detect_integer_as_float(df),
-            'integer_as_string':detect_integer_as_string(df),
+            # 'integer_as_float':detect_integer_as_float(df),
+            # 'integer_as_string':detect_integer_as_string(df),
 
             'outliers':detect_outliers(df),
             'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
