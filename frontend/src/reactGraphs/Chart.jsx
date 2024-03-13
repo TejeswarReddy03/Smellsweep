@@ -15,8 +15,8 @@ function MyHistogram() {
   }));
 
   return (
-    <BarChart width={600} height={300} data={data}>
-      <XAxis dataKey="name" tickLine={false} label={{ value: 'Names', position: 'bottom' }} />
+    <BarChart width={800} height={600} data={data} margin={{ top: 10, right: 30, left: 20, bottom: 170 }}>
+      <XAxis dataKey="name" tickLine={false} label={{ value: 'Names', position: 'bottom' }} angle={-45} textAnchor="end" interval={0} />
       <YAxis />
       <Tooltip />
       <Bar dataKey="count" fill="#8884d8" />
