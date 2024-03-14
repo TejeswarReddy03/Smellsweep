@@ -17,11 +17,16 @@ import ambiguousdatetime from './../../assets/ambiguousdatetime.png';
 import contracting from './../../assets/contracting.png';
 import dummy from './../../assets/dummyvalue.png';
 
+
+import { useLocation } from 'react-router-dom';
+
 const SvgComponent = () => {
+
   const { state } = useLocation();
   const dummy1 = state.ok;
 
   console.log(dummy1);
+
   const navigate = useNavigate();
   const circleImagePaths = [longdata, ambiguous, suspectsign, suspectd, ambiguousdatetime, contracting, dummy]; // Circle image paths
   const squareImagePaths = [missing, duplicate, extreme, misspelling, suspectclass, casing]; // Square image paths
@@ -29,6 +34,7 @@ const SvgComponent = () => {
   const [hoveredCircleIndex, setHoveredCircleIndex] = useState(null);
 
   const generatePatternId = (index) => `pattern${index + 1}`;
+
 
   const generatePathData = (startAngle, endAngle) => {
     const radius = 275;
@@ -157,6 +163,13 @@ const SvgComponent = () => {
       ></path>
     );
   });
+
+
+
+
+    
+
+
 
   return (
     <div className="container" style={{ display: 'flex', justifyContent: 'space-between', height: '100vh' }}>

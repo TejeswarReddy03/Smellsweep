@@ -22,3 +22,6 @@
 .styled-table tbody tr:hover {
     background-color: #ddd;
 }
+.no_case{
+    color:black;
+}

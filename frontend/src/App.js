@@ -10,10 +10,16 @@ import React from "react";
 import "./App.css"
 import MainPage from "./components/DefaultPage/Mainpage";
 import DataSmells from "./components/DefaultPage/datasmells";
+
+// import DataSmellsImageTemplate from "./components/DS_IMG_Template";
+import ErrorInBackend from "./components/error_in_backend";
+import Appp from "./test";
+
 import DataSmells2 from "./components/DefaultPage/datasmells2";
 import DataSmellsImageTemplate from "./components/DsImageTemplate";
-import ErrorInBackend from "./components/error_in_backend";
+
 // import IntegerAsStringChart from "./reactGraphs/Chart";
+
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { BrowserRouter ,Route,Routes,Navigate } from 'react-router-dom';
 import MyHistogram from "./reactGraphs/sus_sign_charts";
@@ -56,9 +62,16 @@ function App() {
         <Routes>
         {<Route index element ={<MainPage />} />}
       {<Route path='/datasmells'  element={< DataSmells/>} />}
+
+      {<Route path='/datasmell_img_template'  element={< DataSmellsImageTemplate/>} />}
+      
+
+
       {<Route path='/datasmells2'  element={< DataSmells2/>} />}
+
       {<Route path='/datasmells'  element={< DataSmells />} />}
       {<Route path='/charts'  element={< MyHistogram4 />} />}
+
       {<Route path='/charts2'  element={< MyHistogram2 />} />}
       {<Route path='/charts3'  element={< MyHistogram3 />} />}
 
@@ -86,7 +99,7 @@ function App() {
       {<Route path='/sus_sign_charts'  element={< MyHistogram/>} />}
       {<Route path='/suspect_detection_charts'  element={< MyHistogram5 />} />}
       {<Route path='/contracting_charts'  element={< MyHistogram6 />} />}
-      {<Route path='/datasmell_img_template'  element={< DataSmellsImageTemplate/>} />}
+      {/* {<Route path='/datasmell_img_template'  element={< DataSmellsImageTemplate/>} />} */}
       {<Route path='/error_in_backend' element={<ErrorInBackend/>}/>}
 
 

@@ -39,8 +39,12 @@ export default function MainPage() {
   const [dummy_value_metrics2,setdummy2]=useState(0);
 
 
+<<<<<<< HEAD
 
   
+=======
+  const [intasfloat,setintasfloat]=useState(false);
+>>>>>>> 1f269ac786ac6c569cb99e5bbf042d5863d4713a
 
 
   const handleFileUpload = (event) => {
@@ -76,7 +80,17 @@ export default function MainPage() {
         // setBoxplot(response.data.outliers.plot);
         // setBargraph_binning_cat(response.data.binning_cat.plot);
         // setBargraph_class_imbal(response.data.imbalance.plot);
+
+        if (!response.data || !response.data.metrics) {
+          // Navigate to a new page if response data is null or doesn't have metrics
+          navigate('/error_in_backend'); // Replace '/new-page-url' with the actual URL of the new page
+          return; // Stop further execution
+        }
+        console.log("before navigating to datasmells");
+        navigate('/datasmells',{ state: { ok:JSON.stringify(response) } });
+console.log("hi");
        
+
      
         // console.log(response);
        // const { dataframe, metrics } = response.data;
