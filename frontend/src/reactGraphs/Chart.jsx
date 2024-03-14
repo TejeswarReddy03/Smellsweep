@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import styles from './DsImageTemplate.module.css';
 
 
-function MyHistogram() {
+function MyHistogram4() {
   const { state } = useLocation();
   const dummy1 = state.ok;
   const dummy2 = state.ok2;
@@ -69,4 +69,4 @@ function MyHistogram() {
   );
 }
 
-export default MyHistogram;
+export default MyHistogram4;

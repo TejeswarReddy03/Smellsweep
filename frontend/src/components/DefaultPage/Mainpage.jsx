@@ -31,6 +31,10 @@ export default function MainPage() {
   const [boxplot, setBoxplot] = useState(null);
   const [click, setClick] = useState(false);
   const [fileChosen, setFileChosen] = useState(false);
+  const[suspect_sign_metrics,setsuspect]=useState(false);
+  const[suspect_detection_metrics,setsuspectt]=useState(false);
+  const[amb_datetime_metrics,setdatetimee]=useState(false);
+  const[contractions_metrics,setcontractions]=useState(false);
   const [dummy_value_metrics,setdummy]=useState(0);
   const [dummy_value_metrics2,setdummy2]=useState(0);
 
@@ -75,6 +79,14 @@ export default function MainPage() {
      
         // console.log(response);
        // const { dataframe, metrics } = response.data;
+        //console.log(response["data"]);
+        console.log(response["data"]);
+        setsuspect(response["data"]["metrics"]["suspect_sign"]);
+        setsuspectt(response["data"]["metrics"]["suspect_detection"]);
+        setdatetimee(response["data"]["metrics"]["amb_d_t"]);
+        setcontractions(response["data"]["metrics"]["conte"]);
+        console.log(response["data"]);
+        // setdummy(response["data"]["metrics"]["outliers"]);
         // console.log(response["data"]);
         setdummy(response["data"]["metrics"]["outliers"]);
         setdummy2(response["data"]["metrics"]["outliers"]);
@@ -83,6 +95,14 @@ export default function MainPage() {
         navigate('/charts4',{ state: { ok:response["data"]["metrics"]["empty_strings"] }});
 
 
+        // console.log("hiiii",response["data"]["metrics"]["suspect_sign"]);
+
+        //  navigate('/charts2',{ state: { ok:response["data"]["metrics"]["unnecessary_char"]  }});
+         // navigate("/sus_sign_charts",{ state: { ok:response["data"]["metrics"]["suspect_sign"]["X_values"],ok2:response["data"]["metrics"]["suspect_sign"]["Y_values"]  }});
+          // navigate("/datasmells");
+          // console.log("hiiii",response["data"]["metrics"]["contracting_datasmell"]);
+          //navigate("/suspect_detection_charts",{ state: { ok:response["data"]["metrics"]["suspect_detection"]["X_values"],ok2:response["data"]["metrics"]["suspect_detection"]["Y_values"]  }});
+          // navigate("/contracting_charts",{ state: { ok:response["data"]["metrics"]["conte"]["X_values"],ok2:response["data"]["metrics"]["conte"]["Y_values"]  }});
         setIsLoading(false);
       })
       .catch((error) => {
@@ -129,9 +149,35 @@ export default function MainPage() {
         >
  
           Analysis
+      {suspect_sign_metrics && (
+        <div className="suspect-sign-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(suspect_sign_metrics, null, 2)}</pre>
+        </div>
+      )}
+       {amb_datetime_metrics && (
+        <div className="amb-datetime_metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(amb_datetime_metrics, null, 2)}</pre>
+        </div>
+      )}
+      {suspect_detection_metrics && (
+        <div className="suspect-detection-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(suspect_detection_metrics, null, 2)}</pre>
+        </div>
+      )}
+      {contractions_metrics && (
+        <div className="contraction-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(contractions_metrics, null, 2)}</pre>
+        </div>
+      )}
+
 
 
         </Button>
+       
         
 
       </div>
@@ -148,6 +194,7 @@ export default function MainPage() {
     </div>
   );
 }
+
 
 function splitIntoSentences(text) {
   const sentences = text.split("\n");
