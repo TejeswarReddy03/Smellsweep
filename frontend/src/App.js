@@ -18,29 +18,13 @@ import { BrowserRouter ,Route,Routes,Navigate } from 'react-router-dom';
 import MyHistogram from "./reactGraphs/Chart";
 import MyHistogram2 from "./reactGraphs/charts_dummyValues";
 import MyHistogram3 from "./reactGraphs/unnecessary_char_graph";
+import MyHistogram4 from "./reactGraphs/Charts_empty"
 // import IntegerAsStringChart from './reactGraphs/Chart';
 
 // @Description: This function returns the key components of the frontend.
 
 function App() {
-  const sampleData = {
-    status: true, // Set to false to see the "No integer-as-string data smells detected" message
-    integer_as_string: {
-      column1: {
-        percentage: 25,
-        rows_with_smell: 10,
-      },
-      column2: {
-        percentage: 15,
-        rows_with_smell: 8,
-      },
-      column3: {
-        percentage: 30,
-        rows_with_smell: 15,
-      },
-      // Add more columns and details as needed
-    },
-  };
+  
   return (
     <>
     <div className="total-main">
@@ -51,6 +35,9 @@ function App() {
       {<Route path='/charts'  element={< MyHistogram />} />}
       {<Route path='/charts2'  element={< MyHistogram2 />} />}
       {<Route path='/charts3'  element={< MyHistogram3 />} />}
+      {<Route path='/charts4'  element={< MyHistogram4 />} />}
+
+      
       {<Route path='/datasmell_img_template'  element={< DataSmellsImageTemplate/>} />}
       {<Route path='/error_in_backend' element={<ErrorInBackend/>}/>}
 

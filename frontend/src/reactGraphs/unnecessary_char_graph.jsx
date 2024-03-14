@@ -40,10 +40,8 @@ function MyHistogram3() {
         <span className={styles.dropdownIcon}>{activeIndex === 0 ? '▲' : '▼'}</span>
       </div>
       <div className={`${styles.accordionContent} ${activeIndex === 0 ? styles.activeContent : styles.inactiveContent}`}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-        deserunt mollit anim id est laborum.
+      This refers to the presence of extraneous characters within the data that don't contribute meaningful information.
+
       </div>
     </div>
     <div className={styles.accordionItem}>
@@ -55,10 +53,8 @@ function MyHistogram3() {
         <span className={styles.dropdownIcon}>{activeIndex === 1 ? '▲' : '▼'}</span>
       </div>
       <div className={`${styles.accordionContent} ${activeIndex === 1 ? styles.activeContent : styles.inactiveContent}`}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-        deserunt mollit anim id est laborum.
+      A dataset with phone numbers might include special characters like hyphens or parentheses, which are unnecessary for analysis and can introduce errors during processing.
+
       </div>
     </div>
   </div>
