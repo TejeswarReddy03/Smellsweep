@@ -43,7 +43,15 @@ def process_dataframe(df,csv_file):
              
              
              
-            #'suspect_character_encoding':detect_suspect_encoding(csv_file),
+
+             'date_time_smell':detect_datetime_smell(df),
+            'float_as_string':detect_float_as_string(df),
+            'integer_as_float':detect_integer_as_float(df),
+             'integer_as_string':detect_integer_as_string(df),
+
+
+          
+
             # 'date_time_smell':detect_datetime_smell(df),
             
             
@@ -54,6 +62,7 @@ def process_dataframe(df,csv_file):
             # 'integer_as_float':detect_integer_as_float(df),
             # 'integer_as_string':detect_integer_as_string(df),
 
+
             'outliers':detect_outliers(df),
             # 'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
             # 'timestamps':detect_timestamp_inconsistency(df,timestamp_format='%m/%d/%Y %H:%M:%S'),
@@ -62,12 +71,19 @@ def process_dataframe(df,csv_file):
             
             'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
             # 'incosistent_unit':detect_and_analyze_units_rule_based(df),
+
+
+            
+            
+
+
             'inconsistent':identify_data_type_inconsistency(df),
             'minconsistency':identify_missing_value_inconsistency(df),
             'seperatingsmell':identify_separating_smell(df),
             'spacingsmell':identify_spacing_smell(df),
             'specialchar':identify_special_characters_inconsistency(df),
             'unitinconsistency':identify_unit_inconsistency(df),
+
             # Add metrics from other algorithms here
         }
         
