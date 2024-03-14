@@ -2,6 +2,10 @@ from flask import Flask, request, jsonify
 import pandas as pd
 from flask_cors import CORS
 import os
+from datasmells_algorithms.suspect_sign_datasmell import identify_suspect_sign
+from datasmells_algorithms.suspect_detection import assess_data_distribution
+from datasmells_algorithms.amb_date_time import assess_ambiguous_date_formats
+from datasmells_algorithms.contracting_datasmell import detect_contractions
 
 
 from datasmells_algorithms.SECTION3_SMELLS.suspect_character_encoding import detect_suspect_encoding
@@ -10,7 +14,7 @@ from datasmells_algorithms.SECTION3_SMELLS.float_as_string import detect_float_a
 from datasmells_algorithms.SECTION3_SMELLS.integer_as_float import detect_integer_as_float
 from datasmells_algorithms.SECTION3_SMELLS.integer_as_string import detect_integer_as_string
 
-from datasmells_algorithms.Tejeswar_smells.dummy_value import identify_dummy_values
+#from datasmells_algorithms.Tejeswar_smells.dummy_value import identify_dummy_values
 from datasmells_algorithms.Tejeswar_smells.outliers import detect_outliers
 from datasmells_algorithms.Tejeswar_smells.empty_strings import detect_and_analyze_empty_strings_rule_based
 from datasmells_algorithms.Tejeswar_smells.unnecessary_character import detect_and_analyze_unnecessary_characters
@@ -29,7 +33,11 @@ def process_dataframe(df,csv_file):
     try:
         # Call the identify_dummy_values function
         aggregated_metrics = {
-            'dummy_values':  identify_dummy_values(df),
+            'suspect_sign': identify_suspect_sign(df),
+            'suspect_detection': assess_data_distribution(df),
+            'amb_d_t':assess_ambiguous_date_formats(df),
+            'conte': detect_contractions(df),
+             #'dummy_values':  identify_dummy_values(df),
             #'suspect_character_encoding':detect_suspect_encoding(csv_file),
             # 'date_time_smell':detect_datetime_smell(df),
             'float_as_string':detect_float_as_string(df),
@@ -52,13 +60,14 @@ def process_dataframe(df,csv_file):
             'unitinconsistency':identify_unit_inconsistency(df),
             # Add metrics from other algorithms here
         }
-
+        
         # Optionally, you can include additional processing steps here
         # For example, data cleaning, analysis, etc.
 
         return aggregated_metrics
     except Exception as e:
         return {'error': str(e)}
+    
 
 
 @app.route('/upload', methods=['POST'])

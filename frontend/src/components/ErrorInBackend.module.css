@@ -1,0 +1,16 @@
+.container {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .heading {
+    font-size: 40px;
+    color: #ff6f61;
+  }
+  
+  .message {
+    font-size: 25px;
+    color: #333;
+  }
+  
