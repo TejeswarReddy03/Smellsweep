@@ -1,58 +1,164 @@
-import React from 'react';
-import DataSmellDetails from './DataSections';
-import "./datasmells.css";
-import Navbar from './Navbar';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import h5 from "./../../assets/h5.png";
-import h6 from "./../../assets/mka.png";
-import h7 from "./../../assets/h7.png";
-import h8 from "./../../assets/h8.png";
-import h9 from "./../../assets/h9.png";
+import mka from "./../../assets/mka.png";
+import missing from './../../assets/missing.png';
+import duplicate from "./../../assets/Duplicatevalue.png";
+import extreme from "./../../assets/extremevalue.jpeg";
+import misspelling from './../../assets/misspelling.png';
+import suspectclass from './../../assets/suspectclass.png';
+import casing from './../../assets/casing.png';
+import longdata from './../../assets/longdatavalue.png';
+import './styles.css';
+
 
 import { useLocation } from 'react-router-dom';
 
-const yourSections = [
-  // Define your 35 sections here with image paths, titles, and bullet points
-  {
-    image: './../assets/h5.png',
-    title: 'Section 1 Title',
-    bulletPoints: ['Bullet point 1', 'Bullet point 2', 'Bullet point 3'],
-  },
+const SvgComponent = () => {
+  console.log("in the datasmell")
+  const navigate = useNavigate();
+  const circleImagePaths = [longdata, mka, h5, mka, h5, longdata, h5]; // Circle image paths
+  const squareImagePaths = [missing, duplicate, extreme, misspelling, suspectclass, casing]; // Square image paths
+  const [hoveredSquareIndex, setHoveredSquareIndex] = useState(null);
+  const [hoveredCircleIndex, setHoveredCircleIndex] = useState(null);
 
-  // ... add 34 more sections
-];
-const imageUrls=[h7,h8,h9,h8,h7];
-const description = 'This is the description for the data smell';
+  const generatePatternId = (index) => `pattern${index + 1}`;
 
 
-function DataSmells() {
-  const location = useLocation();
-  const { ok } = location.state;
+  const generatePathData = (startAngle, endAngle) => {
+    const radius = 275;
+    const startX = 400 + radius * Math.cos((startAngle * Math.PI) / 180);
+    const startY = 400 + radius * Math.sin((startAngle * Math.PI) / 180);
+    const endX = 400 + radius * Math.cos((endAngle * Math.PI) / 180);
+    const endY = 400 + radius * Math.sin((endAngle * Math.PI) / 180);
 
-  // Convert the string back to JSON
-  const responseData = JSON.parse(ok);
-  const { metrics } = responseData.data;
-  console.log("in datasmells.jsx");
-  console.log(metrics);
-  return (
-    <>
-     <Navbar/>
-     <div className='datasml'>
-      <DataSmellDetails imageUrls={imageUrls} description={description} metrics={metrics}/>
-      <DataSmellDetails imageUrls={imageUrls} description={description} metrics={metrics}/>
-      <DataSmellDetails imageUrls={imageUrls} description={description} metrics={metrics}/>
-      <DataSmellDetails imageUrls={imageUrls} description={description} metrics={metrics}/>
-      <DataSmellDetails imageUrls={imageUrls} description={description} metrics={metrics}/>
-      <DataSmellDetails imageUrls={imageUrls} description={description} metrics={metrics}/>
-      <DataSmellDetails imageUrls={imageUrls} description={description} metrics={metrics}/>
+    return `M 400 400 L ${startX} ${startY} A ${radius} ${radius} 0 0 1 ${endX} ${endY} Z`;
+  };
+
+  const customTranslations = [10, 10, 10, 5, -30, -70, -10];
+  const translations = [5, 5, 5, 5, 5, 5];
+
+  const handlePieceClick = (index) => {
+    navigate('/');
+    console.log(`Piece ${index + 1} clicked`);
+  };
+
+  const patterns = circleImagePaths.map((imagePath, index) => (
+    <pattern
+      key={index}
+      id={generatePatternId(index)}
+      patternUnits="userSpaceOnUse"
+      width="100%"
+      height="100%"
+    >
+      <image
+        href={imagePath}
+        x="0"
+        y="0"
+        width="100%"
+        height="100%"
+        preserveAspectRatio="xMidYMid meet"
+      />
+    </pattern>
+  ));
+
+  const squareSize = '63%'; // Adjusted square size
+
+  const squares = squareImagePaths.map((imagePath, index) => {
+    const isHovered = hoveredSquareIndex === index;
+
+    return (
+      <image
+        key={index}
+        width={squareSize}
+        height={squareSize}
+        href={imagePath}
+        onClick={() => handlePieceClick(index)} // Add onClick handler
+        onMouseEnter={() => setHoveredSquareIndex(index)}
+        onMouseLeave={() => setHoveredSquareIndex(null)}
+        style={{
+          transition: 'transform 0.5s ease-in-out, stroke-width 0.3s ease-in-out',
+          transform: isHovered ? `scale(1.1) translateZ(${translations[index]}px)` : '',
+          strokeWidth: isHovered ? 5 : 0,
+        }}
+      />
+    );
+  });
+
+  const paths = circleImagePaths.map((_, index) => {
+    const startAngle = (index * 360) / 7;
+    const endAngle = ((index + 1) * 360) / 7;
+    const isHovered = hoveredCircleIndex === index;
+
+    return (
+      <path
+        key={index}
+        fill={`url(#${generatePatternId(index)})`}
+        d={generatePathData(startAngle, endAngle)}
+        onClick={() => handlePieceClick(index + 6)} // Add onClick handler for circles
+        onMouseEnter={() => setHoveredCircleIndex(index)}
+        onMouseLeave={() => setHoveredCircleIndex(null)}
+        style={{
+          transition: 'transform 0.5s ease-in-out, stroke-width 0.3s ease-in-out',
+          transform: isHovered ? `scale(1.1) translateX(${customTranslations[index]}px)` : '',
+          strokeWidth: isHovered ? 5 : 0,
+        }}
+      ></path>
+    );
+  });
+
 
 
 
     
 
 
-    </div>
-    </>
-  );
-}
 
-export default DataSmells;
+  return (
+    <div className="container" style={{ display: 'flex', justifyContent: 'space-between', height: '100vh' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+          {patterns}
+          <g transform="translate(120, -320)">
+            {squares.slice(0, 3).map((square, index) => (
+              <g key={index} transform={`translate(0, ${index * 120})`}> {/* Adjust translateY and add margin */}
+                <g transform={`translate(0, ${index * 380})`}>{square}</g> {/* Add margin */}
+              </g>
+            ))}
+          </g>
+        </svg>
+      </div>
+      <div style={{ flex: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <Link to="/datasmells2"><button style={{ padding: '10px 20px', fontSize: '1.2rem', borderRadius: '5px', backgroundColor: 'lightblue', border: 'none', cursor: 'pointer' }}> {/* Adjusted button size and style */}
+            Smellsweep1/2
+          </button></Link> {/* Button to navigate */}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="50 50 750 750" width="100%" height="100%">
+          {paths}
+          {circleImagePaths.map((_, index) => (
+            <text key={index}>
+              <textPath startOffset="50%" xlinkHref={`#btn${index + 1}`}>
+                Section {index + 1}
+              </textPath>
+            </text>
+          ))}
+        </svg>
+      </div>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+          {patterns}
+          <g transform="translate(100, -320)">
+            {squares.slice(3).map((square, index) => (
+              <g key={index} transform={`translate(0, ${index * 120})`}> {/* Adjust translateY and add margin */}
+                <g transform={`translate(0, ${index * 380})`}>{square}</g> {/* Add margin */}
+              </g>
+            ))}
+          </g>
+        </svg>
+      </div>
+    </div>
+  );
+  
+  
+};
+
+export default SvgComponent;

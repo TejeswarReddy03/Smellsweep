@@ -9,7 +9,6 @@ import { Button } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import Codebox from "../Codebox";
 import Table from "./Table";
-import OutliersBarChart from "../../reactGraphs/outliers.jsx"
 
 // import MyBarChart from "../../reactGraphs/MyBarChart.jsx";
 
@@ -32,7 +31,13 @@ export default function MainPage() {
   const [boxplot, setBoxplot] = useState(null);
   const [click, setClick] = useState(false);
   const [fileChosen, setFileChosen] = useState(false);
-  const [dummy_value_metrics,setdummy]=useState(false);
+  const[suspect_sign_metrics,setsuspect]=useState(false);
+  const[suspect_detection_metrics,setsuspectt]=useState(false);
+  const[amb_datetime_metrics,setdatetimee]=useState(false);
+  const[contractions_metrics,setcontractions]=useState(false);
+  const [dummy_value_metrics,setdummy]=useState(0);
+  const [dummy_value_metrics2,setdummy2]=useState(0);
+
 
   const [intasfloat,setintasfloat]=useState(false);
 
@@ -70,18 +75,39 @@ export default function MainPage() {
         // setBoxplot(response.data.outliers.plot);
         // setBargraph_binning_cat(response.data.binning_cat.plot);
         // setBargraph_class_imbal(response.data.imbalance.plot);
+
         if (!response.data || !response.data.metrics) {
           // Navigate to a new page if response data is null or doesn't have metrics
           navigate('/error_in_backend'); // Replace '/new-page-url' with the actual URL of the new page
           return; // Stop further execution
         }
-        
+        console.log("before navigating to datasmells");
         navigate('/datasmells',{ state: { ok:JSON.stringify(response) } });
+console.log("hi");
+       
+
      
-        console.log("hiii");
+        // console.log(response);
        // const { dataframe, metrics } = response.data;
+        //console.log(response["data"]);
+        console.log(response["data"]);
+        setsuspect(response["data"]["metrics"]["suspect_sign"]);
+        setsuspectt(response["data"]["metrics"]["suspect_detection"]);
+        setdatetimee(response["data"]["metrics"]["amb_d_t"]);
+        setcontractions(response["data"]["metrics"]["conte"]);
         console.log(response["data"]);
         // setdummy(response["data"]["metrics"]["outliers"]);
+        // console.log(response["data"]);
+        setdummy(response["data"]["metrics"]["outliers"]);
+        setdummy2(response["data"]["metrics"]["outliers"]);
+        // console.log("hiiii",response["data"]["metrics"]["suspect_sign"]);
+
+        //  navigate('/charts2',{ state: { ok:response["data"]["metrics"]["unnecessary_char"]  }});
+         // navigate("/sus_sign_charts",{ state: { ok:response["data"]["metrics"]["suspect_sign"]["X_values"],ok2:response["data"]["metrics"]["suspect_sign"]["Y_values"]  }});
+          // navigate("/datasmells");
+          // console.log("hiiii",response["data"]["metrics"]["contracting_datasmell"]);
+          //navigate("/suspect_detection_charts",{ state: { ok:response["data"]["metrics"]["suspect_detection"]["X_values"],ok2:response["data"]["metrics"]["suspect_detection"]["Y_values"]  }});
+          // navigate("/contracting_charts",{ state: { ok:response["data"]["metrics"]["conte"]["X_values"],ok2:response["data"]["metrics"]["conte"]["Y_values"]  }});
         setIsLoading(false);
       })
       .catch((error) => {
@@ -128,16 +154,36 @@ export default function MainPage() {
         >
  
           Analysis
+      {suspect_sign_metrics && (
+        <div className="suspect-sign-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(suspect_sign_metrics, null, 2)}</pre>
+        </div>
+      )}
+       {amb_datetime_metrics && (
+        <div className="amb-datetime_metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(amb_datetime_metrics, null, 2)}</pre>
+        </div>
+      )}
+      {suspect_detection_metrics && (
+        <div className="suspect-detection-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(suspect_detection_metrics, null, 2)}</pre>
+        </div>
+      )}
+      {contractions_metrics && (
+        <div className="contraction-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(contractions_metrics, null, 2)}</pre>
+        </div>
+      )}
+
 
 
         </Button>
-        {dummy_value_metrics && (
-        <div className="dummy-value-metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(dummy_value_metrics, null, 2)}</pre>
-          
-        </div>
-      )}
+       
+        
 
       </div>
       {fileChosen && jsonData && <Excel myjson={jsonData} />}
@@ -153,6 +199,7 @@ export default function MainPage() {
     </div>
   );
 }
+
 
 function splitIntoSentences(text) {
   const sentences = text.split("\n");
