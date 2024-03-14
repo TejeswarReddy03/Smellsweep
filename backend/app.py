@@ -33,11 +33,11 @@ def process_dataframe(df,csv_file):
             'integer_as_float':detect_integer_as_float(df),
             'integer_as_string':detect_integer_as_string(df),
 
-            'outliers':detect_outliers(df),
-            'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
-            'timestamps':detect_timestamp_inconsistency(df,timestamp_format='%m/%d/%Y %H:%M:%S'),
+           # 'outliers':detect_outliers(df),
+            #'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
+            #'timestamps':detect_timestamp_inconsistency(df,timestamp_format='%m/%d/%Y %H:%M:%S'),
             # 'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
-            'incosistent_unit':detect_and_analyze_units_rule_based(df),
+            #'incosistent_unit':detect_and_analyze_units_rule_based(df),
             
             
 
@@ -84,7 +84,7 @@ def upload_file():
             # Optionally, you can delete the temporary file
             os.remove(file_path)
 
-            return jsonify({'metrics': "metrics"})
+            return jsonify({'metrics': metrics})
         except Exception as e:
             return jsonify({'error': str(e)})
 

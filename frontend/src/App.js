@@ -10,6 +10,9 @@ import React from "react";
 import "./App.css"
 import MainPage from "./components/DefaultPage/Mainpage";
 import DataSmells from "./components/DefaultPage/datasmells";
+import DataSmellsImageTemplate from "./components/DS_IMG_Template";
+import ErrorInBackend from "./components/error_in_backend";
+import Appp from "./test";
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { BrowserRouter ,Route,Routes,Navigate } from 'react-router-dom';
 // @Description: This function returns the key components of the frontend.
@@ -21,6 +24,9 @@ function App() {
         <Routes>
         {<Route index element ={<MainPage />} />}
       {<Route path='/datasmells'  element={< DataSmells/>} />}
+      {<Route path='/datasmell_img_template'  element={< DataSmellsImageTemplate/>} />}
+      {<Route path='/error_in_backend' element={<ErrorInBackend/>}/>}
+
       </Routes>
       </BrowserRouter>
       {/* <RegExForm/> */}

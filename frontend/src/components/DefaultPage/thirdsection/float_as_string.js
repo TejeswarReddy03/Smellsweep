@@ -13,7 +13,9 @@ const FloatAsStringChart = ({ obj }) => {
       {obj && obj.status ? (
         <div>
           <h2>Columns Containing Floats Stored as Strings</h2>
-          <BarChart width={800} height={400} data={chartData}>
+          <div style={{ maxWidth:'620px',backgroundColor: 'white', padding: '20px', transition: 'all 1s ease' }}>
+
+          <BarChart width={600} height={400} data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="column" />
             <YAxis />
@@ -21,7 +23,10 @@ const FloatAsStringChart = ({ obj }) => {
             <Legend />
             <Bar dataKey="percentage" fill="#8884d8" />
           </BarChart>
-          <h2>Percentage Data in Table Format</h2>
+          </div>
+          <p style={{ color: 'black', fontWeight: 'bold',height:'14px',marginBottom:'20px',marginTop:'20px' }}>Tabular format</p>
+          <div style={{ backgroundColor: 'white', padding: '20px', transition: 'all 1s ease' }}>
+           
           <table style={{ borderCollapse: 'collapse', border: '1px solid black' }}>
             <thead>
               <tr style={{ border: '1px solid black', backgroundColor: '#f2f2f2' }}>
@@ -38,9 +43,12 @@ const FloatAsStringChart = ({ obj }) => {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       ) : (
-        <p>No float-as-string data smells detected.</p>
+        <p  style={{ color: 'black', fontWeight: 'bold', fontSize: '30px' }}>No float_as_string data smells detected.</p>
+
+
       )}
     </div>
   );

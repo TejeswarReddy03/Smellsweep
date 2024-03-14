@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-const IntegerAsFloatChart = (props) => {
+const IntegerAsFloatChart = () => {
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
@@ -12,11 +12,31 @@ const IntegerAsFloatChart = (props) => {
         return () => clearTimeout(timer); // Clear the timeout on unmount
     }, []);
 
-    const data = props.obj;
+    // Sample data
+    const sampleData = {
+        status: true, // Set to false to see the "No integer-as-float data smells detected" message
+        integer_as_float: {
+            column1: {
+                percentage: 25,
+                rows_with_smell: 10,
+            },
+            column2: {
+                percentage: 15,
+                rows_with_smell: 8,
+            },
+            column3: {
+                percentage: 30,
+                rows_with_smell: 15,
+            },
+            // Add more columns and details as needed
+        },
+    };
+
+    const data = sampleData;
 
     return (
         <div>
-            {data && data.status ? (
+            {loaded && data && data.status ? (
                 <div>
                     <h2>Columns Containing Integers Represented as Floats</h2>
                     <div style={{ maxWidth:'620px',backgroundColor: 'white', padding: '20px', transition: 'all 1s ease' }}>
@@ -30,8 +50,7 @@ const IntegerAsFloatChart = (props) => {
                             <Bar dataKey="[1].rows_with_smell" fill="#82ca9d" name="Rows with Smell" />
                         </BarChart>
                     </div>
-                    <p style={{ color: 'black', fontWeight: 'bold',height:'14px',marginBottom:'20px',marginTop:'20px' }}>Tabular format</p>
-
+                    <h2>Number of Rows with Integers Represented as Floats</h2>
                     <div style={{ backgroundColor: 'white', padding: '20px', transition: 'all 1s ease' }}>
                         <table style={{ borderCollapse: 'collapse', width: '100%' }}>
                             <thead>
@@ -54,8 +73,7 @@ const IntegerAsFloatChart = (props) => {
                     </div>
                 </div>
             ) : (
-                <p style={{ color: 'black', fontWeight: 'bold',fontSize:'30px' }}>No integer-as-float data smells detected.</p>
-                
+                <p>No integer-as-float data smells detected.</p>
             )}
         </div>
     );
