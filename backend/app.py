@@ -2,6 +2,10 @@ from flask import Flask, request, jsonify
 import pandas as pd
 from flask_cors import CORS
 import os
+from datasmells_algorithms.suspect_sign_datasmell import identify_suspect_sign
+from datasmells_algorithms.suspect_detection import assess_data_distribution
+from datasmells_algorithms.amb_date_time import assess_ambiguous_date_formats
+from datasmells_algorithms.contracting_datasmell import detect_contractions
 
 
 from datasmells_algorithms.SECTION3_SMELLS.suspect_character_encoding import detect_suspect_encoding
@@ -25,8 +29,12 @@ from datasmells_algorithms.Vikram_smells.casing_value import detect_and_report_c
 from datasmells_algorithms.Vikram_smells.longdata_value import detect_and_report_long_data_values_metrics
 from datasmells_algorithms.Vikram_smells.ambiguous_value import detect_ambiguous_values
 
-
-
+from datasmells_algorithms.Sivasai_smells.inconsistent import identify_data_type_inconsistency
+from datasmells_algorithms.Sivasai_smells.missing_value_inconsistency import identify_missing_value_inconsistency
+from datasmells_algorithms.Sivasai_smells.seperatingsmell import identify_separating_smell
+from datasmells_algorithms.Sivasai_smells.spacingsmells import identify_spacing_smell
+from datasmells_algorithms.Sivasai_smells.specialcharactersmell import identify_special_characters_inconsistency
+from datasmells_algorithms.Sivasai_smells.unitinconsistency import identify_unit_inconsistency
 app = Flask(__name__)
 CORS(app)
 
@@ -35,40 +43,32 @@ def process_dataframe(df,csv_file):
         # Call the identify_dummy_values function
         aggregated_metrics = {
             'dummy_values':  identify_dummy_values(df),
-            # #'suspect_character_encoding':detect_suspect_encoding(csv_file),
-            # # 'date_time_smell':detect_datetime_smell(df),
+            #'suspect_character_encoding':detect_suspect_encoding(csv_file),
+            # 'date_time_smell':detect_datetime_smell(df),
             'float_as_string':detect_float_as_string(df),
-            # # 'integer_as_float':detect_integer_as_float(df),
-            # # 'integer_as_string':detect_integer_as_string(df),
+            # 'integer_as_float':detect_integer_as_float(df),
+            # 'integer_as_string':detect_integer_as_string(df),
 
-             'outliers':detect_outliers(df),
-             'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
-            # # 'timestamps':detect_timestamp_inconsistency(df,timestamp_format='%m/%d/%Y %H:%M:%S'),
+            'outliers':detect_outliers(df),
+            'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
+            # 'timestamps':detect_timestamp_inconsistency(df,timestamp_format='%m/%d/%Y %H:%M:%S'),
             
             
             
-            # 'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
-            # # 'incosistent_unit':detect_and_analyze_units_rule_based(df),
+            'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
+            # 'incosistent_unit':detect_and_analyze_units_rule_based(df),
             
-            "duplicate_values":detect_and_report_duplicate_data(df),
-            "missing_value":detect_and_report_missing_data_metrics(df),
-            "extreme_value":extreme_values_metrics(df),
-            "mis_spelling":detect_misspelling_data_smell_metrics(df),
-            "suspect_class":detect_and_report_suspect_class_values_metrics(df),
-            "casing_value":detect_and_report_casing_data_smells(df),
-            "longdata_value":detect_and_report_long_data_values_metrics(df),
-            "ambiguous_value":detect_ambiguous_values(df),
             
 
             # Add metrics from other algorithms here
         }
-
+        
         # Optionally, you can include additional processing steps here
         # For example, data cleaning, analysis, etc.
 
         return aggregated_metrics
     except Exception as e:
-        return {'errorppp': str(e)}
+        return {'error': str(e)}
 
 
 @app.route('/upload', methods=['POST'])
@@ -102,7 +102,7 @@ def upload_file():
 
             # Optionally, you can delete the temporary file
             os.remove(file_path)
-
+            print(metrics)
             return jsonify({'metrics': metrics})
         except Exception as e:
             return jsonify({'errorrrrr': str(e)})

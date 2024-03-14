@@ -35,17 +35,6 @@ export default function MainPage() {
   const [boxplot, setBoxplot] = useState(null);
   const [click, setClick] = useState(false);
   const [fileChosen, setFileChosen] = useState(false);
-
-  
-  const [duplicate_value_metrics,setduplicate]=useState(false);
-  const [missing_value_metrics,setmissing]=useState(false);
-  const [extreme_value_metrics,setextreme]=useState(false);
-  const [mis_spelling_metrics,setmisspell]=useState(false);
-  const [suspect_class_metrics,setsuspect]=useState(false);
-  const [casing_value_metrics,setcasing]=useState(false);
-  const [longdata_value_metrics,setlong]=useState(false);
-  const [ambiguous_value_metrics,setambiguous]=useState(false);
-
   const [dummy_value_metrics,setdummy]=useState(0);
   const [dummy_value_metrics2,setdummy2]=useState(0);
 
@@ -91,25 +80,12 @@ export default function MainPage() {
      
         // console.log(response);
        // const { dataframe, metrics } = response.data;
-        console.log(response["data"]);
-
-        setdummy(response["data"]["metrics"]["dummy_values"]);
-        setduplicate(response["data"]["metrics"]["duplicate_values"]);
-        setmissing(response["data"]["metrics"]["missing_value"]);
-        setextreme(response["data"]["metrics"]["extreme_value"]);
-        setmisspell(response["data"]["metrics"]["mis_spelling"]);
-        setsuspect(response["data"]["metrics"]["suspect_class"]);
-        setcasing(response["data"]["metrics"],["casing_value"]);
-        setlong(response["data"]["metrics"],["longdata_value"]);
-        setambiguous(response["data"]["metrics"],["ambiguous_value"]);
-
+        // console.log(response["data"]);
         setdummy(response["data"]["metrics"]["outliers"]);
         setdummy2(response["data"]["metrics"]["outliers"]);
-        console.log("hiii");
-        console.log(response["data"]["metrics"]);
-        
-        navigate('/charts_v1',{ state: { ok:response["data"]["metrics"]["ambiguous_value"]  }});
+        console.log(response["data"]["metrics"]["unnecessary_char"]);
 
+        navigate('/charts2',{ state: { ok:response["data"]["metrics"]["unnecessary_char"]  }});
 
 
         setIsLoading(false);
@@ -160,6 +136,31 @@ export default function MainPage() {
         >
  
           Analysis
+      {suspect_sign_metrics && (
+        <div className="suspect-sign-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(suspect_sign_metrics, null, 2)}</pre>
+        </div>
+      )}
+       {amb_datetime_metrics && (
+        <div className="amb-datetime_metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(amb_datetime_metrics, null, 2)}</pre>
+        </div>
+      )}
+      {suspect_detection_metrics && (
+        <div className="suspect-detection-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(suspect_detection_metrics, null, 2)}</pre>
+        </div>
+      )}
+      {contractions_metrics && (
+        <div className="contraction-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(contractions_metrics, null, 2)}</pre>
+        </div>
+      )}
+
 
           {duplicate_value_metrics && (
         <div className="duplicate-value-metrics-container">
@@ -218,6 +219,7 @@ export default function MainPage() {
       )}
 
         </Button>
+       
         
 
       </div>
@@ -234,6 +236,7 @@ export default function MainPage() {
     </div>
   );
 }
+
 
 function splitIntoSentences(text) {
   const sentences = text.split("\n");

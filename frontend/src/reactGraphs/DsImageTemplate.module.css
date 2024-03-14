@@ -1,0 +1,93 @@
+/* DSIMGTemplate.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+.chartContainer {
+    height: 600px; /* Adjust height as needed */
+    width: 800px; /* Adjust width as needed */
+    overflow: auto;
+    margin-left:270px /* Add overflow scroll */
+  }
+  
+  .chartWrapper {
+    height: 100%; /* Occupy full height of the container */
+  }
+.container {
+    /* max-width: 800px; */
+    font-family: 'Montserrat', sans-serif;
+    margin: 0 auto;
+    padding: 20px;
+    /* background-color: #f0f8ff;  */
+    /* Light blue background color */
+    /* background: linear-gradient(45deg, #ff6f61, #ffb361, #fffa61, #b3ff61, #61ffb3, #61dfff, #6161ff, #bf61ff, #ff61d1, #ff6194, #ff6161); */
+    /* background: linear-gradient(45deg, #ff6f61, #ffa07a, #ffdab9, #fff5e1, #e1fff5, #b9ffd6, #7affd4, #61ffb3, #61dfff, #61a3ff, #8e61ff, #ff61d1); */
+    background: linear-gradient(45deg, #ff6f61, #ffb361, #ffe17a, #fff5b9, #f5fff9, #b9f5ff, #7ad6ff, #61b3ff,  #7ad6ff,  #fff5b9,#b9f5ff, #ff61d1);
+
+    background-size: 400% 400%; /* Adjust size for desired effect */
+    animation: gradientFlow 10s ease infinite;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+    height: 100%; /* Occupies the full viewport height */
+    padding-top: 100px;
+  }
+  @keyframes gradientFlow {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+  .heading {
+    text-align: center;
+    color: #333; /* Dark text color */
+    margin-bottom: 30px;
+    
+  }
+  
+  .accordionItem {
+    margin-bottom: 20px;
+    max-width: 50%;
+    margin-left: 20%;
+    margin-right: 20%;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff; /* White background */
+  }
+  
+  .accordionHeader {
+    background-color: #ff6f61; /* Reddish-orange background color */
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    color: #fff; /* White text color */
+  }
+  
+  .accordionHeader:hover {
+    background-color: #ff8661; /* Slightly darker shade on hover */
+  }
+  
+  .active {
+    background-color:#ff8661 !important;
+  }
+  
+  .dropdownIcon {
+    font-size: 18px;
+  }
+  
+  .accordionContent {
+    padding-left: 10px;
+    padding-right: 10px;
+   
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  
+  .activeContent {
+    max-height: 200px; /* Adjust the value as needed */
+  }
+
+  .inactiveContent {
+    max-height: 0;
+  }
