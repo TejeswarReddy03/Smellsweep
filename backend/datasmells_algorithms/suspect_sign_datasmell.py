@@ -12,7 +12,9 @@ def identify_suspect_sign(data):
         'Percentage of data points with unexpected signs per attribute': {},
         'Distribution of unexpected signs': {},
         'Domain knowledge validation (qualitative)': "Not assessed",
-        'plot_base64': None  # Placeholder for the base64-encoded plot
+        'plot_base64': None,  # Placeholder for the base64-encoded plot
+        'X_values': [],       # List to store x values for plotting
+        'Y_values': []        # List to store y values for plotting
     }
 
     # Loop through columns to check for suspect signs
@@ -29,6 +31,10 @@ def identify_suspect_sign(data):
         # Adjust based on specific requirements
         unexpected_sign_distribution = data[data[column].apply(lambda value: bool(re.match(r'^-', str(value))))].groupby(column).size().to_dict()
         suspect_signs_metrics['Distribution of unexpected signs'][column] = unexpected_sign_distribution
+
+        # Append x and y values for plotting
+        suspect_signs_metrics['X_values'].append(column)
+        suspect_signs_metrics['Y_values'].append(suspect_sign_percentage)
 
     # Plotting the number of suspect signs per column
     plt.figure(figsize=(10, 6))
