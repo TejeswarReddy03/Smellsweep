@@ -1,11 +1,12 @@
 import pandas as pd
 
-def detect_and_report_suspect_class_values(data):
+def detect_and_report_suspect_class_values_metrics(data):
     # Initialize metrics dictionary to store results
     metrics = {
-        'Number of suspect class values per attribute': {},
-        'Percentage of suspect class values per attribute': {},
-        'Top suspect class values per attribute': {}
+        'attributes': [],
+        'suspect_count': [],
+        'suspect_percentage': [],
+        'top_suspect_values': []
     }
 
     # Define threshold for suspect class values
@@ -23,12 +24,14 @@ def detect_and_report_suspect_class_values(data):
         top_suspect_values = suspect_values.index.tolist()
 
         # Update metrics dictionary
-        metrics['Number of suspect class values per attribute'][column] = suspect_count
-        metrics['Percentage of suspect class values per attribute'][column] = suspect_percentage
-        metrics['Top suspect class values per attribute'][column] = top_suspect_values
-
+        metrics['attributes'].append(column)
+        metrics['suspect_count'].append(suspect_count)
+        metrics['suspect_percentage'].append(suspect_percentage)
+        metrics['top_suspect_values'].append(top_suspect_values)
+   
     return metrics
 
 # Example usage:
-# Load your data into a DataFrame named 'data'
-# suspect_class_values_metrics = detect_and_report_suspect_class_values(data)
+# Assume 'df' is your DataFrame
+# metrics = detect_and_report_suspect_class_values_metrics(df)
+# print(metrics)

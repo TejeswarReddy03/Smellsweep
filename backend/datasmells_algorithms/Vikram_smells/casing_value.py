@@ -3,8 +3,8 @@ import pandas as pd
 def detect_and_report_casing_data_smells(data):
     # Initialize metrics dictionary to store results
     metrics = {
-        'Casing inconsistency count per attribute': {},
-        'Casing inconsistency percentage per attribute': {}
+        'attribute': [],  # Change 'attributes' to 'attribute' to match the structure expected by Recharts
+        'count': []       # Change 'counts' to 'count' to match the structure expected by Recharts
     }
 
     # Loop through columns to check for casing inconsistency
@@ -12,13 +12,8 @@ def detect_and_report_casing_data_smells(data):
         if data[column].dtype == 'object':  # Check if the column contains string data
             unique_values = data[column].unique()
             casing_inconsistency_count = sum(1 for value in unique_values if isinstance(value, str) and (value.lower() != value and value.upper() != value))
-            metrics['Casing inconsistency count per attribute'][column] = casing_inconsistency_count
-            total_unique_values = len(unique_values)
-            if total_unique_values > 0:
-                casing_inconsistency_percentage = (casing_inconsistency_count / total_unique_values) * 100
-            else:
-                casing_inconsistency_percentage = 0
-            metrics['Casing inconsistency percentage per attribute'][column] = casing_inconsistency_percentage
+            metrics['attribute'].append(column)  # Append column name to 'attribute'
+            metrics['count'].append(casing_inconsistency_count)  # Append count of casing inconsistencies to 'count'
 
     return metrics
 

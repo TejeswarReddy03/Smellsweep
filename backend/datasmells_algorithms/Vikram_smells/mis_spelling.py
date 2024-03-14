@@ -1,33 +1,22 @@
 import pandas as pd
 import re
 
-def detect_misspelling_data_smell(data):
+def detect_misspelling_data_smell_metrics(data):
     # Initialize metrics dictionary to store results
-    metrics = {
-        'Number of misspelled values': 0,
-        'Misspelled examples per attribute': {}
-    }
+    misspelled_values_per_attribute = {}
 
     # Loop through columns to check for misspelled values
     for column in data.columns:
         if data[column].dtype == 'object':  # Check if the column contains strings
-            misspelled_values = []
-            misspelled_count = 0
+            misspelled_values = [value for value in data[column] if re.search(r'[^A-Za-z0-9\s.]+', str(value))]
+            misspelled_values_per_attribute[column] = misspelled_values
 
-            # Iterate over each value in the column
-            for value in data[column]:
-                # Perform misspelling detection logic
-                # Updated regex pattern to allow spaces and periods
-                if re.search(r'[^A-Za-z0-9\s.]+', str(value)):
-                    misspelled_values.append(value)
-                    misspelled_count += 1
+    num_misspelled_values = sum(len(misspelled_values) for misspelled_values in misspelled_values_per_attribute.values())
 
-            metrics['Number of misspelled values'] += misspelled_count
-            metrics['Misspelled examples per attribute'][column] = misspelled_values
-
-    return metrics
+    return num_misspelled_values, misspelled_values_per_attribute
 
 # Example usage:
-# Assuming 'data' is your DataFrame
-# misspelling_metrics = detect_misspelling_data_smell(data)
-# print(misspelling_metrics)
+# Assume 'df' is your DataFrame
+# num_misspelled_values, misspelled_values_per_attribute = detect_misspelling_data_smell_metrics(df)
+# print(num_misspelled_values)
+# print(misspelled_values_per_attribute)

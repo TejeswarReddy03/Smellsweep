@@ -105,9 +105,10 @@ export default function MainPage() {
 
         setdummy(response["data"]["metrics"]["outliers"]);
         setdummy2(response["data"]["metrics"]["outliers"]);
-        console.log(response["data"]["metrics"]["unnecessary_char"]);
-
-        navigate('/charts2',{ state: { ok:response["data"]["metrics"]["unnecessary_char"]  }});
+        console.log("hiii");
+        console.log(response["data"]["metrics"]);
+        
+        navigate('/charts_v1',{ state: { ok:response["data"]["metrics"]["ambiguous_value"]  }});
 
 
 

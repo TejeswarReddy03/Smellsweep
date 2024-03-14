@@ -1,33 +1,35 @@
 import pandas as pd
 
-def detect_and_report_missing_data(data):
+def detect_and_report_missing_data_metrics(data):
     # Initialize metrics dictionary to store results
     metrics = {
-        'Number of missing data points': 0,
-        'Percentage of missing data points': 0,
-        'Columns with missing values': [],
-        'Missing value counts per column': {},
-        'Probability of missing values per column': {},
-        'Impact on analysis (qualitative)': "Not assessed"
+        'columns_with_missing': [],
+        'missing_counts_per_column': [],
+        'probability_per_column': []
     }
 
     # Detect missing data points
     missing_values = data.isnull().sum()
     total_missing = missing_values.sum()
-    metrics['Number of missing data points'] = int(total_missing)
-    metrics['Percentage of missing data points'] = (total_missing / data.size) * 100
 
     # Columns with missing values
     columns_with_missing = missing_values[missing_values > 0].index.tolist()
-    metrics['Columns with missing values'] = columns_with_missing
 
     # Missing value counts per column
-    missing_counts_per_column = missing_values[missing_values > 0].astype(int).to_dict()
-    metrics['Missing value counts per column'] = missing_counts_per_column
+    missing_counts_per_column = missing_values[missing_values > 0].astype(int).tolist()
 
     # Probability of missing values per column
     total_rows = len(data)
-    probability_per_column = {col: (missing_counts_per_column[col] / total_rows) * 100 for col in columns_with_missing}
-    metrics['Probability of missing values per column'] = probability_per_column
+    probability_per_column = [(missing_count / total_rows) * 100 for missing_count in missing_counts_per_column]
 
+    # Update metrics dictionary
+    metrics['columns_with_missing'] = columns_with_missing
+    metrics['missing_counts_per_column'] = missing_counts_per_column
+    metrics['probability_per_column'] = probability_per_column
+    
     return metrics
+
+# Example usage:
+# Assume 'df' is your DataFrame
+# metrics = detect_and_report_missing_data_metrics(df)
+# print(metrics)

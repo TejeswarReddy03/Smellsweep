@@ -16,6 +16,15 @@ from datasmells_algorithms.Tejeswar_smells.empty_strings import detect_and_analy
 from datasmells_algorithms.Tejeswar_smells.unnecessary_character import detect_and_analyze_unnecessary_characters
 # from datasmells_algorithms.Tejeswar_smells.inconsistent_unit import detect_and_analyze_units_rule_based
 
+from datasmells_algorithms.Vikram_smells.duplicate_value import detect_and_report_duplicate_data
+from datasmells_algorithms.Vikram_smells.missing_value import detect_and_report_missing_data_metrics
+from datasmells_algorithms.Vikram_smells.extreme_value import extreme_values_metrics
+from datasmells_algorithms.Vikram_smells.mis_spelling import detect_misspelling_data_smell_metrics
+from datasmells_algorithms.Vikram_smells.suspectclass_value import detect_and_report_suspect_class_values_metrics
+from datasmells_algorithms.Vikram_smells.casing_value import detect_and_report_casing_data_smells
+from datasmells_algorithms.Vikram_smells.longdata_value import detect_and_report_long_data_values_metrics
+from datasmells_algorithms.Vikram_smells.ambiguous_value import detect_ambiguous_values
+
 
 
 app = Flask(__name__)
@@ -26,21 +35,29 @@ def process_dataframe(df,csv_file):
         # Call the identify_dummy_values function
         aggregated_metrics = {
             'dummy_values':  identify_dummy_values(df),
-            #'suspect_character_encoding':detect_suspect_encoding(csv_file),
-            # 'date_time_smell':detect_datetime_smell(df),
+            # #'suspect_character_encoding':detect_suspect_encoding(csv_file),
+            # # 'date_time_smell':detect_datetime_smell(df),
             'float_as_string':detect_float_as_string(df),
-            # 'integer_as_float':detect_integer_as_float(df),
-            # 'integer_as_string':detect_integer_as_string(df),
+            # # 'integer_as_float':detect_integer_as_float(df),
+            # # 'integer_as_string':detect_integer_as_string(df),
 
-            'outliers':detect_outliers(df),
-            'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
-            # 'timestamps':detect_timestamp_inconsistency(df,timestamp_format='%m/%d/%Y %H:%M:%S'),
+             'outliers':detect_outliers(df),
+             'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
+            # # 'timestamps':detect_timestamp_inconsistency(df,timestamp_format='%m/%d/%Y %H:%M:%S'),
             
             
             
-            'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
-            # 'incosistent_unit':detect_and_analyze_units_rule_based(df),
+            # 'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
+            # # 'incosistent_unit':detect_and_analyze_units_rule_based(df),
             
+            "duplicate_values":detect_and_report_duplicate_data(df),
+            "missing_value":detect_and_report_missing_data_metrics(df),
+            "extreme_value":extreme_values_metrics(df),
+            "mis_spelling":detect_misspelling_data_smell_metrics(df),
+            "suspect_class":detect_and_report_suspect_class_values_metrics(df),
+            "casing_value":detect_and_report_casing_data_smells(df),
+            "longdata_value":detect_and_report_long_data_values_metrics(df),
+            "ambiguous_value":detect_ambiguous_values(df),
             
 
             # Add metrics from other algorithms here
@@ -51,7 +68,7 @@ def process_dataframe(df,csv_file):
 
         return aggregated_metrics
     except Exception as e:
-        return {'error': str(e)}
+        return {'errorppp': str(e)}
 
 
 @app.route('/upload', methods=['POST'])
@@ -88,7 +105,7 @@ def upload_file():
 
             return jsonify({'metrics': metrics})
         except Exception as e:
-            return jsonify({'error': str(e)})
+            return jsonify({'errorrrrr': str(e)})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
