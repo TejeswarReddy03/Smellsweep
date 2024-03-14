@@ -11,10 +11,11 @@ import "./App.css"
 import MainPage from "./components/DefaultPage/Mainpage";
 import DataSmells from "./components/DefaultPage/datasmells";
 // import IntegerAsStringChart from "./reactGraphs/Chart";
-import Appp from "./reactGraphs/Chart";
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { BrowserRouter ,Route,Routes,Navigate } from 'react-router-dom';
 import MyHistogram from "./reactGraphs/Chart";
+import MyHistogram2 from "./reactGraphs/charts_dummyValues";
+import MyHistogram3 from "./reactGraphs/unnecessary_char_graph";
 // import IntegerAsStringChart from './reactGraphs/Chart';
 
 // @Description: This function returns the key components of the frontend.
@@ -46,6 +47,10 @@ function App() {
         {<Route index element ={<MainPage/>} />}
       {<Route path='/datasmells'  element={< DataSmells />} />}
       {<Route path='/charts'  element={< MyHistogram />} />}
+      {<Route path='/charts2'  element={< MyHistogram2 />} />}
+      {<Route path='/charts3'  element={< MyHistogram3 />} />}
+
+
 
       </Routes>
       </BrowserRouter>
