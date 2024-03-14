@@ -49,4 +49,4 @@ function Charts_empty() {
   )
 }
 
-export default Charts_empty
+export default Charts_empty;

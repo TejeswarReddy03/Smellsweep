@@ -1,20 +1,30 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import h5 from "./../../assets/h5.png";
-import mka from "./../../assets/mka.png";
-import missing from './../../assets/missing.png';
-import duplicate from "./../../assets/Duplicatevalue.png";
-import extreme from "./../../assets/extremevalue.jpeg";
-import misspelling from './../../assets/misspelling.png';
-import suspectclass from './../../assets/suspectclass.png';
-import casing from './../../assets/casing.png';
-import longdata from './../../assets/longdatavalue.png';
+import { useLocation } from 'react-router-dom';
+
+import emptystring from './../../assets/emptystring.jpg'
+import outlier from './../../assets/outlier.jpg';
+import unnecessarychar from './../../assets/unnecessarycharacters.jpg';
+import datetime from './../../assets/datestring.png';
+import intstring from './../../assets/intasstring.png';
+import floatstring from './../../assets/floatasstring.png';
+import intfloat from './../../assets/intasfloat.png';
+import specialchar from './../../assets/specialchar.png';
+import spacingsmell from './../../assets/spacingsmell.png';
+import seperatingsmell from './../../assets/seperatingsmell.png';
+import inconsistent from './../../assets/inconsistent.png';
+import unit from './../../assets/unit.png';
+import mi from './../../assets/mi.png';
 import './styles.css';
 
 const SvgComponent = () => {
+
   const navigate = useNavigate();
-  const circleImagePaths = [longdata, mka, h5, mka, h5, longdata, h5]; // Circle image paths
-  const squareImagePaths = [missing, duplicate, extreme, misspelling, suspectclass, casing]; // Square image paths
+  const { state } = useLocation();
+  const dataa = state.ok;
+  // console.log(passedData,"hiii");
+  const circleImagePaths = [intfloat, specialchar, spacingsmell, seperatingsmell, inconsistent, unit, mi]; // Circle image paths
+  const squareImagePaths = [emptystring, outlier, unnecessarychar, datetime, intstring, floatstring]; // Square image paths
   const [hoveredSquareIndex, setHoveredSquareIndex] = useState(null);
   const [hoveredCircleIndex, setHoveredCircleIndex] = useState(null);
 
@@ -30,11 +40,57 @@ const SvgComponent = () => {
     return `M 400 400 L ${startX} ${startY} A ${radius} ${radius} 0 0 1 ${endX} ${endY} Z`;
   };
 
+  const handleClick = () => {
+    // Navigate to the desired page
+    navigate("/datasmells",{state:{ok:dataa}})
+  };
   const customTranslations = [10, 10, 10, 5, -30, -70, -10];
   const translations = [5, 5, 5, 5, 5, 5];
 
   const handlePieceClick = (index) => {
-    navigate('/');
+    if(index+1==1){
+      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+    }
+    else if(index+1==2){
+      navigate('/charts',{state:{ok:dataa["metrics"]["outliers"][0],ok2:dataa["metrics"]["outliers"][1]}});
+    }
+    else if(index+1==3){
+      navigate('/charts3',{state:{ok:dataa["metrics"]["unnecessary_char"][0],ok2:dataa["metrics"]["unnecessary_char"][1]}});
+    }
+    else if(index+1==4){
+      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+    }
+    else if(index+1==5){
+      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+    }
+    else if(index+1==6){
+      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+    }
+    else if(index+1==7){
+      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+    }
+    else if(index+1==8){
+      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+    }
+    else if(index+1==9){
+      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+    }
+    else if(index+1==10){
+      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+    }
+    else if(index+1==11){
+      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+    }
+    else if(index+1==12){
+      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+    }
+    else if(index+1==13){
+      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+    }
+
+
+
+
     console.log(`Piece ${index + 1} clicked`);
   };
 
@@ -117,9 +173,7 @@ const SvgComponent = () => {
         </svg>
       </div>
       <div style={{ flex: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <Link to="/datasmells"><button style={{ padding: '10px 20px', fontSize: '1.2rem', borderRadius: '5px', backgroundColor: 'lightblue', border: 'none', cursor: 'pointer' }}> {/* Adjusted button size and style */}
-            Smellsweep2/2
-          </button></Link> {/* Button to navigate */}
+      <button onClick={handleClick}>DataSmells2/2</button>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="50 50 750 750" width="100%" height="100%">
           {paths}
           {circleImagePaths.map((_, index) => (
