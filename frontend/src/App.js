@@ -10,6 +10,8 @@ import React from "react";
 import "./App.css"
 import MainPage from "./components/DefaultPage/Mainpage";
 import DataSmells from "./components/DefaultPage/datasmells";
+import DataSmellsImageTemplate from "./components/DsImageTemplate";
+import ErrorInBackend from "./components/error_in_backend";
 // import IntegerAsStringChart from "./reactGraphs/Chart";
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { BrowserRouter ,Route,Routes,Navigate } from 'react-router-dom';
@@ -49,6 +51,8 @@ function App() {
       {<Route path='/charts'  element={< MyHistogram />} />}
       {<Route path='/charts2'  element={< MyHistogram2 />} />}
       {<Route path='/charts3'  element={< MyHistogram3 />} />}
+      {<Route path='/datasmell_img_template'  element={< DataSmellsImageTemplate/>} />}
+      {<Route path='/error_in_backend' element={<ErrorInBackend/>}/>}
 
 
 
