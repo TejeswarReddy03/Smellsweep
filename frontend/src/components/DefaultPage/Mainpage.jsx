@@ -73,13 +73,14 @@ export default function MainPage() {
         // setBargraph_class_imbal(response.data.imbalance.plot);
        
      
-        console.log(response);
+        // console.log(response);
        // const { dataframe, metrics } = response.data;
-        console.log(response["data"]);
+        // console.log(response["data"]);
         setdummy(response["data"]["metrics"]["outliers"]);
         setdummy2(response["data"]["metrics"]["outliers"]);
-        console.log(response["data"]["metrics"]["outliers"][0])
-        navigate('/charts',{ state: { ok:response["data"]["metrics"]["outliers"][0],ok2:response["data"]["metrics"]["outliers"][1] } });
+        console.log(response["data"]["metrics"]["unnecessary_char"]);
+
+        navigate('/charts2',{ state: { ok:response["data"]["metrics"]["unnecessary_char"]  }});
 
 
         setIsLoading(false);
