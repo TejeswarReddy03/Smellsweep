@@ -117,8 +117,8 @@ const SvgComponent = () => {
         </svg>
       </div>
       <div style={{ flex: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <Link to="/datasmells2"><button style={{ padding: '10px 20px', fontSize: '1.2rem', borderRadius: '5px', backgroundColor: 'lightblue', border: 'none', cursor: 'pointer' }}> {/* Adjusted button size and style */}
-            Smellsweep1/2
+        <Link to="/datasmells"><button style={{ padding: '10px 20px', fontSize: '1.2rem', borderRadius: '5px', backgroundColor: 'lightblue', border: 'none', cursor: 'pointer' }}> {/* Adjusted button size and style */}
+            Smellsweep2/2
           </button></Link> {/* Button to navigate */}
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="50 50 750 750" width="100%" height="100%">
           {paths}

@@ -14,7 +14,7 @@ from datasmells_algorithms.SECTION3_SMELLS.float_as_string import detect_float_a
 from datasmells_algorithms.SECTION3_SMELLS.integer_as_float import detect_integer_as_float
 from datasmells_algorithms.SECTION3_SMELLS.integer_as_string import detect_integer_as_string
 
-from datasmells_algorithms.Tejeswar_smells.dummy_value import identify_dummy_values
+#from datasmells_algorithms.Tejeswar_smells.dummy_value import identify_dummy_values
 from datasmells_algorithms.Tejeswar_smells.outliers import detect_outliers
 from datasmells_algorithms.Tejeswar_smells.empty_strings import detect_and_analyze_empty_strings_rule_based
 from datasmells_algorithms.Tejeswar_smells.timestamp import detect_timestamp_inconsistency
@@ -34,7 +34,7 @@ def process_dataframe(df,csv_file):
             'suspect_detection': assess_data_distribution(df),
             'amb_d_t':assess_ambiguous_date_formats(df),
             'conte': detect_contractions(df),
-            'dummy_values':  identify_dummy_values(df),
+             #'dummy_values':  identify_dummy_values(df),
             #'suspect_character_encoding':detect_suspect_encoding(csv_file),
             'date_time_smell':detect_datetime_smell(df),
             'float_as_string':detect_float_as_string(df),

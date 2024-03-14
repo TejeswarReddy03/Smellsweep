@@ -10,6 +10,7 @@ import React from "react";
 import "./App.css"
 import MainPage from "./components/DefaultPage/Mainpage";
 import DataSmells from "./components/DefaultPage/datasmells";
+import DataSmells2 from "./components/DefaultPage/datasmells2";
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { BrowserRouter ,Route,Routes,Navigate } from 'react-router-dom';
 // @Description: This function returns the key components of the frontend.
@@ -21,6 +22,7 @@ function App() {
         <Routes>
         {<Route index element ={<MainPage />} />}
       {<Route path='/datasmells'  element={< DataSmells/>} />}
+      {<Route path='/datasmells2'  element={< DataSmells2/>} />}
       </Routes>
       </BrowserRouter>
       {/* <RegExForm/> */}
