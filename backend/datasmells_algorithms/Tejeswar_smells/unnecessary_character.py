@@ -13,12 +13,14 @@ def detect_and_analyze_unnecessary_characters(dataframe):
 
 def detect_and_clean_unnecessary_characters(dataframe):
     unnecessary_characters = defaultdict(int)
-
+    keyss=[]
+    vals=[]
     # Create a copy of the original DataFrame for cleaning
     cleaned_dataframe = dataframe.copy()
 
     # Iterate through each cell in the DataFrame
     for col in dataframe.columns:
+        
         for index, value in dataframe[col].items():
             if isinstance(value, str):
                 # Detect unnecessary characters (non-alphanumeric and non-whitespace)
@@ -28,12 +30,19 @@ def detect_and_clean_unnecessary_characters(dataframe):
                 if detected_chars:
                     for char in detected_chars:
                         unnecessary_characters[char] += 1
-
+                    for char in detected_chars:
+                        keyss.append(char)
+                        vals.append(unnecessary_characters[char])
                     # Remove unnecessary characters from the copy of the DataFrame
                     cleaned_value = ''.join(char for char in value if char in string.ascii_letters + string.digits + string.whitespace)
                     cleaned_dataframe.at[index, col] = cleaned_value
     plot_unnecessary_distribution(unnecessary_characters)
-    return unnecessary_characters
+    return keyss,vals
+
+
+
+
+
 
 import matplotlib
 matplotlib.use('agg')

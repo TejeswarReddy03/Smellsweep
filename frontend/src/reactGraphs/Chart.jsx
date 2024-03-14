@@ -46,10 +46,8 @@ function MyHistogram4() {
         <span className={styles.dropdownIcon}>{activeIndex === 0 ? '▲' : '▼'}</span>
       </div>
       <div className={`${styles.accordionContent} ${activeIndex === 0 ? styles.activeContent : styles.inactiveContent}`}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-        deserunt mollit anim id est laborum.
+      This data smell refers to the presence of data points that fall significantly outside the expected range of the majority of data (i.e., outliers). This can skew the overall distribution and distort the representation of the data.
+
       </div>
     </div>
     <div className={styles.accordionItem}>
@@ -61,16 +59,12 @@ function MyHistogram4() {
         <span className={styles.dropdownIcon}>{activeIndex === 1 ? '▲' : '▼'}</span>
       </div>
       <div className={`${styles.accordionContent} ${activeIndex === 1 ? styles.activeContent : styles.inactiveContent}`}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-        deserunt mollit anim id est laborum.
+      Impact: Outliers can significantly impact the results of statistical analysis, leading to misleading conclusions. They can also mask underlying patterns in the data.
+
       </div>
     </div>
   </div>
-</div>
-
-
+</div >
   </>
   );
 }

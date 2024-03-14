@@ -1,23 +1,34 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import h5 from "./../../assets/h5.png";
-import mka from "./../../assets/mka.png";
-import missing from './../../assets/missing.png';
+import { useLocation } from 'react-router-dom';
+
+import './styles.css';
+import missing from './../../assets/missingvalue.png';
 import duplicate from "./../../assets/Duplicatevalue.png";
-import extreme from "./../../assets/extremevalue.jpeg";
+import extreme from "./../../assets/extremevalue.jpg";
 import misspelling from './../../assets/misspelling.png';
 import suspectclass from './../../assets/suspectclass.png';
 import casing from './../../assets/casing.png';
-import longdata from './../../assets/longdatavalue.png';
-import './styles.css';
+import longdata from './../../assets/long.png';
+import ambiguous from './../../assets/ambiguous.png';
+import suspectsign from './../../assets/suspect.png';
+import suspectd from './../../assets/suspectd.png';
+import ambiguousdatetime from './../../assets/ambiguousdatetime.png';
+import contracting from './../../assets/contracting.png';
+import dummy from './../../assets/dummyvalue.png';
 
 
 import { useLocation } from 'react-router-dom';
 
 const SvgComponent = () => {
-  console.log("in the datasmell")
+
+  const { state } = useLocation();
+  const dummy1 = state.ok;
+
+  console.log(dummy1);
+
   const navigate = useNavigate();
-  const circleImagePaths = [longdata, mka, h5, mka, h5, longdata, h5]; // Circle image paths
+  const circleImagePaths = [longdata, ambiguous, suspectsign, suspectd, ambiguousdatetime, contracting, dummy]; // Circle image paths
   const squareImagePaths = [missing, duplicate, extreme, misspelling, suspectclass, casing]; // Square image paths
   const [hoveredSquareIndex, setHoveredSquareIndex] = useState(null);
   const [hoveredCircleIndex, setHoveredCircleIndex] = useState(null);
@@ -39,9 +50,55 @@ const SvgComponent = () => {
   const translations = [5, 5, 5, 5, 5, 5];
 
   const handlePieceClick = (index) => {
-    navigate('/');
+    
+    if(index+1==13){
+      navigate('/charts2',{state:{ok:dummy1["metrics"]["dummy_values"]["Percentage of dummy values per attribute"]}});
+    }
+   else if(index+1==9){
+    navigate('/sus_sign_charts',{state:{ok:dummy1["metrics"]["suspect_sign"]["X_values"],ok2:dummy1["metrics"]["suspect_sign"]["Y_values"]}});
+    }
+    else if(index+1==10){
+      navigate('/suspect_detection_charts',{state:{ok:dummy1["metrics"]["suspect_detection"]["X_values"],ok2:dummy1["metrics"]["suspect_detection"]["Y_values"]}});
+    }
+    else if(index+1==11){
+      navigate('/charts2',{state:{ok:dummy1["metrics"]["dummy_values"]["Percentage of dummy values per attribute"]}});
+    }
+    else if(index+1==12){
+      navigate('/contracting_charts',{state:{ok:dummy1["metrics"]["conte"]["X_values"],ok2:dummy1["metrics"]["conte"]["Y_values"]}});
+    }
+    else if(index+1==13){
+
+    }
+    else if(index+1==13){
+
+    }
+    else if(index+1==13){
+
+    }
+    else if(index+1==13){
+
+    }
+    else if(index+1==13){
+
+    }
+    else if(index+1==13){
+
+    }
+    else if(index+1==13){
+
+    }
+    else if(index+1==13){
+
+    }
+
     console.log(`Piece ${index + 1} clicked`);
   };
+  const handleClickss = () => {
+    // Navigate to the desired page
+   navigate("/datasmells2",{ state: { ok:dummy1 }}
+   );
+  };
+
 
   const patterns = circleImagePaths.map((imagePath, index) => (
     <pattern
@@ -129,9 +186,7 @@ const SvgComponent = () => {
         </svg>
       </div>
       <div style={{ flex: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <Link to="/datasmells2"><button style={{ padding: '10px 20px', fontSize: '1.2rem', borderRadius: '5px', backgroundColor: 'lightblue', border: 'none', cursor: 'pointer' }}> {/* Adjusted button size and style */}
-            Smellsweep1/2
-          </button></Link> {/* Button to navigate */}
+      <button onClick={handleClickss}>DataSmells1/1</button>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="50 50 750 750" width="100%" height="100%">
           {paths}
           {circleImagePaths.map((_, index) => (

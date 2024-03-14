@@ -100,6 +100,11 @@ console.log("hi");
         // console.log(response["data"]);
         setdummy(response["data"]["metrics"]["outliers"]);
         setdummy2(response["data"]["metrics"]["outliers"]);
+        console.log(response["data"]["metrics"]["unnecessary_char"]);
+
+        // navigate('/charts4',{ state: { ok:response["data"]["metrics"]["empty_strings"] }});
+        console.log(response["data"])
+        navigate("/datasmells",{ state: { ok:response["data"] }});
         // console.log("hiiii",response["data"]["metrics"]["suspect_sign"]);
 
         //  navigate('/charts2',{ state: { ok:response["data"]["metrics"]["unnecessary_char"]  }});

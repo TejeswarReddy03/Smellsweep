@@ -7,6 +7,7 @@ function MyHistogram2() {
   const { state } = useLocation();
 //   console.log(state.ok);
   const dummy1 = state.ok;
+  console.log(dummy1);
   const data = Object.entries(dummy1).map(([name, count]) => ({ name, count }));
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -40,10 +41,8 @@ function MyHistogram2() {
         <span className={styles.dropdownIcon}>{activeIndex === 0 ? '▲' : '▼'}</span>
       </div>
       <div className={`${styles.accordionContent} ${activeIndex === 0 ? styles.activeContent : styles.inactiveContent}`}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-        deserunt mollit anim id est laborum.
+      Placeholder values used to represent missing data without proper indication. These values can mislead analysis if not identified and handled appropriately.
+
       </div>
     </div>
     <div className={styles.accordionItem}>
@@ -55,10 +54,7 @@ function MyHistogram2() {
         <span className={styles.dropdownIcon}>{activeIndex === 1 ? '▲' : '▼'}</span>
       </div>
       <div className={`${styles.accordionContent} ${activeIndex === 1 ? styles.activeContent : styles.inactiveContent}`}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-        deserunt mollit anim id est laborum.
+      In some cases, dummy values may be mistaken for actual data, leading to misinterpretation of the dataset. For example, if dummy values are not clearly documented or differentiated from actual data values, they may inadvertently influence analysis results or decision-making processes.
       </div>
     </div>
   </div>
