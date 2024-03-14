@@ -6,6 +6,7 @@ function MyHistogram2() {
   const { state } = useLocation();
 //   console.log(state.ok);
   const dummy1 = state.ok;
+  console.log(dummy1);
   const data = Object.entries(dummy1).map(([name, count]) => ({ name, count }));
 
 

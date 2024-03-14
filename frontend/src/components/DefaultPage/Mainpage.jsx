@@ -78,9 +78,12 @@ export default function MainPage() {
         // console.log(response["data"]);
         setdummy(response["data"]["metrics"]["outliers"]);
         setdummy2(response["data"]["metrics"]["outliers"]);
-        console.log(response["data"]["metrics"]["unnecessary_char"]);
-
-        navigate('/charts2',{ state: { ok:response["data"]["metrics"]["unnecessary_char"]  }});
+        console.log("hiiiii");
+        console.log(response["data"]);
+        console.log(response["data"]["metrics"]["minconsistency"]);
+        navigate('/siva6',{ state: { ok:response["data"]["metrics"]["unitinconsistency"]  }});
+        
+        // navigate()
 
 
         setIsLoading(false);

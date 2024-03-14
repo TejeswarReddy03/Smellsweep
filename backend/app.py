@@ -16,8 +16,12 @@ from datasmells_algorithms.Tejeswar_smells.empty_strings import detect_and_analy
 from datasmells_algorithms.Tejeswar_smells.unnecessary_character import detect_and_analyze_unnecessary_characters
 # from datasmells_algorithms.Tejeswar_smells.inconsistent_unit import detect_and_analyze_units_rule_based
 
-
-
+from datasmells_algorithms.Sivasai_smells.inconsistent import identify_data_type_inconsistency
+from datasmells_algorithms.Sivasai_smells.missing_value_inconsistency import identify_missing_value_inconsistency
+from datasmells_algorithms.Sivasai_smells.seperatingsmell import identify_separating_smell
+from datasmells_algorithms.Sivasai_smells.spacingsmells import identify_spacing_smell
+from datasmells_algorithms.Sivasai_smells.specialcharactersmell import identify_special_characters_inconsistency
+from datasmells_algorithms.Sivasai_smells.unitinconsistency import identify_unit_inconsistency
 app = Flask(__name__)
 CORS(app)
 
@@ -40,9 +44,12 @@ def process_dataframe(df,csv_file):
             
             'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
             # 'incosistent_unit':detect_and_analyze_units_rule_based(df),
-            
-            
-
+            'inconsistent':identify_data_type_inconsistency(df),
+            'minconsistency':identify_missing_value_inconsistency(df),
+            'seperatingsmell':identify_separating_smell(df),
+            'spacingsmell':identify_spacing_smell(df),
+            'specialchar':identify_special_characters_inconsistency(df),
+            'unitinconsistency':identify_unit_inconsistency(df),
             # Add metrics from other algorithms here
         }
 
@@ -85,7 +92,7 @@ def upload_file():
 
             # Optionally, you can delete the temporary file
             os.remove(file_path)
-
+            print(metrics)
             return jsonify({'metrics': metrics})
         except Exception as e:
             return jsonify({'error': str(e)})

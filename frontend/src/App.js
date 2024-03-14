@@ -16,6 +16,12 @@ import { BrowserRouter ,Route,Routes,Navigate } from 'react-router-dom';
 import MyHistogram from "./reactGraphs/Chart";
 import MyHistogram2 from "./reactGraphs/charts_dummyValues";
 import MyHistogram3 from "./reactGraphs/unnecessary_char_graph";
+import SivaHistogram1 from "./reactGraphs/sivaone";
+import SivaHistogram2 from "./reactGraphs/sivatwo";
+import SivaHistogram3 from "./reactGraphs/sivathree";
+import SivaHistogram4 from "./reactGraphs/sivafour";
+import SivaHistogram5 from "./reactGraphs/sivafive";
+import SivaHistogram6 from "./reactGraphs/sivasix";
 // import IntegerAsStringChart from './reactGraphs/Chart';
 
 // @Description: This function returns the key components of the frontend.
@@ -49,9 +55,12 @@ function App() {
       {<Route path='/charts'  element={< MyHistogram />} />}
       {<Route path='/charts2'  element={< MyHistogram2 />} />}
       {<Route path='/charts3'  element={< MyHistogram3 />} />}
-
-
-
+      {<Route path='/siva1' element={<SivaHistogram1/>}/>}
+      {<Route path='/siva2' element={<SivaHistogram2/>}/>}
+      {<Route path='/siva3' element={<SivaHistogram3/>}/>}
+      {<Route path='/siva4' element={<SivaHistogram4/>}/>}
+      {<Route path='/siva5' element={<SivaHistogram5/>}/>}
+      {<Route path='/siva6' element={<SivaHistogram6/>}/>}
       </Routes>
       </BrowserRouter>
       {/* <RegExForm/> */}
