@@ -1,5 +1,6 @@
 import Excel from "../ExcelSheet/Excel";
 import React, { useState } from "react";
+import { useNavigate,useLocation } from 'react-router-dom';
 import Papa from "papaparse";
 import axios from "axios";
 import "./Mainpage.css";
@@ -8,10 +9,17 @@ import { Button } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import Codebox from "../Codebox";
 import Table from "./Table";
+
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+
+
+// import MyBarChart from "../../reactGraphs/MyBarChart.jsx";
+
+
 const language = "python";
 
 export default function MainPage() {
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [jsonData, setJsonData] = useState(null);
   const [analysisData, setAnalysisData] = useState(null);
@@ -27,7 +35,8 @@ export default function MainPage() {
   const [boxplot, setBoxplot] = useState(null);
   const [click, setClick] = useState(false);
   const [fileChosen, setFileChosen] = useState(false);
-  const [dummy_value_metrics,setdummy]=useState(false);
+
+  
   const [duplicate_value_metrics,setduplicate]=useState(false);
   const [missing_value_metrics,setmissing]=useState(false);
   const [extreme_value_metrics,setextreme]=useState(false);
@@ -36,6 +45,12 @@ export default function MainPage() {
   const [casing_value_metrics,setcasing]=useState(false);
   const [longdata_value_metrics,setlong]=useState(false);
   const [ambiguous_value_metrics,setambiguous]=useState(false);
+
+  const [dummy_value_metrics,setdummy]=useState(0);
+  const [dummy_value_metrics2,setdummy2]=useState(0);
+
+
+
   
 
 
@@ -72,9 +87,12 @@ export default function MainPage() {
         // setBoxplot(response.data.outliers.plot);
         // setBargraph_binning_cat(response.data.binning_cat.plot);
         // setBargraph_class_imbal(response.data.imbalance.plot);
-        console.log("hiii");
+       
+     
+        console.log(response);
        // const { dataframe, metrics } = response.data;
         console.log(response["data"]);
+
         setdummy(response["data"]["metrics"]["dummy_values"]);
         setduplicate(response["data"]["metrics"]["duplicate_values"]);
         setmissing(response["data"]["metrics"]["missing_value"]);
@@ -84,6 +102,14 @@ export default function MainPage() {
         setcasing(response["data"]["metrics"],["casing_value"]);
         setlong(response["data"]["metrics"],["longdata_value"]);
         setambiguous(response["data"]["metrics"],["ambiguous_value"]);
+
+        setdummy(response["data"]["metrics"]["outliers"]);
+        setdummy2(response["data"]["metrics"]["outliers"]);
+        console.log(response["data"]["metrics"]["outliers"][0])
+        navigate('/charts',{ state: { ok:response["data"]["metrics"]["outliers"][0],ok2:response["data"]["metrics"]["outliers"][1] } });
+
+
+
         setIsLoading(false);
       })
       .catch((error) => {
@@ -105,6 +131,7 @@ export default function MainPage() {
 
   return (
     <div className="App">
+<div className="inside"> 
       {isLoading && (
         <div className="loading-overlay">
           <div className="spinner"></div>
@@ -129,14 +156,8 @@ export default function MainPage() {
           size="lg"
           onClick={handleUpload}
         >
-
+ 
           Analysis
-          {dummy_value_metrics && (
-        <div className="dummy-value-metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(dummy_value_metrics, null, 2)}</pre>
-        </div>
-      )}
 
           {duplicate_value_metrics && (
         <div className="duplicate-value-metrics-container">
@@ -195,6 +216,8 @@ export default function MainPage() {
       )}
 
         </Button>
+        
+
       </div>
       {fileChosen && jsonData && <Excel myjson={jsonData} />}
       {analysisData && (
@@ -203,6 +226,9 @@ export default function MainPage() {
          
         </div>
       )}
+
+</div>
+
     </div>
   );
 }

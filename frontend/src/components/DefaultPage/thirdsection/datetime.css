@@ -1,0 +1,14 @@
+.row-counts-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.row-counts-table th, .row-counts-table td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.row-counts-table th {
+    background-color: #f2f2f2;
+}

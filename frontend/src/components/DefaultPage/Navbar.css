@@ -1,0 +1,29 @@
+/* Reset some default styles for better cross-browser consistency */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Navbar styles */
+  .navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+  }
+  
+  .navbar a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  /* Style the Home link */
+  .navbar a.home {
+    margin-right: 20px;
+  }
+  
+  /* Add hover effect to the Home link */
+  .navbar a.home:hover {
+    text-decoration: underline;
+  }
+  
