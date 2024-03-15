@@ -7,6 +7,15 @@ from datasmells_algorithms.suspect_detection import assess_data_distribution
 from datasmells_algorithms.amb_date_time import assess_ambiguous_date_formats
 from datasmells_algorithms.contracting_datasmell import detect_contractions
 
+from datasmells_algorithms.Vikram_smells.duplicate_value import detect_and_report_duplicate_data
+from datasmells_algorithms.Vikram_smells.missing_value import detect_and_report_missing_data_metrics
+from datasmells_algorithms.Vikram_smells.extreme_value import extreme_values_metrics
+from datasmells_algorithms.Vikram_smells.mis_spelling import detect_misspelling_data_smell_metrics
+from datasmells_algorithms.Vikram_smells.suspectclass_value import detect_and_report_suspect_class_values_metrics
+from datasmells_algorithms.Vikram_smells.casing_value import detect_and_report_casing_data_smells
+from datasmells_algorithms.Vikram_smells.longdata_value import detect_and_report_long_data_values_metrics
+from datasmells_algorithms.Vikram_smells.ambiguous_value import detect_ambiguous_values
+
 
 from datasmells_algorithms.SECTION3_SMELLS.suspect_character_encoding import detect_suspect_encoding
 from datasmells_algorithms.SECTION3_SMELLS.date_time import detect_datetime_smell
@@ -35,39 +44,57 @@ def process_dataframe(df,csv_file):
         aggregated_metrics = {
             
             
-            'suspect_sign': identify_suspect_sign(df),
-            'suspect_detection': assess_data_distribution(df),
-            # 'amb_d_t':assess_ambiguous_date_formats(df),
-            'conte': detect_contractions(df),
-             'dummy_values':  identify_dummy_values(df),
+            # 'suspect_sign': identify_suspect_sign(df),
+            # 'suspect_detection': assess_data_distribution(df),
+            # # 'amb_d_t':assess_ambiguous_date_formats(df),
+            # 'conte': detect_contractions(df),
+            #  'dummy_values':  identify_dummy_values(df),
              
              
              
-            'suspect_character_encoding':detect_suspect_encoding(csv_file),
-            'date_time_smell':detect_datetime_smell(df),
+            # 'suspect_character_encoding':detect_suspect_encoding(csv_file),
+            # 'date_time_smell':detect_datetime_smell(df),
             
             
             
-            'float_as_string':detect_float_as_string(df),
+            # 'float_as_string':detect_float_as_string(df),
             
             
-            'integer_as_float':detect_integer_as_float(df),
-            'integer_as_string':detect_integer_as_string(df),
+            # 'integer_as_float':detect_integer_as_float(df),
+            # 'integer_as_string':detect_integer_as_string(df),
 
-            'outliers':detect_outliers(df),
-            'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
-            'timestamps':detect_timestamp_inconsistency(df,timestamp_format='%m/%d/%Y %H:%M:%S'),
+            # 'outliers':detect_outliers(df),
+            # 'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
+            
+            
+            'v1':detect_and_report_duplicate_data(df),
+            'v2':detect_and_report_missing_data_metrics(df),
+            'v3':extreme_values_metrics(df),
+            'v4':detect_misspelling_data_smell_metrics(df),
+            'v5':detect_and_report_suspect_class_values_metrics(df),
+            'v6':detect_and_report_casing_data_smells(df),
+            'v7':detect_and_report_long_data_values_metrics(df),
+            'v8':detect_ambiguous_values(df),
             
             
             
-            'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
-            # 'incosistent_unit':detect_and_analyze_units_rule_based(df),
-            'inconsistent':identify_data_type_inconsistency(df),
-            'minconsistency':identify_missing_value_inconsistency(df),
-            'seperatingsmell':identify_separating_smell(df),
-            'spacingsmell':identify_spacing_smell(df),
-            'specialchar':identify_special_characters_inconsistency(df),
-            'unitinconsistency':identify_unit_inconsistency(df),
+            
+            
+            
+            
+            
+            
+            
+            # 'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
+            ###### 'incosistent_unit':detect_and_analyze_units_rule_based(df),
+            # 'inconsistent':identify_data_type_inconsistency(df),
+            # 'minconsistency':identify_missing_value_inconsistency(df),
+            # 'seperatingsmell':identify_separating_smell(df),
+            # 'spacingsmell':identify_spacing_smell(df),
+            # 'specialchar':identify_special_characters_inconsistency(df),
+            # 'unitinconsistency':identify_unit_inconsistency(df),
+            
+            
             # Add metrics from other algorithms here
         }
         

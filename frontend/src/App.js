@@ -31,6 +31,19 @@ import MyHistogram5 from "./reactGraphs/suspect_detection_chart";
 import MyHistogram6 from "./reactGraphs/contracting_charts";
 import Charts_empty from "./reactGraphs/Charts_empty";
 
+import AmbiguousValuesComponent from "./reactGraphs/ambiguous_graph";
+import CasingInconsistenciesGraph from "./reactGraphs/casing_graph";
+import DuplicateDataGraph from "./reactGraphs/duplicate_value_graph";
+import ExtremeValuesGraph from "./reactGraphs/extreme_value_graph";
+import LongDataValuesGraph from "./reactGraphs/longdata_value_graph";
+import MisspelledDataGraph from "./reactGraphs/mis_spell_graph";
+import SuspectClassValuesGraph from "./reactGraphs/suspectclass_value_graph";
+import MissingDataGraph from "./reactGraphs/missing_value_graph";
+
+
+
+
+
 import IntDataSmellsImageTemplate from "./components/DefaultPage/third_last/DsImageTemplate";
 import FloatDataSmellsImageTemplate from "./components/DefaultPage/third_last/DsImageTemplate copy";
 import IntSDataSmellsImageTemplate from "./components/DefaultPage/third_last/DsImageTemplate copy 2";
@@ -75,7 +88,15 @@ function App() {
       {<Route path='/manoj1' element={<DateDataSmellsImageTemplate/>}/>}
       {<Route path='/manoj3' element={<FloatDataSmellsImageTemplate/>}/>}
 
-
+      {<Route path='/charts_v1'  element={< AmbiguousValuesComponent />} />}
+      {<Route path='/charts_v2'  element={< CasingInconsistenciesGraph />} />}
+      {<Route path='/charts_v3'  element={< DuplicateDataGraph />} />}
+      {<Route path='/charts_v4'  element={< ExtremeValuesGraph />} />}
+      {<Route path='/charts_v5'  element={< LongDataValuesGraph />} />}
+      {<Route path='/charts_v6'  element={< MisspelledDataGraph />} />}
+      {<Route path='/charts_v7'  element={< MissingDataGraph />} />}
+      {<Route path='/charts_v8'  element={< SuspectClassValuesGraph />} />}
+      
 
 
 

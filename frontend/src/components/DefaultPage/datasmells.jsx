@@ -45,8 +45,29 @@ const SvgComponent = () => {
 
   const handlePieceClick = (index) => {
     
-    if(index+1==13){
-      navigate('/charts2',{state:{ok:dummy1["metrics"]["dummy_values"]["Percentage of dummy values per attribute"]}});
+    if(index+1==1){
+      navigate('/charts_v7',{state:{ok:dummy1["metrics"]["v2"]}});
+    }
+    else if(index+1==2){
+      navigate('/charts_v3',{state:{ok:dummy1["metrics"]["v1"]}});
+    }
+    else if(index+1==3){
+      navigate('/charts_v4',{state:{ok:dummy1["metrics"]["v3"]}});
+    }
+    else if(index+1==4){
+      navigate('/charts_v6',{state:{ok:dummy1["metrics"]["v4"]}});
+    }
+    else if(index+1==5){
+      navigate('/charts_v8',{state:{ok:dummy1["metrics"]["v5"]}});
+    }
+    else if(index+1==6){
+      navigate('/charts_v2',{state:{ok:dummy1["metrics"]["v6"]}});
+    }
+    else if(index+1==7){
+      navigate('/charts_v5',{state:{ok:dummy1["metrics"]["v7"]}});
+    }
+    else if(index+1==8){
+      navigate('/charts_v1',{state:{ok:dummy1["metrics"]["v8"]}});
     }
    else if(index+1==9){
     navigate('/sus_sign_charts',{state:{ok:dummy1["metrics"]["suspect_sign"]["X_values"],ok2:dummy1["metrics"]["suspect_sign"]["Y_values"]}});
