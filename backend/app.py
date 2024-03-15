@@ -44,27 +44,27 @@ def process_dataframe(df,csv_file):
         aggregated_metrics = {
             
             
-            # 'suspect_sign': identify_suspect_sign(df),
-            # 'suspect_detection': assess_data_distribution(df),
-            # # 'amb_d_t':assess_ambiguous_date_formats(df),
-            # 'conte': detect_contractions(df),
-            #  'dummy_values':  identify_dummy_values(df),
+            'suspect_sign': identify_suspect_sign(df),
+            'suspect_detection': assess_data_distribution(df),
+            'amb_d_t':assess_ambiguous_date_formats(df),
+            'conte': detect_contractions(df),
+             'dummy_values':  identify_dummy_values(df),
              
              
              
-            # 'suspect_character_encoding':detect_suspect_encoding(csv_file),
-            # 'date_time_smell':detect_datetime_smell(df),
+            'suspect_character_encoding':detect_suspect_encoding(csv_file),
+            'date_time_smell':detect_datetime_smell(df),
             
             
             
-            # 'float_as_string':detect_float_as_string(df),
+            'float_as_string':detect_float_as_string(df),
             
             
-            # 'integer_as_float':detect_integer_as_float(df),
-            # 'integer_as_string':detect_integer_as_string(df),
+            'integer_as_float':detect_integer_as_float(df),
+            'integer_as_string':detect_integer_as_string(df),
 
-            # 'outliers':detect_outliers(df),
-            # 'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
+            'outliers':detect_outliers(df),
+            'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
             
             
             'v1':detect_and_report_duplicate_data(df),
@@ -85,14 +85,14 @@ def process_dataframe(df,csv_file):
             
             
             
-            # 'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
+            'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
             ###### 'incosistent_unit':detect_and_analyze_units_rule_based(df),
-            # 'inconsistent':identify_data_type_inconsistency(df),
-            # 'minconsistency':identify_missing_value_inconsistency(df),
-            # 'seperatingsmell':identify_separating_smell(df),
-            # 'spacingsmell':identify_spacing_smell(df),
-            # 'specialchar':identify_special_characters_inconsistency(df),
-            # 'unitinconsistency':identify_unit_inconsistency(df),
+            'inconsistent':identify_data_type_inconsistency(df),
+            'minconsistency':identify_missing_value_inconsistency(df),
+            'seperatingsmell':identify_separating_smell(df),
+            'spacingsmell':identify_spacing_smell(df),
+            'specialchar':identify_special_characters_inconsistency(df),
+            'unitinconsistency':identify_unit_inconsistency(df),
             
             
             # Add metrics from other algorithms here
