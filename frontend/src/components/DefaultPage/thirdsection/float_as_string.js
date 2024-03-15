@@ -2,15 +2,21 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 const FloatAsStringChart = ({ obj }) => {
-  // Transform object into array of objects with column and percentage properties
-  const chartData = Object.entries(obj.float_as_string).map(([column, percentage]) => ({
-    column,
-    percentage
-  }));
+  let chartData = []; // Initialize chartData to an empty array
+  console.log("in float as string file")
+  console.log(obj)
+
+  if (obj && Object.keys(obj.float_as_string).length > 0) { // Check if obj and obj.float_as_string are not empty
+    // Transform object into array of objects with column and percentage properties
+    chartData = Object.entries(obj.float_as_string).map(([column, percentage]) => ({
+      column,
+      percentage
+    }));
+  }
 
   return (
     <div>
-      {obj && obj.status ? (
+      {obj && Object.keys(obj.float_as_string).length > 0 ? ( // Additional check for obj to handle empty object case
         <div>
           <h2>Columns Containing Floats Stored as Strings</h2>
           <BarChart width={800} height={400} data={chartData}>

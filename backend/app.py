@@ -35,28 +35,28 @@ def process_dataframe(df,csv_file):
         aggregated_metrics = {
             
             
-            # 'suspect_sign': identify_suspect_sign(df),
-            # 'suspect_detection': assess_data_distribution(df),
-            # # 'amb_d_t':assess_ambiguous_date_formats(df),
-            # 'conte': detect_contractions(df),
-            #  'dummy_values':  identify_dummy_values(df),
+            'suspect_sign': identify_suspect_sign(df),
+            'suspect_detection': assess_data_distribution(df),
+            # 'amb_d_t':assess_ambiguous_date_formats(df),
+            'conte': detect_contractions(df),
+             'dummy_values':  identify_dummy_values(df),
              
              
              
-            #'suspect_character_encoding':detect_suspect_encoding(csv_file),
-            # 'date_time_smell':detect_datetime_smell(df),
+            'suspect_character_encoding':detect_suspect_encoding(csv_file),
+            'date_time_smell':detect_datetime_smell(df),
             
             
             
-            # 'float_as_string':detect_float_as_string(df),
+            'float_as_string':detect_float_as_string(df),
             
             
-            # 'integer_as_float':detect_integer_as_float(df),
-            # 'integer_as_string':detect_integer_as_string(df),
+            'integer_as_float':detect_integer_as_float(df),
+            'integer_as_string':detect_integer_as_string(df),
 
             'outliers':detect_outliers(df),
-            # 'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
-            # 'timestamps':detect_timestamp_inconsistency(df,timestamp_format='%m/%d/%Y %H:%M:%S'),
+            'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
+            'timestamps':detect_timestamp_inconsistency(df,timestamp_format='%m/%d/%Y %H:%M:%S'),
             
             
             

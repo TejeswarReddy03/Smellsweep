@@ -80,20 +80,20 @@ export default function MainPage() {
         // console.log(response);
        // const { dataframe, metrics } = response.data;
         //console.log(response["data"]);
-        console.log(response["data"]);
-        setsuspect(response["data"]["metrics"]["suspect_sign"]);
-        setsuspectt(response["data"]["metrics"]["suspect_detection"]);
-        setdatetimee(response["data"]["metrics"]["amb_d_t"]);
-        setcontractions(response["data"]["metrics"]["conte"]);
-        console.log(response["data"]);
-        // setdummy(response["data"]["metrics"]["outliers"]);
+         console.log(response["data"]);
+        // setsuspect(response["data"]["metrics"]["suspect_sign"]);
+        // setsuspectt(response["data"]["metrics"]["suspect_detection"]);
+        // setdatetimee(response["data"]["metrics"]["amb_d_t"]);
+        // setcontractions(response["data"]["metrics"]["conte"]);
         // console.log(response["data"]);
-        setdummy(response["data"]["metrics"]["outliers"]);
-        setdummy2(response["data"]["metrics"]["outliers"]);
-        console.log(response["data"]["metrics"]["unnecessary_char"]);
+        // // setdummy(response["data"]["metrics"]["outliers"]);
+        // // console.log(response["data"]);
+        // setdummy(response["data"]["metrics"]["outliers"]);
+        // setdummy2(response["data"]["metrics"]["outliers"]);
+        // console.log(response["data"]["metrics"]["unnecessary_char"]);
 
-        // navigate('/charts4',{ state: { ok:response["data"]["metrics"]["empty_strings"] }});
-        console.log(response["data"])
+        // // navigate('/charts4',{ state: { ok:response["data"]["metrics"]["empty_strings"] }});
+        // console.log(response["data"])
         navigate("/datasmells",{ state: { ok:response["data"] }});
         // console.log("hiiii",response["data"]["metrics"]["suspect_sign"]);
 

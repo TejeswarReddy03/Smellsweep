@@ -49,7 +49,7 @@ const SvgComponent = () => {
 
   const handlePieceClick = (index) => {
     if(index+1==1){
-      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+      navigate('/charts1',{state:{ok:dataa["metrics"]["empty_strings"]}});
     }
     else if(index+1==2){
       navigate('/charts',{state:{ok:dataa["metrics"]["outliers"][0],ok2:dataa["metrics"]["outliers"][1]}});
@@ -58,34 +58,49 @@ const SvgComponent = () => {
       navigate('/charts3',{state:{ok:dataa["metrics"]["unnecessary_char"][0],ok2:dataa["metrics"]["unnecessary_char"][1]}});
     }
     else if(index+1==4){
-      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+      const metricsdatetimesmell = dataa.metrics.date_time_smell;
+      navigate('/manoj1', { state: { ok: metricsdatetimesmell } });
+      // navigate('/charts4',{state:{ok:dataa["metrics"]["date_time_smell"]}});
     }
     else if(index+1==5){
-      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+      const metricintasstring=dataa.metrics.integer_as_string;
+      navigate('/manoj2', { state: { ok: metricintasstring } });
+      
+      
+      // navigate('/charts4',{state:{ok:dataa["metrics"]["integer_as_string"]}});
     }
     else if(index+1==6){
-      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+      const metricfloatasstring=dataa.metrics.float_as_string;
+      navigate('/manoj3', { state: { ok: metricfloatasstring } });
+
+      // navigate('/charts5',{state:{ok:dataa["metrics"]["float_as_string"]}});
     }
     else if(index+1==7){
-      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+      console.log("in datasmells2");
+      console.log(dataa.metrics);
+      console.log(dataa.metrics.integer_as_float)
+      const metricintasfloat=dataa.metrics.integer_as_float;
+      navigate('/manoj4', { state: { ok: dataa.metrics.integer_as_float } });
+
+      // navigate('/charts7',{state:{ok:dataa["metrics"]["integer_as_float"]}});
     }
     else if(index+1==8){
-      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+      navigate('/siva5',{state:{ok:dataa["metrics"]["specialchar"]}});
     }
     else if(index+1==9){
-      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+      navigate('/siva4',{state:{ok:dataa["metrics"]["spacingsmell"]}});
     }
     else if(index+1==10){
-      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+      navigate('/siva3',{state:{ok:dataa["metrics"]["seperatingsmell"]}});
     }
     else if(index+1==11){
-      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+      navigate('/siva1',{state:{ok:dataa["metrics"]["inconsistent"]}});
     }
     else if(index+1==12){
-      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+      navigate('/siva6',{state:{ok:dataa["metrics"]["unitinconsistency"]}});
     }
     else if(index+1==13){
-      navigate('/charts4',{state:{ok:dataa["metrics"]["empty_strings"]}});
+      navigate('/siva2',{state:{ok:dataa["metrics"]["minconsistency"]}});
     }
 
 

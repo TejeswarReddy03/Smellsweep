@@ -11,7 +11,7 @@ import "./App.css"
 import MainPage from "./components/DefaultPage/Mainpage";
 import DataSmells from "./components/DefaultPage/datasmells";
 import DataSmells2 from "./components/DefaultPage/datasmells2";
-import DataSmellsImageTemplate from "./components/DsImageTemplate";
+import DataSmellsImageTemplate from "./components/DefaultPage/third_last/DsImageTemplate";
 import ErrorInBackend from "./components/error_in_backend";
 // import IntegerAsStringChart from "./reactGraphs/Chart";
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -25,12 +25,16 @@ import SivaHistogram3 from "./reactGraphs/sivathree";
 import SivaHistogram4 from "./reactGraphs/sivafour";
 import SivaHistogram5 from "./reactGraphs/sivafive";
 import SivaHistogram6 from "./reactGraphs/sivasix";
-=======
 import MyHistogram40 from "./reactGraphs/Charts_empty"
 import MyHistogram4 from "./reactGraphs/Chart";
 import MyHistogram5 from "./reactGraphs/suspect_detection_chart";
 import MyHistogram6 from "./reactGraphs/contracting_charts";
 import Charts_empty from "./reactGraphs/Charts_empty";
+
+import IntDataSmellsImageTemplate from "./components/DefaultPage/third_last/DsImageTemplate";
+import FloatDataSmellsImageTemplate from "./components/DefaultPage/third_last/DsImageTemplate copy";
+import IntSDataSmellsImageTemplate from "./components/DefaultPage/third_last/DsImageTemplate copy 2";
+import DateDataSmellsImageTemplate from "./components/DefaultPage/third_last/DsImageTemplate copy 3";
 // import IntegerAsStringChart from './reactGraphs/Chart';
 
 // @Description: This function returns the key components of the frontend.
@@ -58,6 +62,7 @@ function App() {
 //       {<Route path='/sus_sign_charts'  element={< MyHistogram4 />} />}
       {<Route path='/charts4'  element={< MyHistogram40 />} />}
       {/* Charts_empty */}
+      {<Route path='/charts1'  element={< Charts_empty />} />}
 
       
       {<Route path='/sus_sign_charts'  element={< MyHistogram/>} />}
@@ -65,6 +70,14 @@ function App() {
       {<Route path='/contracting_charts'  element={< MyHistogram6 />} />}
       {<Route path='/datasmell_img_template'  element={< DataSmellsImageTemplate/>} />}
       {<Route path='/error_in_backend' element={<ErrorInBackend/>}/>}
+      {<Route path='/manoj4' element={<IntDataSmellsImageTemplate/>}/>}
+      {<Route path='/manoj2' element={<IntSDataSmellsImageTemplate/>}/>}
+      {<Route path='/manoj1' element={<DateDataSmellsImageTemplate/>}/>}
+      {<Route path='/manoj3' element={<FloatDataSmellsImageTemplate/>}/>}
+
+
+
+
 
 
 

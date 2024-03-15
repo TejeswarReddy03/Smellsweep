@@ -3,6 +3,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'rec
 
 const IntegerAsFloatChart = (props) => {
     const data = props.obj;
+    console.log("in integer as float");
+    console.log(data);
 
     return (
         <div>
