@@ -10,7 +10,11 @@ import html2canvas from "html2canvas";
 import Codebox from "../Codebox";
 import Table from "./Table";
 
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+
+
 // import MyBarChart from "../../reactGraphs/MyBarChart.jsx";
+
 
 const language = "python";
 
@@ -31,15 +35,16 @@ export default function MainPage() {
   const [boxplot, setBoxplot] = useState(null);
   const [click, setClick] = useState(false);
   const [fileChosen, setFileChosen] = useState(false);
-  const[suspect_sign_metrics,setsuspect]=useState(false);
-  const[suspect_detection_metrics,setsuspectt]=useState(false);
-  const[amb_datetime_metrics,setdatetimee]=useState(false);
-  const[contractions_metrics,setcontractions]=useState(false);
   const [dummy_value_metrics,setdummy]=useState(0);
   const [dummy_value_metrics2,setdummy2]=useState(0);
 
 
+<<<<<<< HEAD
+
+  
+=======
   const [intasfloat,setintasfloat]=useState(false);
+>>>>>>> 1f269ac786ac6c569cb99e5bbf042d5863d4713a
 
 
   const handleFileUpload = (event) => {
@@ -89,30 +94,14 @@ console.log("hi");
      
         // console.log(response);
        // const { dataframe, metrics } = response.data;
-        //console.log(response["data"]);
-        console.log(response["data"]);
-        setsuspect(response["data"]["metrics"]["suspect_sign"]);
-        setsuspectt(response["data"]["metrics"]["suspect_detection"]);
-        setdatetimee(response["data"]["metrics"]["amb_d_t"]);
-        setcontractions(response["data"]["metrics"]["conte"]);
-        console.log(response["data"]);
-        // setdummy(response["data"]["metrics"]["outliers"]);
         // console.log(response["data"]);
         setdummy(response["data"]["metrics"]["outliers"]);
         setdummy2(response["data"]["metrics"]["outliers"]);
         console.log(response["data"]["metrics"]["unnecessary_char"]);
 
-        // navigate('/charts4',{ state: { ok:response["data"]["metrics"]["empty_strings"] }});
-        console.log(response["data"])
-        navigate("/datasmells",{ state: { ok:response["data"] }});
-        // console.log("hiiii",response["data"]["metrics"]["suspect_sign"]);
+        navigate('/charts2',{ state: { ok:response["data"]["metrics"]["unnecessary_char"]  }});
 
-        //  navigate('/charts2',{ state: { ok:response["data"]["metrics"]["unnecessary_char"]  }});
-         // navigate("/sus_sign_charts",{ state: { ok:response["data"]["metrics"]["suspect_sign"]["X_values"],ok2:response["data"]["metrics"]["suspect_sign"]["Y_values"]  }});
-          // navigate("/datasmells");
-          // console.log("hiiii",response["data"]["metrics"]["contracting_datasmell"]);
-          //navigate("/suspect_detection_charts",{ state: { ok:response["data"]["metrics"]["suspect_detection"]["X_values"],ok2:response["data"]["metrics"]["suspect_detection"]["Y_values"]  }});
-          // navigate("/contracting_charts",{ state: { ok:response["data"]["metrics"]["conte"]["X_values"],ok2:response["data"]["metrics"]["conte"]["Y_values"]  }});
+
         setIsLoading(false);
       })
       .catch((error) => {
@@ -129,6 +118,8 @@ console.log("hi");
       pdf.save("page-content.pdf");
     });
   };
+
+ 
 
   return (
     <div className="App">
@@ -185,6 +176,61 @@ console.log("hi");
       )}
 
 
+          {duplicate_value_metrics && (
+        <div className="duplicate-value-metrics-container">
+          {/* Display your duplicate value metrics here */}
+          <pre>{JSON.stringify(duplicate_value_metrics, null, 2)}</pre>
+        </div>
+      )} 
+
+          {missing_value_metrics && (
+        <div className="missing-value-metrics-container">
+          {/* Display your missing value metrics here */}
+          <pre>{JSON.stringify(missing_value_metrics, null, 2)}</pre>
+        </div>
+      )} 
+
+          {extreme_value_metrics && (
+        <div className="extreme-value-metrics-container">
+          {/* Display your extreme value metrics here */}
+          <pre>{JSON.stringify(extreme_value_metrics, null, 2)}</pre>
+        </div>
+      )} 
+
+          {mis_spelling_metrics && (
+        <div className="mis-spelling-metrics-container">
+          {/* Display your mis spelling metrics here */}
+          <pre>{JSON.stringify(mis_spelling_metrics, null, 2)}</pre>
+        </div>
+      )} 
+
+          {suspect_class_metrics && (
+        <div className="Suspect-class-metrics-container">
+          {/* Display your suspectclass metrics here */}
+          <pre>{JSON.stringify(suspect_class_metrics, null, 2)}</pre>
+        </div>
+      )} 
+
+          {casing_value_metrics && (
+        <div className="Casing_value-metrics-container">
+          {/* Display your casingvalue metrics here */}
+          <pre>{JSON.stringify(casing_value_metrics, null, 2)}</pre>
+        </div>
+      )} 
+
+          {ambiguous_value_metrics && (
+        <div className="ambiguous_value-metrics-container">
+          {/* Display your ambiguousvalue metrics here */}
+          <pre>{JSON.stringify(ambiguous_value_metrics, null, 2)}</pre>
+        </div>
+      )}
+
+          {longdata_value_metrics && (
+        <div className="longdata_value-metrics-container">
+          {/* Display your longvalue metrics here */}
+          <pre>{JSON.stringify(longdata_value_metrics, null, 2)}</pre>
+        </div>
+      )}
 
         </Button>
        

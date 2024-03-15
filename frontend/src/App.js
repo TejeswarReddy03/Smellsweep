@@ -25,6 +25,17 @@ import { BrowserRouter ,Route,Routes,Navigate } from 'react-router-dom';
 import MyHistogram from "./reactGraphs/sus_sign_charts";
 import MyHistogram2 from "./reactGraphs/charts_dummyValues";
 import MyHistogram3 from "./reactGraphs/unnecessary_char_graph";
+
+import AmbiguousValuesComponent from "./reactGraphs/ambiguous_graph";
+import CasingInconsistenciesGraph from "./reactGraphs/casing_graph";
+import DuplicateDataGraph from "./reactGraphs/duplicate_value_graph";
+import ExtremeValuesGraph from "./reactGraphs/extreme_value_graph";
+import LongDataValuesGraph from "./reactGraphs/longdata_value_graph";
+import MisspelledDataGraph from "./reactGraphs/mis_spell_graph";
+import SuspectClassValuesGraph from "./reactGraphs/suspectclass_value_graph";
+import MissingDataGraph from "./reactGraphs/missing_value_graph";
+
+
 import SivaHistogram1 from "./reactGraphs/sivaone";
 import SivaHistogram2 from "./reactGraphs/sivatwo";
 import SivaHistogram3 from "./reactGraphs/sivathree";
@@ -37,6 +48,7 @@ import MyHistogram4 from "./reactGraphs/Chart";
 import MyHistogram5 from "./reactGraphs/suspect_detection_chart";
 import MyHistogram6 from "./reactGraphs/contracting_charts";
 import Charts_empty from "./reactGraphs/Charts_empty";
+
 // import IntegerAsStringChart from './reactGraphs/Chart';
 
 // @Description: This function returns the key components of the frontend.
@@ -62,6 +74,17 @@ function App() {
 
       {<Route path='/charts2'  element={< MyHistogram2 />} />}
       {<Route path='/charts3'  element={< MyHistogram3 />} />}
+
+      {<Route path='/charts_v1'  element={< AmbiguousValuesComponent />} />}
+      {<Route path='/charts_v2'  element={< CasingInconsistenciesGraph />} />}
+      {<Route path='/charts_v3'  element={< DuplicateDataGraph />} />}
+      {<Route path='/charts_v4'  element={< ExtremeValuesGraph />} />}
+      {<Route path='/charts_v5'  element={< LongDataValuesGraph />} />}
+      {<Route path='/charts_v6'  element={< MisspelledDataGraph />} />}
+      {<Route path='/charts_v7'  element={< MissingDataGraph />} />}
+      {<Route path='/charts_v8'  element={< SuspectClassValuesGraph />} />}
+      
+
       {<Route path='/siva1' element={<SivaHistogram1/>}/>}
       {<Route path='/siva2' element={<SivaHistogram2/>}/>}
       {<Route path='/siva3' element={<SivaHistogram3/>}/>}
