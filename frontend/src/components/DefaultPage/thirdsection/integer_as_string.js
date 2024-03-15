@@ -27,6 +27,7 @@ const IntegerAsStringChart = (props) => {
             {data && data.status ? (
                 <div>
                     <h2>Columns Containing Integers Represented as Strings</h2>
+                    <div style={{ maxWidth:'800px',backgroundColor: 'white', padding: '20px', transition: 'all 1s ease' }}>
                     <BarChart width={800} height={400} data={Object.entries(data.integer_as_string)}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="[0]" />
@@ -36,8 +37,10 @@ const IntegerAsStringChart = (props) => {
                         <Bar dataKey="[1].percentage" fill="#8884d8" name="Percentage" />
                         <Bar dataKey="[1].rows_with_smell" fill="#82ca9d" name="Rows with Smell" />
                     </BarChart>
-                    <h2>Details</h2>
-                    <table style={tableStyle}>
+                    </div>
+                    <p style={{ color: 'black', fontWeight: 'bold',height:'14px',marginBottom:'20px',marginTop:'20px' }}>Tabular format</p>
+                    <div style={{ backgroundColor: 'white', padding: '20px', transition: 'all 1s ease' }}>
+                    <table style={{ borderCollapse: 'collapse', width: '100%' }}>
                         <thead>
                             <tr>
                                 <th style={thStyle}>Column</th>
@@ -55,9 +58,12 @@ const IntegerAsStringChart = (props) => {
                             ))}
                         </tbody>
                     </table>
+                    </div>
                 </div>
             ) : (
-                <p>No integer-as-string data smells detected.</p>
+                
+        <p style={{ color: 'black', fontWeight: 'bold',fontSize:'30px' }}>No integer-as-string data smells detected.</p>
+
             )}
         </div>
     );

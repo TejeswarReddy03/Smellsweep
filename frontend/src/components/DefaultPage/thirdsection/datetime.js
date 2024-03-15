@@ -4,14 +4,21 @@ import "./datetime.css"; // Import CSS file for styling
 
 const Datetimefun = (props) => {
     // Check if the status attribute is true
-    const shouldRenderGraph = props.datetime_obj && props.datetime_obj.status;
+    console.log("in datetime");
+    console.log(props.obj);
+    const shouldRenderGraph = props.obj && props.obj.status;
 
     return (
         <div className="dummy-value-metrics-container">
+<<<<<<< HEAD
+=======
+            {/* <pre>{JSON.stringify(props.datetime_obj, null, 2)}</pre> */}
+>>>>>>> 005f619138ea864926f1a3eed1556d964f13461e
             {shouldRenderGraph ? (
-                <StatisticsChart data={props.datetime_obj} />
+                <StatisticsChart data={props.obj} />
             ) : (
-                <p>No datetime data smell detected.</p>
+                <p style={{ color: 'black', fontWeight: 'bold',fontSize:'30px' }}>No datetime data smells detected.</p>
+               
             )}
         </div>
     );
@@ -43,6 +50,8 @@ const StatisticsChart = ({ data }) => {
     return (
         <div>
             <h2>Statistics for Columns</h2>
+            <div style={{ maxWidth:'620px',backgroundColor: 'white', padding: '20px', transition: 'all 1s ease' }}>
+
             <BarChart width={600} height={400} data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
@@ -53,7 +62,9 @@ const StatisticsChart = ({ data }) => {
                 <Bar dataKey="uniqueDatePercentage" stackId="a" fill="#82ca9d" />
                 <Bar dataKey="uniqueTimePercentage" stackId="a" fill="#ffc658" />
             </BarChart>
-            <h2>Row Counts</h2>
+            </div>
+            <p style={{ color: 'black', fontWeight: 'bold',height:'14px',marginBottom:'20px',marginTop:'20px' }}>Details</p>
+            
             <table className="row-counts-table">
                 <thead>
                     <tr>
