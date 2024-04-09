@@ -3,7 +3,6 @@
  * @Language: React.js
  * @Description: App.js- This file is the key component of the frontend. It contains the navigation bar and the main page.
  */
-
 import React from "react";
 // import { useState } from "react";
 // import axios from "axios";
@@ -13,16 +12,13 @@ import DataSmells from "./components/DefaultPage/datasmells";
 
 // import DataSmellsImageTemplate from "./components/DS_IMG_Template";
 import ErrorInBackend from "./components/error_in_backend";
-import Appp from "./test";
+// import Appp from "./test";
 
 import DataSmells2 from "./components/DefaultPage/datasmells2";
-<<<<<<< HEAD
 import DataSmellsImageTemplate from "./components/DefaultPage/third_last/DsImageTemplate";
-import ErrorInBackend from "./components/error_in_backend";
-=======
-import DataSmellsImageTemplate from "./components/DsImageTemplate";
+// import ErrorInBackend from "./components/error_in_backend";
+// import DataSmellsImageTemplate from "./components/DsImageTemplate";
 
->>>>>>> 005f619138ea864926f1a3eed1556d964f13461e
 // import IntegerAsStringChart from "./reactGraphs/Chart";
 
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -36,10 +32,7 @@ import SivaHistogram3 from "./reactGraphs/sivathree";
 import SivaHistogram4 from "./reactGraphs/sivafour";
 import SivaHistogram5 from "./reactGraphs/sivafive";
 import SivaHistogram6 from "./reactGraphs/sivasix";
-<<<<<<< HEAD
-=======
 
->>>>>>> 005f619138ea864926f1a3eed1556d964f13461e
 import MyHistogram40 from "./reactGraphs/Charts_empty"
 import MyHistogram4 from "./reactGraphs/Chart";
 import MyHistogram5 from "./reactGraphs/suspect_detection_chart";

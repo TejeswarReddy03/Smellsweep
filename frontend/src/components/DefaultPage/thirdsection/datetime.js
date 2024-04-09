@@ -10,10 +10,6 @@ const Datetimefun = (props) => {
 
     return (
         <div className="dummy-value-metrics-container">
-<<<<<<< HEAD
-=======
-            {/* <pre>{JSON.stringify(props.datetime_obj, null, 2)}</pre> */}
->>>>>>> 005f619138ea864926f1a3eed1556d964f13461e
             {shouldRenderGraph ? (
                 <StatisticsChart data={props.obj} />
             ) : (

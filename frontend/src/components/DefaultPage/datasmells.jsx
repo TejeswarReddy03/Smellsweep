@@ -18,7 +18,7 @@ import contracting from './../../assets/contracting.png';
 import dummy from './../../assets/dummyvalue.png';
 
 
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
 const SvgComponent = () => {
 
