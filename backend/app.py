@@ -31,14 +31,14 @@ from datasmells_algorithms.Tejeswar_smells.unnecessary_character import detect_a
 
 from datasmells_algorithms.Sivasai_smells.inconsistent import identify_data_type_inconsistency
 from datasmells_algorithms.Sivasai_smells.missing_value_inconsistency import identify_missing_value_inconsistency
-from datasmells_algorithms.Sivasai_smells.missing_value_refactoring import missingvalue_refactor_data
+from refactoring_algorithms.Siva_Algos.missing_value_refactoring import missingvalue_refactor_data
 from datasmells_algorithms.Sivasai_smells.seperatingsmell import identify_separating_smell
-from datasmells_algorithms.Sivasai_smells.seperatingsmell_refactor import separating_smell_refactor_data
+from refactoring_algorithms.Siva_Algos.seperatingsmell_refactor import separating_smell_refactor_data
 from datasmells_algorithms.Sivasai_smells.spacingsmells import identify_spacing_smell
-from datasmells_algorithms.Sivasai_smells.spacingsmell_refactor import spacing_smell_refactor_data
+from refactoring_algorithms.Siva_Algos.spacingsmell_refactor import spacing_smell_refactor_data
 from datasmells_algorithms.Sivasai_smells.specialcharactersmell import identify_special_characters_inconsistency
 from datasmells_algorithms.Sivasai_smells.unitinconsistency import identify_unit_inconsistency
-from datasmells_algorithms.Sivasai_smells.unitrefactor import refactor_unit_inconsistency
+from refactoring_algorithms.Siva_Algos.unitrefactor import refactor_unit_inconsistency
 app = Flask(__name__)
 CORS(app)
 
@@ -102,16 +102,16 @@ def process_dataframe(df,csv_file):
             
 
 
-            # 'inconsistent':identify_data_type_inconsistency(df),
-            # 'minconsistency':identify_missing_value_inconsistency(df),
-            # 'minconsisrefactor':missingvalue_refactor_data(df),
-            # 'seperatingsmell':identify_separating_smell(df),
-            # 'seperatingrefactor':separating_smell_refactor_data(df),
+            # # 'inconsistent':identify_data_type_inconsistency(df),
+            'minconsistency':identify_missing_value_inconsistency(df),
+            'minconsisrefactor':missingvalue_refactor_data(df),
+            'seperatingsmell':identify_separating_smell(df),
+            'seperatingrefactor':separating_smell_refactor_data(df),
             # 'spacingsmell':identify_spacing_smell(df),
             # 'spacingrefactor':spacing_smell_refactor_data(df),
             # 'specialchar':identify_special_characters_inconsistency(df),
-            'unitinconsistency':identify_unit_inconsistency(df),
-            'unitrefactor':refactor_unit_inconsistency(df),
+             'unitinconsistency':identify_unit_inconsistency(df),
+            # 'unitrefactor':refactor_unit_inconsistency(df),
 
             # Add metrics from other algorithms here
         }
