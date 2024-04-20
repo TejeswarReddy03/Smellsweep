@@ -11,7 +11,9 @@ def detect_float_as_string(df):
         dict: A dictionary where keys are column names and values are percentages of cells containing potential data smells (float as string).
     """
     float_as_string = {}  # Dictionary to store detected instances
-
+    print("in float_as_string")
+    print(df)
+    print(df.dtypes)
     # Iterate through each column in the DataFrame
     for column in df.columns:
         # Check if the column contains any text strings that can be converted to floating-point numbers
