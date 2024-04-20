@@ -143,6 +143,8 @@ def upload_file():
             if df.empty or len(df.columns) == 0:
                 return jsonify({'error': 'No columns to parse'})
             print("in backend beforecalling fun")
+            print(df)
+            print(df.dtypes)
             # Process the DataFrame and get metrics
             metrics = process_dataframe(df,file)
 
