@@ -6,7 +6,7 @@ def detect_and_analyze_units_rule_based(dataframe):
     inconsistent_units = detect_and_standardize_units_rule_based(dataframe)
     print("Inconsistent Unit Counts:")
     for unit, count in inconsistent_units.items():
-        print(f"{unit}: {count} occurrences")
+        print(f"{unit}: {count} occurrences")           
     return len(inconsistent_units)
 
 def detect_and_standardize_units_rule_based(dataframe):

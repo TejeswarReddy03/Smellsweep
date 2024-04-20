@@ -48,7 +48,7 @@ def process_dataframe(df,csv_file):
             'suspect_detection': assess_data_distribution(df),
             'amb_d_t':assess_ambiguous_date_formats(df),
             'conte': detect_contractions(df),
-             'dummy_values':  identify_dummy_values(df),
+            'dummy_values':  identify_dummy_values(df),
              
              
              

@@ -69,7 +69,7 @@ export default function MainPage() {
       .post("http://localhost:5001/upload", formData)  // Update the URL accordingly
       .then((response) => {
         // setAnalysisData(response.data);
-        // setHeatmapData(response.data.heatmap);
+        // setHeatmapData(response.data.heatmap);]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]];
         // setBargraph_sp_miss(response.data.bargraph_sp_miss);
         // setBargraph_nan(response.data.bargraph_nan);
         // setBoxplot(response.data.outliers.plot);
