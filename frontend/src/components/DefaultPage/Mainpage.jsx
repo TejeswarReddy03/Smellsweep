@@ -120,7 +120,43 @@ console.log("hi");
         setIsLoading(false);
       });
   };
-
+  const handleUpload_refactor = () => {
+    setClick(true);
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+  
+    axios
+      .post("http://localhost:5001/refactor", formData)
+      .then((response) => {
+        if (!response.data || !response.data.refactored_csv) {
+          navigate('/error_in_backend');
+          return;
+        }
+        console.log(response.data);
+        // Create a Blob object from the refactored CSV data
+        const blob = new Blob([response.data.refactored_csv], { type: 'text/csv' });
+  
+        // Create a temporary anchor element to trigger the download
+        const a = document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = 'refactored_data.csv'; // Specify the filename
+        a.style.display = 'none';
+  
+        // Append the anchor element to the body and trigger the download
+        document.body.appendChild(a);
+        a.click();
+  
+        // Cleanup: Remove the temporary anchor element
+        document.body.removeChild(a);
+  
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
+  };
   const handleDownload = () => {
     html2canvas(document.body).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
@@ -159,6 +195,8 @@ console.log("hi");
         >
  
           Analysis
+          
+          
       {suspect_sign_metrics && (
         <div className="suspect-sign-metrics-container">
           {/* Display your dummy value metrics here */}
@@ -188,7 +226,43 @@ console.log("hi");
 
         </Button>
        
-        
+        <Button
+          className="analyze-btn d-flex align-self-center"
+          variant="success"
+          size="lg"
+          onClick={handleUpload_refactor}
+        >
+ 
+         Refactor
+          
+      {suspect_sign_metrics && (
+        <div className="suspect-sign-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(suspect_sign_metrics, null, 2)}</pre>
+        </div>
+      )}
+       {amb_datetime_metrics && (
+        <div className="amb-datetime_metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(amb_datetime_metrics, null, 2)}</pre>
+        </div>
+      )}
+      {suspect_detection_metrics && (
+        <div className="suspect-detection-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(suspect_detection_metrics, null, 2)}</pre>
+        </div>
+      )}
+      {contractions_metrics && (
+        <div className="contraction-metrics-container">
+          {/* Display your dummy value metrics here */}
+          <pre>{JSON.stringify(contractions_metrics, null, 2)}</pre>
+        </div>
+      )}
+
+
+
+        </Button>
 
       </div>
       {fileChosen && jsonData && <Excel myjson={jsonData} />}
