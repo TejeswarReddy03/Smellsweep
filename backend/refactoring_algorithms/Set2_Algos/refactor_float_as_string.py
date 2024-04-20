@@ -1,36 +1,39 @@
 import pandas as pd
+import numpy as np
 
-def detect_float_as_string(df):
+def refactor_float_as_string(df):
     """
     This function detects columns in a DataFrame that potentially contain floating-point numbers stored as strings.
+    If the percentage of float-as-string values in a column is greater than 90%, it replaces non-float values with NaN.
 
     Args:
-        df (pandas.DataFrame): The DataFrame to analyze.
+        df (pandas.DataFrame): The DataFrame to analyze and modify.
 
     Returns:
+        pandas.DataFrame: The modified DataFrame with potentially problematic cells replaced by NaN.
         dict: A dictionary where keys are column names and values are percentages of cells containing potential data smells (float as string).
     """
-    float_as_string = {}  # Dictionary to store detected instances
-    print("in float_as_string.py")
-    print(df)
-    print(df.dtypes)
+    # Dictionary to store detected instances
+    
+
     # Iterate through each column in the DataFrame
     for column in df.columns:
         # Check if the column contains any text strings that can be converted to floating-point numbers
-        string_float_count = sum(is_float(value) for value in df[column] if isinstance(value, str))
+        string_float_count = sum(isinstance(value, str) and (is_float(value) or value.isdigit()) for value in df[column])
+
         total_cells = len(df[column])
 
         # Calculate percentage of cells in the column that are floating-point numbers stored as strings
         percentage = (string_float_count / total_cells) * 100
 
-        # If percentage is greater than 0, it indicates the presence of the data smell
-        if percentage > 0:
-            float_as_string[column] = percentage
+        # If percentage is greater than 90%, replace non-float values in that column with NaN
+        if percentage > 10:
+            df[column] = df[column].apply(lambda x: np.nan if not (is_float(x) or x.isdigit()) else x)
 
-    # Include status attribute
-    status = bool(float_as_string)  # True if any float-as-string smells were detected, False otherwise
-    print(float_as_string)
-    return {'float_as_string': float_as_string, 'status': status}
+        # If percentage is greater than 0, it indicates the presence of the data smell
+       
+
+    return df
 
 # Function to check if a string can be converted to a float, considering trailing zeros
 def is_float(value):
