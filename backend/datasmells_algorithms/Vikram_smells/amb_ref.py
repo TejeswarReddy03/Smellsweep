@@ -1,14 +1,14 @@
 import pandas as pd
 
-# Function to detect ambiguous values in text columns
-def detect_ambiguous_values(df):
+# Function to refactor ambiguous values in the dataset
+def refactor_ambiguous_values(df):
     ambiguous_rows = []
     for index, row in df.iterrows():
         for col in df.columns:
             if pd.api.types.is_string_dtype(df[col]):
                 if is_ambiguous(row[col]):
-                    ambiguous_rows.append((index, col))  # Store both index and column name
-                    break
+                    ambiguous_rows.append((index, col))
+                    df.at[index, col] = "Refactored"  # For example, replace ambiguous values with "Refactored"
     return ambiguous_rows
 
 # Rule-based detection: Check if the text contains ambiguous keywords or non-numeric values in numeric columns
@@ -20,8 +20,9 @@ def is_ambiguous(text):
         return True
     return False
 
-# Function to calculate metrics for ambiguous values
-def ambiguous_value_metrics(df, ambiguous_rows):
+# Function to calculate metrics for ambiguous values and print the updated dataset
+def ambiguous_value_metrics(df):
+    ambiguous_rows = refactor_ambiguous_values(df)
     num_ambiguous = len(ambiguous_rows)
     ambiguous_percentage = (num_ambiguous / len(df)) * 100
     
@@ -34,18 +35,13 @@ def ambiguous_value_metrics(df, ambiguous_rows):
         'ambiguous_attributes': list(ambiguous_attributes),  # Convert to list for JSON serialization
         'ambiguous_rows': ambiguous_rows
     }
-    return metrics
 
-# Function to identify ambiguous values
-def ambiguous_values(df):
-    ambiguous_rows = detect_ambiguous_values(df)
-    if not ambiguous_rows:
-        return "No ambiguous values detected in the dataset."
-    else:
-        metrics = ambiguous_value_metrics(df, ambiguous_rows)
-        return metrics
+    print("Updated dataset:")
+    print(df)
+
+    return metrics
 
 # Example usage:
 # df = pd.DataFrame({'Text': ['This is clear', 'This is vague', 'Confusing text', 'Not sure']})
-# result = ambiguous_values(df)
-# print(result)
+# metrics = ambiguous_value_metrics(df)
+# print(metrics)
