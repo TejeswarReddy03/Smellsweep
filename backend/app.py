@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import pandas as pd
 from flask_cors import CORS
 import os
+import io
 from datasmells_algorithms.suspect_sign_datasmell import identify_suspect_sign
 from datasmells_algorithms.suspect_detection import assess_data_distribution
 from datasmells_algorithms.amb_date_time import assess_ambiguous_date_formats
@@ -31,14 +32,19 @@ from datasmells_algorithms.Tejeswar_smells.unnecessary_character import detect_a
 
 from datasmells_algorithms.Sivasai_smells.inconsistent import identify_data_type_inconsistency
 from datasmells_algorithms.Sivasai_smells.missing_value_inconsistency import identify_missing_value_inconsistency
-from refactoring_algorithms.Siva_Algos.missing_value_refactoring import missingvalue_refactor_data
+from refactoring_algorithms.Set5_Algos.missing_value_refactoring import missingvalue_refactor_data
 from datasmells_algorithms.Sivasai_smells.seperatingsmell import identify_separating_smell
-from refactoring_algorithms.Siva_Algos.seperatingsmell_refactor import separating_smell_refactor_data
+from refactoring_algorithms.Set5_Algos.seperatingsmell_refactor import separating_smell_refactor_data
 from datasmells_algorithms.Sivasai_smells.spacingsmells import identify_spacing_smell
-from refactoring_algorithms.Siva_Algos.spacingsmell_refactor import spacing_smell_refactor_data
+from refactoring_algorithms.Set5_Algos.spacingsmell_refactor import spacing_smell_refactor_data
 from datasmells_algorithms.Sivasai_smells.specialcharactersmell import identify_special_characters_inconsistency
 from datasmells_algorithms.Sivasai_smells.unitinconsistency import identify_unit_inconsistency
-from refactoring_algorithms.Siva_Algos.unitrefactor import refactor_unit_inconsistency
+
+from refactoring_algorithms.Set2_Algos.refactor_int_as_float import refactor_floats_to_int
+from refactoring_algorithms.Set2_Algos.refactor_datetime import refactor_datetime_smell
+from refactoring_algorithms.Set2_Algos.refactor_float_as_string import refactor_float_as_string
+from refactoring_algorithms.Set2_Algos.refactor_int_as_string import refactor_integer_as_string
+from refactoring_algorithms.Set5_Algos.unitrefactor import refactor_unit_inconsistency
 app = Flask(__name__)
 CORS(app)
 
@@ -48,16 +54,16 @@ def process_dataframe(df,csv_file):
         aggregated_metrics = {
             
             
-            # 'suspect_sign': identify_suspect_sign(df),
-            # 'suspect_detection': assess_data_distribution(df),
-            # 'amb_d_t':assess_ambiguous_date_formats(df),
-            # 'conte': detect_contractions(df),
-            #  'dummy_values':  identify_dummy_values(df),
+            'suspect_sign': identify_suspect_sign(df),
+            'suspect_detection': assess_data_distribution(df),
+            'amb_d_t':assess_ambiguous_date_formats(df),
+            'conte': detect_contractions(df),
+             'dummy_values':  identify_dummy_values(df),
              
              
              
-            # 'suspect_character_encoding':detect_suspect_encoding(csv_file),
-            # 'date_time_smell':detect_datetime_smell(df),
+            'suspect_character_encoding':detect_suspect_encoding(csv_file),
+            'date_time_smell':detect_datetime_smell(df),
 
 
             #  'date_time_smell':detect_datetime_smell(df),
@@ -102,16 +108,12 @@ def process_dataframe(df,csv_file):
             
 
 
-            # # 'inconsistent':identify_data_type_inconsistency(df),
-            'minconsistency':identify_missing_value_inconsistency(df),
-            'minconsisrefactor':missingvalue_refactor_data(df),
-            'seperatingsmell':identify_separating_smell(df),
-            'seperatingrefactor':separating_smell_refactor_data(df),
+            # 'inconsistent':identify_data_type_inconsistency(df),
+            # 'minconsistency':identify_missing_value_inconsistency(df),
+            # 'seperatingsmell':identify_separating_smell(df),
             # 'spacingsmell':identify_spacing_smell(df),
-            # 'spacingrefactor':spacing_smell_refactor_data(df),
             # 'specialchar':identify_special_characters_inconsistency(df),
-             'unitinconsistency':identify_unit_inconsistency(df),
-            # 'unitrefactor':refactor_unit_inconsistency(df),
+            # 'unitinconsistency':identify_unit_inconsistency(df),
 
             # Add metrics from other algorithms here
         }
@@ -123,7 +125,26 @@ def process_dataframe(df,csv_file):
     except Exception as e:
         return {'error': str(e)}
     
-
+def refactor_dataframe(df):
+    try:
+        df = separating_smell_refactor_data(df)
+        df = refactor_integer_as_string(df)
+        df = refactor_float_as_string(df)
+        df = refactor_floats_to_int(df)
+        df = refactor_datetime_smell(df)
+        df = missingvalue_refactor_data(df)
+        df = spacing_smell_refactor_data(df)
+        df = refactor_unit_inconsistency(df)
+        # Convert the DataFrame to a CSV file in memory
+        csv_buffer = io.StringIO()
+        df.to_csv(csv_buffer, index=False)
+        
+        # Get the CSV contents as a string
+        csv_contents = csv_buffer.getvalue()
+        
+        return csv_contents
+    except Exception as e:
+        return {'error': str(e)}
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -151,6 +172,8 @@ def upload_file():
             if df.empty or len(df.columns) == 0:
                 return jsonify({'error': 'No columns to parse'})
             print("in backend beforecalling fun")
+            print(df)
+            print(df.dtypes)
             # Process the DataFrame and get metrics
             metrics = process_dataframe(df,file)
 
@@ -158,6 +181,39 @@ def upload_file():
             os.remove(file_path)
             # print(metrics)
             return jsonify({'metrics': metrics})
+        except Exception as e:
+            return jsonify({'error': str(e)})
+@app.route('/refactor', methods=['POST'])
+def refactor_file():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'})
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'})
+
+    if file:
+        try:
+            # Save the uploaded file temporarily
+            #csv_contents = file.read()
+            print("in backend")
+            # Call detect_suspect_encoding with CSV contents
+            #encoding_status = detect_suspect_encoding(csv_contents)
+            file_path = 'temp.csv'
+            file.save(file_path)
+           
+            df = pd.read_csv(file_path)
+           
+            if df.empty or len(df.columns) == 0:
+                return jsonify({'error': 'No columns to parse'})
+            
+            refactored_csv = refactor_dataframe(df)
+
+            # Optionally, you can delete the temporary file
+            os.remove(file_path)
+
+            # Return the refactored CSV contents to the frontend
+            return jsonify({'refactored_csv': refactored_csv})
         except Exception as e:
             return jsonify({'error': str(e)})
 
