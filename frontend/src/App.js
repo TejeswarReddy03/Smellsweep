@@ -67,12 +67,14 @@ function App() {
     <div className="total-main">
       <BrowserRouter>
         <Routes>
-        {<Route index element ={<Form />} />}
-        {/* {<Route index element ={<MainPage />} />} */}
+        {/* {<Route index element ={<Form />} />} */}
+        {<Route index element ={<MainPage />} />}
 
       {<Route path='/datasmells'  element={< DataSmells/>} />}
 
       {<Route path='/datasmell_img_template'  element={< DataSmellsImageTemplate/>} />}
+      {<Route path='/input_data'  element={< Form />} />}
+
       
 
 

@@ -15,6 +15,7 @@ import Table from "./Table";
 const language = "python";
 
 export default function MainPage() {
+
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [jsonData, setJsonData] = useState(null);
@@ -37,9 +38,8 @@ export default function MainPage() {
   const[contractions_metrics,setcontractions]=useState(false);
   const [dummy_value_metrics,setdummy]=useState(0);
   const [dummy_value_metrics2,setdummy2]=useState(0);
-
-
   const [intasfloat,setintasfloat]=useState(false);
+  const [inputVal,setInputVal]=useState(false)
 
 
   const handleFileUpload = (event) => {
@@ -57,6 +57,12 @@ export default function MainPage() {
         console.log(result.data);
       },
     });
+  };
+
+  const handleInputPage = () => {
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    navigate("/input_data", { state: { file: selectedFile } });
   };
 
   const handleUpload = () => {
@@ -121,6 +127,7 @@ console.log("hi");
       });
   };
   const handleUpload_refactor = () => {
+
     setClick(true);
     setIsLoading(true);
     const formData = new FormData();
@@ -157,6 +164,7 @@ console.log("hi");
         setIsLoading(false);
       });
   };
+
   const handleDownload = () => {
     html2canvas(document.body).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
@@ -230,39 +238,16 @@ console.log("hi");
           className="analyze-btn d-flex align-self-center"
           variant="success"
           size="lg"
-          onClick={handleUpload_refactor}
+          onClick={handleInputPage}
         >
  
-         Refactor
+         Customized Refactoring
           
-      {suspect_sign_metrics && (
-        <div className="suspect-sign-metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(suspect_sign_metrics, null, 2)}</pre>
-        </div>
-      )}
-       {amb_datetime_metrics && (
-        <div className="amb-datetime_metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(amb_datetime_metrics, null, 2)}</pre>
-        </div>
-      )}
-      {suspect_detection_metrics && (
-        <div className="suspect-detection-metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(suspect_detection_metrics, null, 2)}</pre>
-        </div>
-      )}
-      {contractions_metrics && (
-        <div className="contraction-metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(contractions_metrics, null, 2)}</pre>
-        </div>
-      )}
-
+    
 
 
         </Button>
+        
 
       </div>
       {fileChosen && jsonData && <Excel myjson={jsonData} />}

@@ -19,11 +19,11 @@ def replace_empty_strings(dataframe):
     for col in cleaned_dataframe.columns:
         if cleaned_dataframe[col].dtype == 'int64':
             mean_value = cleaned_dataframe[col].mean()
-            cleaned_dataframe[col] = cleaned_dataframe[col].replace('', mean_value)
+            cleaned_dataframe[col] = cleaned_dataframe[col].replace("''", mean_value)
         elif cleaned_dataframe[col].dtype == 'object':
             # Replace empty strings with the most frequent word for string type columns
             most_frequent_word = cleaned_dataframe[col].mode()[0]
-            cleaned_dataframe[col] = cleaned_dataframe[col].replace('', most_frequent_word)
+            cleaned_dataframe[col] = cleaned_dataframe[col].replace("''", most_frequent_word)
 
     return cleaned_dataframe
 

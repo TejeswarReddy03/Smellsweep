@@ -41,6 +41,7 @@ from refactoring_algorithms.Set2_Algos.refactor_int_as_float import refactor_flo
 from refactoring_algorithms.Set2_Algos.refactor_datetime import refactor_datetime_smell
 from refactoring_algorithms.Set2_Algos.refactor_float_as_string import refactor_float_as_string
 from refactoring_algorithms.Set2_Algos.refactor_int_as_string import refactor_integer_as_string
+from refactoring_algorithms.Set1_Algos.refactor_unnecessaryChar import clean_csv
 app = Flask(__name__)
 CORS(app)
 
@@ -55,6 +56,7 @@ def process_dataframe(df,csv_file):
             'amb_d_t':assess_ambiguous_date_formats(df),
             'conte': detect_contractions(df),
             'dummy_values':  identify_dummy_values(df),
+            
              
              
              
@@ -124,10 +126,11 @@ def process_dataframe(df,csv_file):
 def refactor_dataframe(df):
     try:
        
-        df = refactor_integer_as_string(df)
-        df = refactor_float_as_string(df)
-        df = refactor_floats_to_int(df)
-        df = refactor_datetime_smell(df)
+        # df = refactor_integer_as_string(df)
+        # df = refactor_float_as_string(df)
+        # df = refactor_floats_to_int(df)
+        # df = refactor_datetime_smell(df)
+        df= clean_csv(df)
         
         # Convert the DataFrame to a CSV file in memory
         csv_buffer = io.StringIO()
@@ -183,6 +186,18 @@ def refactor_file():
         return jsonify({'error': 'No file part'})
 
     file = request.files['file']
+    field1 = request.form['field1']
+    field2 = request.form['field2']
+    field3 = request.form['field3']
+    field4 = request.form['field4']
+    field5 = request.form['field5']
+    field6 = request.form['field6']
+    field7 = request.form['field7']
+    field8 = request.form['field8']
+    field9 = request.form['field9']
+    field10 = request.form['field10']
+    print(field9)
+    
     if file.filename == '':
         return jsonify({'error': 'No selected file'})
 
