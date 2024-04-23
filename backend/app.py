@@ -41,6 +41,13 @@ from refactoring_algorithms.Set2_Algos.refactor_int_as_float import refactor_flo
 from refactoring_algorithms.Set2_Algos.refactor_datetime import refactor_datetime_smell
 from refactoring_algorithms.Set2_Algos.refactor_float_as_string import refactor_float_as_string
 from refactoring_algorithms.Set2_Algos.refactor_int_as_string import refactor_integer_as_string
+
+from refactoring_algorithms.Set3_Algos.cont_ref import detect_and_refactor_contractions
+from refactoring_algorithms.Set3_Algos.sus_det_ref import detect_and_refactor_suspect_distribution
+from refactoring_algorithms.Set3_Algos.sus_sign_ref import refactor_data
+
+
+
 app = Flask(__name__)
 CORS(app)
 
@@ -49,11 +56,6 @@ def process_dataframe(df,csv_file):
         # Call the identify_dummy_values function
         aggregated_metrics = {
             
-            
-           # 'suspect_sign': identify_suspect_sign(df),
-           # 'suspect_detection': assess_data_distribution(df),
-            #'amb_d_t':assess_ambiguous_date_formats(df),
-           # 'conte': detect_contractions(df),
             # 'dummy_values':  identify_dummy_values(df),
              
              
@@ -86,9 +88,7 @@ def process_dataframe(df,csv_file):
             'v7':detect_and_report_long_data_values_metrics(df),
             'v8':detect_ambiguous_values(df),
             
-            
-            
-            
+        
             
             
             
@@ -111,6 +111,12 @@ def process_dataframe(df,csv_file):
             'specialchar':identify_special_characters_inconsistency(df),
             'unitinconsistency':identify_unit_inconsistency(df),
 
+            'suspect_sign': identify_suspect_sign(df),
+            'suspect_detection': assess_data_distribution(df),
+            'amb_d_t':assess_ambiguous_date_formats(df),
+            'conte': detect_contractions(df),
+            
+
             # Add metrics from other algorithms here
         }
         
@@ -128,6 +134,10 @@ def refactor_dataframe(df):
         df = refactor_float_as_string(df)
         df = refactor_floats_to_int(df)
         df = refactor_datetime_smell(df)
+        df = detect_and_refactor_contractions(df)
+        df = detect_and_refactor_suspect_distribution(df)
+        df = refactor_data(df)
+
         
         # Convert the DataFrame to a CSV file in memory
         csv_buffer = io.StringIO()
