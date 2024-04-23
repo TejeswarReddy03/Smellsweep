@@ -15,11 +15,11 @@ def clean_cell(cell):
     pattern = r'[^a-zA-Z0-9\s]'  # This pattern will keep only alphanumeric characters and spaces
 
     # Use regular expression substitution to remove unnecessary characters
-    cleaned_cell = re.sub(pattern, '', cell)
+    cleaned_cell = re.sub(pattern, '', str(cell))  # Convert cell to string before cleaning
 
     return cleaned_cell
 
-def clean_csv(csv_file):
+def clean_csv(df):
     """
     Clean a CSV file by removing unnecessary characters from all cells.
 
@@ -30,7 +30,7 @@ def clean_csv(csv_file):
     df (DataFrame): The cleaned DataFrame.
     """
     # Read the CSV file into a DataFrame
-    df = pd.read_csv(csv_file)
+    # df = pd.read_csv(csv_file)
 
     # Apply the clean_cell function to each cell in the DataFrame
     df = df.applymap(clean_cell)

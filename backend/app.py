@@ -39,11 +39,13 @@ from datasmells_algorithms.Sivasai_smells.spacingsmells import identify_spacing_
 from refactoring_algorithms.Set5_Algos.spacingsmell_refactor import spacing_smell_refactor_data
 from datasmells_algorithms.Sivasai_smells.specialcharactersmell import identify_special_characters_inconsistency
 from datasmells_algorithms.Sivasai_smells.unitinconsistency import identify_unit_inconsistency
+from refactoring_algorithms.Set5_Algos.specialchar_refactoring import  remove_special_characters
 
 from refactoring_algorithms.Set2_Algos.refactor_int_as_float import refactor_floats_to_int
 from refactoring_algorithms.Set2_Algos.refactor_datetime import refactor_datetime_smell
 from refactoring_algorithms.Set2_Algos.refactor_float_as_string import refactor_float_as_string
 from refactoring_algorithms.Set2_Algos.refactor_int_as_string import refactor_integer_as_string
+from refactoring_algorithms.Set1_Algos.refactor_unnecessaryChar import clean_csv
 from refactoring_algorithms.Set5_Algos.unitrefactor import refactor_unit_inconsistency
 app = Flask(__name__)
 CORS(app)
@@ -54,11 +56,11 @@ def process_dataframe(df,csv_file):
         aggregated_metrics = {
             
             
-            'suspect_sign': identify_suspect_sign(df),
-            'suspect_detection': assess_data_distribution(df),
-            'amb_d_t':assess_ambiguous_date_formats(df),
-            'conte': detect_contractions(df),
-             'dummy_values':  identify_dummy_values(df),
+           # 'suspect_sign': identify_suspect_sign(df),
+           # 'suspect_detection': assess_data_distribution(df),
+            #'amb_d_t':assess_ambiguous_date_formats(df),
+           # 'conte': detect_contractions(df),
+            # 'dummy_values':  identify_dummy_values(df),
              
              
              
@@ -125,7 +127,7 @@ def process_dataframe(df,csv_file):
     except Exception as e:
         return {'error': str(e)}
     
-def refactor_dataframe(df):
+def refactor_dataframe(df,field1):
     try:
         df = separating_smell_refactor_data(df)
         df = refactor_integer_as_string(df)
@@ -135,6 +137,8 @@ def refactor_dataframe(df):
         df = missingvalue_refactor_data(df)
         df = spacing_smell_refactor_data(df)
         df = refactor_unit_inconsistency(df)
+        df = remove_special_characters(df,field1)
+
         # Convert the DataFrame to a CSV file in memory
         csv_buffer = io.StringIO()
         df.to_csv(csv_buffer, index=False)
@@ -189,6 +193,18 @@ def refactor_file():
         return jsonify({'error': 'No file part'})
 
     file = request.files['file']
+    field1 = request.form['field1']
+    field2 = request.form['field2']
+    field3 = request.form['field3']
+    field4 = request.form['field4']
+    field5 = request.form['field5']
+    field6 = request.form['field6']
+    field7 = request.form['field7']
+    field8 = request.form['field8']
+    field9 = request.form['field9']
+    field10 = request.form['field10']
+    print(field9)
+    
     if file.filename == '':
         return jsonify({'error': 'No selected file'})
 
@@ -207,7 +223,7 @@ def refactor_file():
             if df.empty or len(df.columns) == 0:
                 return jsonify({'error': 'No columns to parse'})
             
-            refactored_csv = refactor_dataframe(df)
+            refactored_csv = refactor_dataframe(df,field1)
 
             # Optionally, you can delete the temporary file
             os.remove(file_path)
