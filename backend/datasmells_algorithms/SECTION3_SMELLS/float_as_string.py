@@ -11,7 +11,9 @@ def detect_float_as_string(df):
         dict: A dictionary where keys are column names and values are percentages of cells containing potential data smells (float as string).
     """
     float_as_string = {}  # Dictionary to store detected instances
-
+    print("in float_as_string.py")
+    print(df)
+    print(df.dtypes)
     # Iterate through each column in the DataFrame
     for column in df.columns:
         # Check if the column contains any text strings that can be converted to floating-point numbers
@@ -27,6 +29,7 @@ def detect_float_as_string(df):
 
     # Include status attribute
     status = bool(float_as_string)  # True if any float-as-string smells were detected, False otherwise
+    print(float_as_string)
     return {'float_as_string': float_as_string, 'status': status}
 
 # Function to check if a string can be converted to a float, considering trailing zeros
