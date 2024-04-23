@@ -8,8 +8,9 @@ function SivaHistogram3() {
   const metrics = state.ok;
   const [activeIndex, setActiveIndex] = useState(null);
 
+  console.log(metrics);
   if (!metrics || !metrics['Percentage of separating smell per attribute']) {
-    return <div>No data smell found</div>;
+    return <div>No data smell found nothing to refactor for this smell</div>;
   }
 
   const separatingSmellData = metrics['Percentage of separating smell per attribute'];
