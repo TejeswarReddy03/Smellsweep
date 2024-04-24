@@ -39,15 +39,21 @@ from datasmells_algorithms.Tejeswar_smells.unnecessary_character import detect_a
 
 from datasmells_algorithms.Sivasai_smells.inconsistent import identify_data_type_inconsistency
 from datasmells_algorithms.Sivasai_smells.missing_value_inconsistency import identify_missing_value_inconsistency
+from refactoring_algorithms.Set5_Algos.missing_value_refactoring import missingvalue_refactor_data
 from datasmells_algorithms.Sivasai_smells.seperatingsmell import identify_separating_smell
+from refactoring_algorithms.Set5_Algos.seperatingsmell_refactor import separating_smell_refactor_data
 from datasmells_algorithms.Sivasai_smells.spacingsmells import identify_spacing_smell
+from refactoring_algorithms.Set5_Algos.spacingsmell_refactor import spacing_smell_refactor_data
 from datasmells_algorithms.Sivasai_smells.specialcharactersmell import identify_special_characters_inconsistency
 from datasmells_algorithms.Sivasai_smells.unitinconsistency import identify_unit_inconsistency
+from refactoring_algorithms.Set5_Algos.specialchar_refactoring import  remove_special_characters
 
 from refactoring_algorithms.Set2_Algos.refactor_int_as_float import refactor_floats_to_int
 from refactoring_algorithms.Set2_Algos.refactor_datetime import refactor_datetime_smell
 from refactoring_algorithms.Set2_Algos.refactor_float_as_string import refactor_float_as_string
 from refactoring_algorithms.Set2_Algos.refactor_int_as_string import refactor_integer_as_string
+from refactoring_algorithms.Set1_Algos.refactor_unnecessaryChar import clean_csv
+from refactoring_algorithms.Set5_Algos.unitrefactor import refactor_unit_inconsistency
 app = Flask(__name__)
 CORS(app)
 
@@ -70,12 +76,14 @@ def process_dataframe(df,csv_file):
              
              
              
-          #  'suspect_character_encoding':detect_suspect_encoding(csv_file),
-           # 'date_time_smell':detect_datetime_smell(df),
-            # 'suspect_character_encoding':detect_suspect_encoding(csv_file),
-            # 'date_time_smell':detect_datetime_smell(df),
+            'suspect_character_encoding':detect_suspect_encoding(csv_file),
+            'date_time_smell':detect_datetime_smell(df),
 
 
+            #  'date_time_smell':detect_datetime_smell(df),
+            # 'float_as_string':detect_float_as_string(df),
+            # 'integer_as_float':detect_integer_as_float(df),
+            #  'integer_as_string':detect_integer_as_string(df),
             #  'date_time_smell':detect_datetime_smell(df),
             # 'float_as_string':detect_float_as_string(df),
             # 'integer_as_float':detect_integer_as_float(df),
@@ -99,11 +107,18 @@ def process_dataframe(df,csv_file):
             # 'v6':detect_and_report_casing_data_smells(df),
             # 'v7':detect_and_report_long_data_values_metrics(df),
             # 'v8':detect_ambiguous_values(df),
-         
+            
+            
+            
+            
+            
+            
+            
+            
             
             
             # 'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
-            # 'incosistent_unit':detect_and_analyze_units_rule_based(df),
+            ###### 'incosistent_unit':detect_and_analyze_units_rule_based(df),
             # 'incosistent_unit':detect_and_analyze_units_rule_based(df),
 
 
@@ -128,20 +143,24 @@ def process_dataframe(df,csv_file):
     except Exception as e:
         return {'error': str(e)}
     
-def refactor_dataframe(df):
+def refactor_dataframe(df,field1):
     try:
-       
-        # df = refactor_integer_as_string(df)
-        # df = refactor_float_as_string(df)
-        # df = refactor_floats_to_int(df)
-        # df = refactor_datetime_smell(df)
-        # df=refactor_misspelling_data_smell(df)
-        # df=refactor_extreme_values(df)
-        # df=refactor_casing_data_smells(df)
-        # df=refactor_long_data_values(df)
-        # df=refactor_missing_data_smell(df)
-        # df=refactor_suspect_class_values(df)
-        # df=refactor_ambiguous_values(df)
+        df = separating_smell_refactor_data(df)
+        df = refactor_integer_as_string(df)
+        df = refactor_float_as_string(df)
+        df = refactor_floats_to_int(df)
+        df = refactor_datetime_smell(df)
+        df = missingvalue_refactor_data(df)
+        df = spacing_smell_refactor_data(df)
+        df = refactor_unit_inconsistency(df)
+        df = remove_special_characters(df,field1)
+        df=refactor_misspelling_data_smell(df)
+        df=refactor_ambiguous_values(df)
+        df=refactor_casing_data_smells(df)
+        df=refactor_extreme_values(df)
+        df=refactor_long_data_values(df)
+        df=refactor_missing_data_smell(df)
+        df=refactor_suspect_class_values(df)
         # Convert the DataFrame to a CSV file in memory
         csv_buffer = io.StringIO()
         df.to_csv(csv_buffer, index=False)
@@ -186,7 +205,7 @@ def upload_file():
 
             # Optionally, you can delete the temporary file
             os.remove(file_path)
-            print(metrics)
+            # print(metrics)
             return jsonify({'metrics': metrics})
         except Exception as e:
             return jsonify({'error': str(e)})
@@ -196,6 +215,18 @@ def refactor_file():
         return jsonify({'error': 'No file part'})
 
     file = request.files['file']
+    field1 = request.form['field1']
+    field2 = request.form['field2']
+    field3 = request.form['field3']
+    field4 = request.form['field4']
+    field5 = request.form['field5']
+    field6 = request.form['field6']
+    field7 = request.form['field7']
+    field8 = request.form['field8']
+    field9 = request.form['field9']
+    field10 = request.form['field10']
+    print(field9)
+    
     if file.filename == '':
         return jsonify({'error': 'No selected file'})
 
@@ -214,7 +245,7 @@ def refactor_file():
             if df.empty or len(df.columns) == 0:
                 return jsonify({'error': 'No columns to parse'})
             
-            refactored_csv = refactor_dataframe(df)
+            refactored_csv = refactor_dataframe(df,field1)
 
             # Optionally, you can delete the temporary file
             os.remove(file_path)
