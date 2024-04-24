@@ -47,6 +47,11 @@ from refactoring_algorithms.Set2_Algos.refactor_float_as_string import refactor_
 from refactoring_algorithms.Set2_Algos.refactor_int_as_string import refactor_integer_as_string
 from refactoring_algorithms.Set1_Algos.refactor_unnecessaryChar import clean_csv
 from refactoring_algorithms.Set5_Algos.unitrefactor import refactor_unit_inconsistency
+
+from refactoring_algorithms.Set3_Algos.cont_ref import detect_and_refactor_contractions
+from refactoring_algorithms.Set3_Algos.sus_det_ref import detect_and_refactor_suspect_distribution
+from refactoring_algorithms.Set3_Algos.sus_sign_ref import refactor_data
+
 app = Flask(__name__)
 CORS(app)
 
@@ -60,7 +65,7 @@ def process_dataframe(df,csv_file):
            # 'suspect_detection': assess_data_distribution(df),
             #'amb_d_t':assess_ambiguous_date_formats(df),
            # 'conte': detect_contractions(df),
-            # 'dummy_values':  identify_dummy_values(df),
+            'dummy_values':  identify_dummy_values(df),
              
              
              
@@ -79,8 +84,8 @@ def process_dataframe(df,csv_file):
             # 'date_time_smell':detect_datetime_smell(df),
 
 
-            # 'outliers':detect_outliers(df),
-            # 'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
+            'outliers':detect_outliers(df),
+            'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
             
             
             # 'v1':detect_and_report_duplicate_data(df),
@@ -101,7 +106,7 @@ def process_dataframe(df,csv_file):
             
             
             
-            # 'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
+            'unnecessary_char':detect_and_analyze_unnecessary_characters(df),
             ###### 'incosistent_unit':detect_and_analyze_units_rule_based(df),
             # 'incosistent_unit':detect_and_analyze_units_rule_based(df),
 
@@ -138,6 +143,9 @@ def refactor_dataframe(df,field1):
         df = spacing_smell_refactor_data(df)
         df = refactor_unit_inconsistency(df)
         df = remove_special_characters(df,field1)
+        df = detect_and_refactor_contractions(df)
+        df = detect_and_refactor_suspect_distribution(df)
+        df = refactor_data(df)
 
         # Convert the DataFrame to a CSV file in memory
         csv_buffer = io.StringIO()
