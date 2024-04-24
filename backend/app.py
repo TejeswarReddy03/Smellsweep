@@ -16,7 +16,7 @@ from datasmells_algorithms.Vikram_smells.suspectclass_value import detect_and_re
 from datasmells_algorithms.Vikram_smells.casing_value import detect_and_report_casing_data_smells
 from datasmells_algorithms.Vikram_smells.longdata_value import detect_and_report_long_data_values_metrics
 from datasmells_algorithms.Vikram_smells.ambiguous_value import detect_ambiguous_values
-from refactoring_algorithms.Set4_Algos.amb_ref import refactor_ambiguous_values
+# from refactoring_algorithms.Set4_Algos.amb_ref import refactor_ambiguous_values
 from refactoring_algorithms.Set4_Algos.cas_ref import refactor_casing_data_smells
 from refactoring_algorithms.Set4_Algos.dup_ref import refactor_duplicate_data
 from refactoring_algorithms.Set4_Algos.ext_ref import refactor_extreme_values
@@ -59,9 +59,11 @@ from refactoring_algorithms.Set3_Algos.cont_ref import detect_and_refactor_contr
 from refactoring_algorithms.Set3_Algos.sus_det_ref import detect_and_refactor_suspect_distribution
 from refactoring_algorithms.Set3_Algos.sus_sign_ref import refactor_data
 
+from flask_socketio import SocketIO,emit
 app = Flask(__name__)
-CORS(app)
-
+app.config['SECRET_KEY'] = 'secret!'
+CORS(app, resources={r"/*": {"origins": "*"}})
+socketio = SocketIO(app, cors_allowed_origins="*")
 def process_dataframe(df,csv_file):
     try:
         # Call the identify_dummy_values function
@@ -149,27 +151,65 @@ def process_dataframe(df,csv_file):
     except Exception as e:
         return {'error': str(e)}
     
-def refactor_dataframe(df,field1):
+# def refactor_dataframe(df):
+#     try:
+       
+#         df = refactor_integer_as_string(df)
+#         df = refactor_float_as_string(df)
+#         df = refactor_floats_to_int(df)
+#         df = refactor_datetime_smell(df)
+        
+#         # Convert the DataFrame to a CSV file in memory
+#         csv_buffer = io.StringIO()
+#         #df.to_csv(csv_buffer, index=False)
+        
+#         # Get the CSV contents as a string
+#         csv_contents = csv_buffer.getvalue()
+        
+#         return csv_contents
+#     except Exception as e:
+#         return {'error': str(e)}
+
+def refactor_dataframe(df, field1):
     try:
-        df = separating_smell_refactor_data(df)
-        df = refactor_integer_as_string(df)
-        df = refactor_float_as_string(df)
-        df = refactor_floats_to_int(df)
-        df = refactor_datetime_smell(df)
-        df = missingvalue_refactor_data(df)
-        df = spacing_smell_refactor_data(df)
-        df = refactor_unit_inconsistency(df)
-        df = remove_special_characters(df,field1)
-        df=refactor_misspelling_data_smell(df)
-        df=refactor_ambiguous_values(df)
-        df=refactor_casing_data_smells(df)
-        df=refactor_extreme_values(df)
-        df=refactor_long_data_values(df)
-        df=refactor_missing_data_smell(df)
-        df=refactor_suspect_class_values(df)
-        df = detect_and_refactor_contractions(df)
-        df = detect_and_refactor_suspect_distribution(df)
-        df = refactor_data(df)
+        refactoring_methods = [
+            separating_smell_refactor_data,
+            refactor_integer_as_string,
+            refactor_float_as_string,
+            refactor_floats_to_int,
+            refactor_datetime_smell,
+            missingvalue_refactor_data,
+            spacing_smell_refactor_data,
+            refactor_unit_inconsistency,
+            lambda df: remove_special_characters(df, field1),
+            refactor_misspelling_data_smell,
+            # refactor_ambiguous_values,
+            refactor_casing_data_smells,
+            refactor_extreme_values,
+            refactor_long_data_values,
+            refactor_missing_data_smell,
+            refactor_suspect_class_values,
+            detect_and_refactor_contractions,
+            detect_and_refactor_suspect_distribution,
+            refactor_data
+        ]
+        task_id = 0  # Initialize task_id
+        for method in refactoring_methods:
+            print("in ",method.__name__)
+            # Emit the start status for the current method
+            socketio.emit('refactoring_update', {'index': task_id, 'method': method.__name__, 'status': 'start'})
+            socketio.sleep(1)
+            # Invoke the refactoring method
+            df = method(df)
+
+            # Emit the done status for the current method
+            socketio.emit('refactoring_update', {'index': task_id, 'method': method.__name__, 'status': 'done'})
+            socketio.sleep(1)
+            # Increment task_id for the next method
+            task_id += 1
+        print("hi")
+        # Disconnect the socket after all methods are completed
+        #socketio.disconnect()
 
         # Convert the DataFrame to a CSV file in memory
         csv_buffer = io.StringIO()
@@ -180,6 +220,7 @@ def refactor_dataframe(df,field1):
         
         return csv_contents
     except Exception as e:
+        print("error occured")
         return {'error': str(e)}
 
 @app.route('/upload', methods=['POST'])
@@ -266,4 +307,4 @@ def refactor_file():
             return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    socketio.run(app,debug=True, port=5001)

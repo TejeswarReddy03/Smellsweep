@@ -27,7 +27,7 @@ def refactor_float_as_string(df):
         percentage = (string_float_count / total_cells) * 100
 
         # If percentage is greater than 90%, replace non-float values in that column with NaN
-        if percentage > 10:
+        if percentage > 80:
             df[column] = df[column].apply(lambda x: np.nan if not (is_float(x) or x.isdigit()) else x)
 
         # If percentage is greater than 0, it indicates the presence of the data smell
