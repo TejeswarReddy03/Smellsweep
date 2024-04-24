@@ -36,7 +36,7 @@ function RefactorStatus() {
         {/* Render the latest status */}
         {statusList.map((status, index) => (
           <div key={`${status.index}-${status.method}-${status.status}`} className={`status-item ${index === 0 ? "new" : ""}`}>
-            <p className="index">Index: {status.index}</p>
+            <p className="index">Method Number: {status.index}</p>
             <p className="method">Method: {status.method}</p>
             <p className="status">Status: {status.status}</p>
             <div className="tick-box">

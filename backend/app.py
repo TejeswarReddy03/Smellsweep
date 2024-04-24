@@ -16,7 +16,14 @@ from datasmells_algorithms.Vikram_smells.suspectclass_value import detect_and_re
 from datasmells_algorithms.Vikram_smells.casing_value import detect_and_report_casing_data_smells
 from datasmells_algorithms.Vikram_smells.longdata_value import detect_and_report_long_data_values_metrics
 from datasmells_algorithms.Vikram_smells.ambiguous_value import detect_ambiguous_values
-
+# from refactoring_algorithms.Set4_Algos.amb_ref import refactor_ambiguous_values
+from refactoring_algorithms.Set4_Algos.cas_ref import refactor_casing_data_smells
+from refactoring_algorithms.Set4_Algos.dup_ref import refactor_duplicate_data
+from refactoring_algorithms.Set4_Algos.ext_ref import refactor_extreme_values
+from refactoring_algorithms.Set4_Algos.long_ref import refactor_long_data_values
+from refactoring_algorithms.Set4_Algos.mis_ref import refactor_misspelling_data_smell
+from refactoring_algorithms.Set4_Algos.missing_ref import refactor_missing_data_smell
+from refactoring_algorithms.Set4_Algos.sus_ref import refactor_suspect_class_values
 
 from datasmells_algorithms.SECTION3_SMELLS.suspect_character_encoding import detect_suspect_encoding
 from datasmells_algorithms.SECTION3_SMELLS.date_time import detect_datetime_smell
@@ -32,15 +39,26 @@ from datasmells_algorithms.Tejeswar_smells.unnecessary_character import detect_a
 
 from datasmells_algorithms.Sivasai_smells.inconsistent import identify_data_type_inconsistency
 from datasmells_algorithms.Sivasai_smells.missing_value_inconsistency import identify_missing_value_inconsistency
+from refactoring_algorithms.Set5_Algos.missing_value_refactoring import missingvalue_refactor_data
 from datasmells_algorithms.Sivasai_smells.seperatingsmell import identify_separating_smell
+from refactoring_algorithms.Set5_Algos.seperatingsmell_refactor import separating_smell_refactor_data
 from datasmells_algorithms.Sivasai_smells.spacingsmells import identify_spacing_smell
+from refactoring_algorithms.Set5_Algos.spacingsmell_refactor import spacing_smell_refactor_data
 from datasmells_algorithms.Sivasai_smells.specialcharactersmell import identify_special_characters_inconsistency
 from datasmells_algorithms.Sivasai_smells.unitinconsistency import identify_unit_inconsistency
+from refactoring_algorithms.Set5_Algos.specialchar_refactoring import  remove_special_characters
 
 from refactoring_algorithms.Set2_Algos.refactor_int_as_float import refactor_floats_to_int
 from refactoring_algorithms.Set2_Algos.refactor_datetime import refactor_datetime_smell
 from refactoring_algorithms.Set2_Algos.refactor_float_as_string import refactor_float_as_string
 from refactoring_algorithms.Set2_Algos.refactor_int_as_string import refactor_integer_as_string
+from refactoring_algorithms.Set1_Algos.refactor_unnecessaryChar import clean_csv
+from refactoring_algorithms.Set5_Algos.unitrefactor import refactor_unit_inconsistency
+
+from refactoring_algorithms.Set3_Algos.cont_ref import detect_and_refactor_contractions
+from refactoring_algorithms.Set3_Algos.sus_det_ref import detect_and_refactor_suspect_distribution
+from refactoring_algorithms.Set3_Algos.sus_sign_ref import refactor_data
+
 from flask_socketio import SocketIO,emit
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -57,17 +75,27 @@ def process_dataframe(df,csv_file):
             #'amb_d_t':assess_ambiguous_date_formats(df),
            # 'conte': detect_contractions(df),
             # 'dummy_values':  identify_dummy_values(df),
+            # 'suspect_sign': identify_suspect_sign(df),
+            # 'suspect_detection': assess_data_distribution(df),
+            # 'amb_d_t':assess_ambiguous_date_formats(df),
+            # 'conte': detect_contractions(df),
+            #  'dummy_values':  identify_dummy_values(df),
+            'dummy_values':  identify_dummy_values(df),
              
              
              
-          #  'suspect_character_encoding':detect_suspect_encoding(csv_file),
-           # 'date_time_smell':detect_datetime_smell(df),
+            'suspect_character_encoding':detect_suspect_encoding(csv_file),
+            'date_time_smell':detect_datetime_smell(df),
 
 
-             'date_time_smell':detect_datetime_smell(df),
-            'float_as_string':detect_float_as_string(df),
-            'integer_as_float':detect_integer_as_float(df),
-             'integer_as_string':detect_integer_as_string(df),
+            #  'date_time_smell':detect_datetime_smell(df),
+            # 'float_as_string':detect_float_as_string(df),
+            # 'integer_as_float':detect_integer_as_float(df),
+            #  'integer_as_string':detect_integer_as_string(df),
+            #  'date_time_smell':detect_datetime_smell(df),
+            # 'float_as_string':detect_float_as_string(df),
+            # 'integer_as_float':detect_integer_as_float(df),
+            #  'integer_as_string':detect_integer_as_string(df),
 
 
           
@@ -79,14 +107,14 @@ def process_dataframe(df,csv_file):
             'empty_strings':detect_and_analyze_empty_strings_rule_based(df),
             
             
-            'v1':detect_and_report_duplicate_data(df),
-            'v2':detect_and_report_missing_data_metrics(df),
-            'v3':extreme_values_metrics(df),
-            'v4':detect_misspelling_data_smell_metrics(df),
-            'v5':detect_and_report_suspect_class_values_metrics(df),
-            'v6':detect_and_report_casing_data_smells(df),
-            'v7':detect_and_report_long_data_values_metrics(df),
-            'v8':detect_ambiguous_values(df),
+            # 'v1':detect_and_report_duplicate_data(df),
+            # 'v2':detect_and_report_missing_data_metrics(df),
+            # 'v3':extreme_values_metrics(df),
+            # 'v4':detect_misspelling_data_smell_metrics(df),
+            # 'v5':detect_and_report_suspect_class_values_metrics(df),
+            # 'v6':detect_and_report_casing_data_smells(df),
+            # 'v7':detect_and_report_long_data_values_metrics(df),
+            # 'v8':detect_ambiguous_values(df),
             
             
             
@@ -106,12 +134,12 @@ def process_dataframe(df,csv_file):
             
 
 
-            'inconsistent':identify_data_type_inconsistency(df),
-            'minconsistency':identify_missing_value_inconsistency(df),
-            'seperatingsmell':identify_separating_smell(df),
-            'spacingsmell':identify_spacing_smell(df),
-            'specialchar':identify_special_characters_inconsistency(df),
-            'unitinconsistency':identify_unit_inconsistency(df),
+            # 'inconsistent':identify_data_type_inconsistency(df),
+            # 'minconsistency':identify_missing_value_inconsistency(df),
+            # 'seperatingsmell':identify_separating_smell(df),
+            # 'spacingsmell':identify_spacing_smell(df),
+            # 'specialchar':identify_special_characters_inconsistency(df),
+            # 'unitinconsistency':identify_unit_inconsistency(df),
 
             # Add metrics from other algorithms here
         }
@@ -141,13 +169,29 @@ def process_dataframe(df,csv_file):
 #         return csv_contents
 #     except Exception as e:
 #         return {'error': str(e)}
-def refactor_dataframe(df):
+
+def refactor_dataframe(df, field1):
     try:
         refactoring_methods = [
+            separating_smell_refactor_data,
             refactor_integer_as_string,
             refactor_float_as_string,
             refactor_floats_to_int,
-            refactor_datetime_smell
+            refactor_datetime_smell,
+            missingvalue_refactor_data,
+            spacing_smell_refactor_data,
+            refactor_unit_inconsistency,
+            lambda df: remove_special_characters(df, field1),
+            # refactor_misspelling_data_smell,
+            # refactor_ambiguous_values,
+            refactor_casing_data_smells,
+            refactor_extreme_values,
+            refactor_long_data_values,
+            refactor_missing_data_smell,
+            refactor_suspect_class_values,
+            detect_and_refactor_contractions,
+            detect_and_refactor_suspect_distribution,
+            refactor_data
         ]
         task_id = 0  # Initialize task_id
         for method in refactoring_methods:
@@ -166,7 +210,7 @@ def refactor_dataframe(df):
         # Disconnect the socket after all methods are completed
         socketio.disconnect()
 
-        # ... rest of your code
+        # Convert the DataFrame to a CSV file in memory
         csv_buffer = io.StringIO()
         df.to_csv(csv_buffer, index=False)
         
@@ -176,9 +220,6 @@ def refactor_dataframe(df):
         return csv_contents
     except Exception as e:
         return {'error': str(e)}
-
-
-
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -213,7 +254,7 @@ def upload_file():
 
             # Optionally, you can delete the temporary file
             os.remove(file_path)
-            print(metrics)
+            # print(metrics)
             return jsonify({'metrics': metrics})
         except Exception as e:
             return jsonify({'error': str(e)})
@@ -223,6 +264,18 @@ def refactor_file():
         return jsonify({'error': 'No file part'})
 
     file = request.files['file']
+    field1 = request.form['field1']
+    field2 = request.form['field2']
+    field3 = request.form['field3']
+    field4 = request.form['field4']
+    field5 = request.form['field5']
+    field6 = request.form['field6']
+    field7 = request.form['field7']
+    field8 = request.form['field8']
+    field9 = request.form['field9']
+    field10 = request.form['field10']
+    print(field9)
+    
     if file.filename == '':
         return jsonify({'error': 'No selected file'})
 
@@ -241,7 +294,7 @@ def refactor_file():
             if df.empty or len(df.columns) == 0:
                 return jsonify({'error': 'No columns to parse'})
             
-            refactored_csv = refactor_dataframe(df)
+            refactored_csv = refactor_dataframe(df,field1)
 
             # Optionally, you can delete the temporary file
             os.remove(file_path)

@@ -47,7 +47,7 @@ import LongDataValuesGraph from "./reactGraphs/longdata_value_graph";
 import MisspelledDataGraph from "./reactGraphs/mis_spell_graph";
 import SuspectClassValuesGraph from "./reactGraphs/suspectclass_value_graph";
 import MissingDataGraph from "./reactGraphs/missing_value_graph";
-
+import Form from "./components/DefaultPage/Form";
 
 
 
@@ -68,10 +68,14 @@ function App() {
     <div className="total-main">
       <BrowserRouter>
         <Routes>
+        {/* {<Route index element ={<Form />} />} */}
         {<Route index element ={<MainPage />} />}
+
       {<Route path='/datasmells'  element={< DataSmells/>} />}
 
       {<Route path='/datasmell_img_template'  element={< DataSmellsImageTemplate/>} />}
+      {<Route path='/input_data'  element={< Form />} />}
+
       
 
 

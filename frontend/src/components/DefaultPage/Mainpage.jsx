@@ -17,6 +17,7 @@ import socket from "./common_socket"
 const language = "python";
 
 export default function MainPage() {
+
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [jsonData, setJsonData] = useState(null);
@@ -39,9 +40,9 @@ export default function MainPage() {
   const[contractions_metrics,setcontractions]=useState(false);
   const [dummy_value_metrics,setdummy]=useState(0);
   const [dummy_value_metrics2,setdummy2]=useState(0);
-
-
   const [intasfloat,setintasfloat]=useState(false);
+  const [inputVal,setInputVal]=useState(false)
+
 
   const handleFileUpload = (event) => {
     setFileChosen(true);
@@ -58,6 +59,12 @@ export default function MainPage() {
         console.log(result.data);
       },
     });
+  };
+
+  const handleInputPage = () => {
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    navigate("/input_data", { state: { file: selectedFile } });
   };
 
   const handleUpload = () => {
@@ -140,48 +147,8 @@ const handleUpload_refactor = () => {
         console.log(error);
         setIsLoading(false);
       });
- 
-};
+  };
 
-
-  // const handleUpload_refactor = () => {
-  //   setClick(true);
-  //   setIsLoading(true);
-  //   const formData = new FormData();
-  //   formData.append("file", selectedFile);
-  
-  //   axios
-  //     .post("http://localhost:5001/refactor", formData)
-  //     .then((response) => {
-  //       if (!response.data || !response.data.refactored_csv) {
-  //         navigate('/error_in_backend');
-  //         return;
-  //       }
-  //       console.log(response.data);
-        
-  //       // Create a Blob object from the refactored CSV data
-  //       const blob = new Blob([response.data.refactored_csv], { type: 'text/csv' });
-  
-  //       // Create a temporary anchor element to trigger the download
-  //       const a = document.createElement('a');
-  //       a.href = window.URL.createObjectURL(blob);
-  //       a.download = 'refactored_data.csv'; // Specify the filename
-  //       a.style.display = 'none';
-  
-  //       // Append the anchor element to the body and trigger the download
-  //       document.body.appendChild(a);
-  //       a.click();
-  
-  //       // Cleanup: Remove the temporary anchor element
-  //       document.body.removeChild(a);
-  
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       setIsLoading(false);
-  //     });
-  // };
   const handleDownload = () => {
     html2canvas(document.body).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
@@ -232,16 +199,16 @@ const handleUpload_refactor = () => {
           className="analyze-btn d-flex align-self-center"
           variant="success"
           size="lg"
-          onClick={handleUpload_refactor}
+          onClick={handleInputPage}
         >
  
-         Refactor
+         Customized Refactoring
           
-      
-
+    
 
 
         </Button>
+        
 
       </div>
       {fileChosen && jsonData && <Excel myjson={jsonData} />}
