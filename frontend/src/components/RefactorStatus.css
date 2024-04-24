@@ -1,0 +1,108 @@
+.status-container {
+    width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f8f8; /* Light gray background */
+    border-radius: 12px;
+    border: 2px solid #333333; /* Dark border for the container */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    height: 400px; /* Fixed height for the container */
+    overflow: hidden; /* Hide overflow */
+  }
+  
+  .title {
+    color: #333333; /* Dark font color */
+    text-align: center;
+  }
+  
+  .status-list {
+    position: relative;
+    height: 100%;
+  }
+  
+  .status-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 70px); /* Adjusted width with 2px margin for padding */
+    padding: 20px;
+    background-color: #fcf8f8; /* Light pink background */
+    border-radius: 12px;
+    border: 2px solid #333333; /* Dark border for the cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Add transitions */
+    margin: 20px; /* Increased margin for better spacing */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font family */
+    color: #333333; /* Dark font color */
+  }
+  
+  .status-item:not(:first-child) {
+    opacity: 0; /* Hide older cards */
+  }
+  
+  .status-item.move-up {
+    transform: translateY(-100%); /* Move card up */
+  }
+  
+  /* Hover effect */
+  .status-item:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Animation effect */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .status-item.new {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  /* Styling for different statuses */
+  .method {
+    color: #00adb5; /* Light blue color for "start" status */
+  }
+  
+  .status {
+    color: #ff7675; /* Coral color for "done" status */
+  }
+  
+  .tick-box {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .tick-box input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 2px solid #333;
+    border-radius: 4px;
+  }
+  
+  .tick-box input[type="checkbox"]:checked {
+    background-color: #00b894; /* Light green background when checked */
+  }
+  
+  .tick-box .tick {
+    width: 16px;
+    height: 16px;
+    border-bottom: 2px solid #fff; /* Tick shape */
+    border-right: 2px solid #fff;
+    transform: rotate(45deg); /* Rotate tick to form a checkmark */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Fade-in transition */
+  }
+  
+  .tick-box input[type="checkbox"]:checked + .tick {
+    opacity: 1; /* Show tick animation when checkbox is checked */
+  }
+  

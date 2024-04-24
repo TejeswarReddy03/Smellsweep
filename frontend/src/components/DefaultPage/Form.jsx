@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { useNavigate,useLocation } from 'react-router-dom';
 import axios from "axios";
 import  { useState } from "react";
-
+// import socket from "./common_socket"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,7 +62,9 @@ export default function Form() {
     formData.append("field10", event.target.field10.value);
 
     // Add more formData.append statements for additional fields
-  
+    console.log("in handleupload refactor");
+    navigate('/refactor_status');
+    console.log("after navigating");
     axios
       .post("http://localhost:5001/refactor", formData)
       .then((response) => {
@@ -70,7 +72,8 @@ export default function Form() {
           navigate('/error_in_backend');
           return;
         }
-  
+        console.log("received df from backend")
+        console.log(response.data);
         // Download refactored CSV
         const blob = new Blob([response.data.refactored_csv], { type: 'text/csv' });
         const a = document.createElement('a');
@@ -82,6 +85,7 @@ export default function Form() {
         document.body.removeChild(a);
   
         setIsLoading(false);
+        navigate("/refactoring_finished")
       })
       .catch((error) => {
         console.log(error);

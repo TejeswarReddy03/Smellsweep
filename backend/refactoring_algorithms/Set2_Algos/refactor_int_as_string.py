@@ -14,8 +14,8 @@ def refactor_integer_as_string(df):
         if integer_count > 0:
             percentage = (integer_count / total_rows) * 100
            
-            # Check if the percentage is more than 10%
-            if percentage > 10:
+            # Check if the percentage is more than 80%
+            if percentage > 80:
                 # Replace non-integer strings with NaN
                 df[column] = pd.to_numeric(df[column], errors='coerce')
 
