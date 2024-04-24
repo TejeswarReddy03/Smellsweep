@@ -16,7 +16,14 @@ from datasmells_algorithms.Vikram_smells.suspectclass_value import detect_and_re
 from datasmells_algorithms.Vikram_smells.casing_value import detect_and_report_casing_data_smells
 from datasmells_algorithms.Vikram_smells.longdata_value import detect_and_report_long_data_values_metrics
 from datasmells_algorithms.Vikram_smells.ambiguous_value import detect_ambiguous_values
-
+from refactoring_algorithms.Set4_Algos.amb_ref import refactor_ambiguous_values
+from refactoring_algorithms.Set4_Algos.cas_ref import refactor_casing_data_smells
+from refactoring_algorithms.Set4_Algos.dup_ref import refactor_duplicate_data
+from refactoring_algorithms.Set4_Algos.ext_ref import refactor_extreme_values
+from refactoring_algorithms.Set4_Algos.long_ref import refactor_long_data_values
+from refactoring_algorithms.Set4_Algos.mis_ref import refactor_misspelling_data_smell
+from refactoring_algorithms.Set4_Algos.missing_ref import refactor_missing_data_smell
+from refactoring_algorithms.Set4_Algos.sus_ref import refactor_suspect_class_values
 
 from datasmells_algorithms.SECTION3_SMELLS.suspect_character_encoding import detect_suspect_encoding
 from datasmells_algorithms.SECTION3_SMELLS.date_time import detect_datetime_smell
@@ -65,6 +72,12 @@ def process_dataframe(df,csv_file):
            # 'suspect_detection': assess_data_distribution(df),
             #'amb_d_t':assess_ambiguous_date_formats(df),
            # 'conte': detect_contractions(df),
+            # 'dummy_values':  identify_dummy_values(df),
+            # 'suspect_sign': identify_suspect_sign(df),
+            # 'suspect_detection': assess_data_distribution(df),
+            # 'amb_d_t':assess_ambiguous_date_formats(df),
+            # 'conte': detect_contractions(df),
+            #  'dummy_values':  identify_dummy_values(df),
             'dummy_values':  identify_dummy_values(df),
              
              
@@ -73,6 +86,10 @@ def process_dataframe(df,csv_file):
             'date_time_smell':detect_datetime_smell(df),
 
 
+            #  'date_time_smell':detect_datetime_smell(df),
+            # 'float_as_string':detect_float_as_string(df),
+            # 'integer_as_float':detect_integer_as_float(df),
+            #  'integer_as_string':detect_integer_as_string(df),
             #  'date_time_smell':detect_datetime_smell(df),
             # 'float_as_string':detect_float_as_string(df),
             # 'integer_as_float':detect_integer_as_float(df),
@@ -143,6 +160,13 @@ def refactor_dataframe(df,field1):
         df = spacing_smell_refactor_data(df)
         df = refactor_unit_inconsistency(df)
         df = remove_special_characters(df,field1)
+        df=refactor_misspelling_data_smell(df)
+        df=refactor_ambiguous_values(df)
+        df=refactor_casing_data_smells(df)
+        df=refactor_extreme_values(df)
+        df=refactor_long_data_values(df)
+        df=refactor_missing_data_smell(df)
+        df=refactor_suspect_class_values(df)
         df = detect_and_refactor_contractions(df)
         df = detect_and_refactor_suspect_distribution(df)
         df = refactor_data(df)
