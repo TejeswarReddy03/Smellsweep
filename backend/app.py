@@ -41,9 +41,11 @@ from refactoring_algorithms.Set2_Algos.refactor_int_as_float import refactor_flo
 from refactoring_algorithms.Set2_Algos.refactor_datetime import refactor_datetime_smell
 from refactoring_algorithms.Set2_Algos.refactor_float_as_string import refactor_float_as_string
 from refactoring_algorithms.Set2_Algos.refactor_int_as_string import refactor_integer_as_string
+from flask_socketio import SocketIO,emit
 app = Flask(__name__)
-CORS(app)
-
+app.config['SECRET_KEY'] = 'secret!'
+CORS(app, resources={r"/*": {"origins": "*"}})
+socketio = SocketIO(app, cors_allowed_origins="*")
 def process_dataframe(df,csv_file):
     try:
         # Call the identify_dummy_values function
@@ -121,15 +123,50 @@ def process_dataframe(df,csv_file):
     except Exception as e:
         return {'error': str(e)}
     
+# def refactor_dataframe(df):
+#     try:
+       
+#         df = refactor_integer_as_string(df)
+#         df = refactor_float_as_string(df)
+#         df = refactor_floats_to_int(df)
+#         df = refactor_datetime_smell(df)
+        
+#         # Convert the DataFrame to a CSV file in memory
+#         csv_buffer = io.StringIO()
+#         #df.to_csv(csv_buffer, index=False)
+        
+#         # Get the CSV contents as a string
+#         csv_contents = csv_buffer.getvalue()
+        
+#         return csv_contents
+#     except Exception as e:
+#         return {'error': str(e)}
 def refactor_dataframe(df):
     try:
-       
-        df = refactor_integer_as_string(df)
-        df = refactor_float_as_string(df)
-        df = refactor_floats_to_int(df)
-        df = refactor_datetime_smell(df)
-        
-        # Convert the DataFrame to a CSV file in memory
+        refactoring_methods = [
+            refactor_integer_as_string,
+            refactor_float_as_string,
+            refactor_floats_to_int,
+            refactor_datetime_smell
+        ]
+        task_id = 0  # Initialize task_id
+        for method in refactoring_methods:
+            # Emit the start status for the current method
+            socketio.emit('refactoring_update', {'index': task_id, 'method': method.__name__, 'status': 'start'})
+            socketio.sleep(1)
+            # Invoke the refactoring method
+            df = method(df)
+
+            # Emit the done status for the current method
+            socketio.emit('refactoring_update', {'index': task_id, 'method': method.__name__, 'status': 'done'})
+            socketio.sleep(1)
+            # Increment task_id for the next method
+            task_id += 1
+
+        # Disconnect the socket after all methods are completed
+        socketio.disconnect()
+
+        # ... rest of your code
         csv_buffer = io.StringIO()
         df.to_csv(csv_buffer, index=False)
         
@@ -139,6 +176,9 @@ def refactor_dataframe(df):
         return csv_contents
     except Exception as e:
         return {'error': str(e)}
+
+
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -212,4 +252,4 @@ def refactor_file():
             return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    socketio.run(app,debug=True, port=5001)

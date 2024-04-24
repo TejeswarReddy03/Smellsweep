@@ -9,6 +9,8 @@ import { Button } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import Codebox from "../Codebox";
 import Table from "./Table";
+import io from 'socket.io-client';
+import socket from "./common_socket"
 
 // import MyBarChart from "../../reactGraphs/MyBarChart.jsx";
 
@@ -41,7 +43,6 @@ export default function MainPage() {
 
   const [intasfloat,setintasfloat]=useState(false);
 
-
   const handleFileUpload = (event) => {
     setFileChosen(true);
     if(event.target.files.length==0){
@@ -68,14 +69,7 @@ export default function MainPage() {
     axios
       .post("http://localhost:5001/upload", formData)  // Update the URL accordingly
       .then((response) => {
-        // setAnalysisData(response.data);
-        // setHeatmapData(response.data.heatmap);
-        // setBargraph_sp_miss(response.data.bargraph_sp_miss);
-        // setBargraph_nan(response.data.bargraph_nan);
-        // setBoxplot(response.data.outliers.plot);
-        // setBargraph_binning_cat(response.data.binning_cat.plot);
-        // setBargraph_class_imbal(response.data.imbalance.plot);
-
+        
         if (!response.data || !response.data.metrics) {
           // Navigate to a new page if response data is null or doesn't have metrics
           navigate('/error_in_backend'); // Replace '/new-page-url' with the actual URL of the new page
@@ -87,32 +81,10 @@ console.log("hi");
        
 
      
-        // console.log(response);
-       // const { dataframe, metrics } = response.data;
-        //console.log(response["data"]);
          console.log(response["data"]);
-        // setsuspect(response["data"]["metrics"]["suspect_sign"]);
-        // setsuspectt(response["data"]["metrics"]["suspect_detection"]);
-        // setdatetimee(response["data"]["metrics"]["amb_d_t"]);
-        // setcontractions(response["data"]["metrics"]["conte"]);
-        // console.log(response["data"]);
-        // // setdummy(response["data"]["metrics"]["outliers"]);
-        // // console.log(response["data"]);
-        // setdummy(response["data"]["metrics"]["outliers"]);
-        // setdummy2(response["data"]["metrics"]["outliers"]);
-        // console.log(response["data"]["metrics"]["unnecessary_char"]);
-
-        // // navigate('/charts4',{ state: { ok:response["data"]["metrics"]["empty_strings"] }});
-        // console.log(response["data"])
+       
         navigate("/datasmells",{ state: { ok:response["data"] }});
-        // console.log("hiiii",response["data"]["metrics"]["suspect_sign"]);
-
-        //  navigate('/charts2',{ state: { ok:response["data"]["metrics"]["unnecessary_char"]  }});
-         // navigate("/sus_sign_charts",{ state: { ok:response["data"]["metrics"]["suspect_sign"]["X_values"],ok2:response["data"]["metrics"]["suspect_sign"]["Y_values"]  }});
-          // navigate("/datasmells");
-          // console.log("hiiii",response["data"]["metrics"]["contracting_datasmell"]);
-          //navigate("/suspect_detection_charts",{ state: { ok:response["data"]["metrics"]["suspect_detection"]["X_values"],ok2:response["data"]["metrics"]["suspect_detection"]["Y_values"]  }});
-          // navigate("/contracting_charts",{ state: { ok:response["data"]["metrics"]["conte"]["X_values"],ok2:response["data"]["metrics"]["conte"]["Y_values"]  }});
+       
         setIsLoading(false);
       })
       .catch((error) => {
@@ -120,12 +92,25 @@ console.log("hi");
         setIsLoading(false);
       });
   };
-  const handleUpload_refactor = () => {
-    setClick(true);
-    setIsLoading(true);
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-  
+ 
+
+// ...
+const handleUpload_refactor = () => {
+  setIsLoading(true);
+  const formData = new FormData();
+  formData.append("file", selectedFile);
+
+  // const socket = io("localhost:5001/", {
+  //   transports: ["websocket"],
+  //   cors: {
+  //     origin: "http://localhost:3000/",
+  //   },
+  // });
+
+  // socket.emit('refactoring_update', { method: 'refactoring_started' });
+  console.log("in handleupload refactor");
+  navigate('/refactor_status');
+  console.log("after navigating");
     axios
       .post("http://localhost:5001/refactor", formData)
       .then((response) => {
@@ -133,30 +118,70 @@ console.log("hi");
           navigate('/error_in_backend');
           return;
         }
+        console.log("received df from backend")
         console.log(response.data);
-        // Create a Blob object from the refactored CSV data
+
         const blob = new Blob([response.data.refactored_csv], { type: 'text/csv' });
-  
-        // Create a temporary anchor element to trigger the download
+
         const a = document.createElement('a');
         a.href = window.URL.createObjectURL(blob);
-        a.download = 'refactored_data.csv'; // Specify the filename
+        a.download = 'refactored_data.csv';
         a.style.display = 'none';
-  
-        // Append the anchor element to the body and trigger the download
+
         document.body.appendChild(a);
         a.click();
-  
-        // Cleanup: Remove the temporary anchor element
+
         document.body.removeChild(a);
-  
+
         setIsLoading(false);
+        navigate("/refactoring_finished")
       })
       .catch((error) => {
         console.log(error);
         setIsLoading(false);
       });
-  };
+ 
+};
+
+
+  // const handleUpload_refactor = () => {
+  //   setClick(true);
+  //   setIsLoading(true);
+  //   const formData = new FormData();
+  //   formData.append("file", selectedFile);
+  
+  //   axios
+  //     .post("http://localhost:5001/refactor", formData)
+  //     .then((response) => {
+  //       if (!response.data || !response.data.refactored_csv) {
+  //         navigate('/error_in_backend');
+  //         return;
+  //       }
+  //       console.log(response.data);
+        
+  //       // Create a Blob object from the refactored CSV data
+  //       const blob = new Blob([response.data.refactored_csv], { type: 'text/csv' });
+  
+  //       // Create a temporary anchor element to trigger the download
+  //       const a = document.createElement('a');
+  //       a.href = window.URL.createObjectURL(blob);
+  //       a.download = 'refactored_data.csv'; // Specify the filename
+  //       a.style.display = 'none';
+  
+  //       // Append the anchor element to the body and trigger the download
+  //       document.body.appendChild(a);
+  //       a.click();
+  
+  //       // Cleanup: Remove the temporary anchor element
+  //       document.body.removeChild(a);
+  
+  //       setIsLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       setIsLoading(false);
+  //     });
+  // };
   const handleDownload = () => {
     html2canvas(document.body).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
@@ -197,30 +222,7 @@ console.log("hi");
           Analysis
           
           
-      {suspect_sign_metrics && (
-        <div className="suspect-sign-metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(suspect_sign_metrics, null, 2)}</pre>
-        </div>
-      )}
-       {amb_datetime_metrics && (
-        <div className="amb-datetime_metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(amb_datetime_metrics, null, 2)}</pre>
-        </div>
-      )}
-      {suspect_detection_metrics && (
-        <div className="suspect-detection-metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(suspect_detection_metrics, null, 2)}</pre>
-        </div>
-      )}
-      {contractions_metrics && (
-        <div className="contraction-metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(contractions_metrics, null, 2)}</pre>
-        </div>
-      )}
+    
 
 
 
@@ -235,30 +237,7 @@ console.log("hi");
  
          Refactor
           
-      {suspect_sign_metrics && (
-        <div className="suspect-sign-metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(suspect_sign_metrics, null, 2)}</pre>
-        </div>
-      )}
-       {amb_datetime_metrics && (
-        <div className="amb-datetime_metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(amb_datetime_metrics, null, 2)}</pre>
-        </div>
-      )}
-      {suspect_detection_metrics && (
-        <div className="suspect-detection-metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(suspect_detection_metrics, null, 2)}</pre>
-        </div>
-      )}
-      {contractions_metrics && (
-        <div className="contraction-metrics-container">
-          {/* Display your dummy value metrics here */}
-          <pre>{JSON.stringify(contractions_metrics, null, 2)}</pre>
-        </div>
-      )}
+      
 
 
 

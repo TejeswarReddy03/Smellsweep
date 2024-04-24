@@ -13,7 +13,7 @@ import DataSmells from "./components/DefaultPage/datasmells";
 // import DataSmellsImageTemplate from "./components/DS_IMG_Template";
 import ErrorInBackend from "./components/error_in_backend";
 // import Appp from "./test";
-
+import RefactorStatus from "./components/refactor_status"
 import DataSmells2 from "./components/DefaultPage/datasmells2";
 import DataSmellsImageTemplate from "./components/DefaultPage/third_last/DsImageTemplate";
 // import ErrorInBackend from "./components/error_in_backend";
@@ -56,6 +56,7 @@ import IntDataSmellsImageTemplate from "./components/DefaultPage/third_last/DsIm
 import FloatDataSmellsImageTemplate from "./components/DefaultPage/third_last/DsImageTemplate copy";
 import IntSDataSmellsImageTemplate from "./components/DefaultPage/third_last/DsImageTemplate copy 2";
 import DateDataSmellsImageTemplate from "./components/DefaultPage/third_last/DsImageTemplate copy 3";
+import RefactorFinished from "./components/refactor_finished";
 // import IntegerAsStringChart from './reactGraphs/Chart';
 
 // @Description: This function returns the key components of the frontend.
@@ -111,6 +112,8 @@ function App() {
       {<Route path='/charts_v6'  element={< MisspelledDataGraph />} />}
       {<Route path='/charts_v7'  element={< MissingDataGraph />} />}
       {<Route path='/charts_v8'  element={< SuspectClassValuesGraph />} />}
+      {<Route path='/refactor_status'  element={< RefactorStatus />} />}
+      {<Route path='/refactoring_finished'  element={< RefactorFinished />} />}
       
 
 
