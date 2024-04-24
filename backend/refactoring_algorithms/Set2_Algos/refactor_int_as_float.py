@@ -31,7 +31,7 @@ def refactor_floats_to_int(df):
 
             if count_total_float > 0:
                 percentage = (count_float_represented_as_int / count_total_float) * 100
-                if percentage > 10:  # If more than 90% values can be represented as integers
+                if percentage > 80:  # If more than 90% values can be represented as integers
                     df = sub_refactor_floats_to_int(df, column)
 
     return df

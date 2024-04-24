@@ -182,7 +182,7 @@ def refactor_dataframe(df, field1):
             spacing_smell_refactor_data,
             refactor_unit_inconsistency,
             lambda df: remove_special_characters(df, field1),
-            # refactor_misspelling_data_smell,
+            refactor_misspelling_data_smell,
             # refactor_ambiguous_values,
             refactor_casing_data_smells,
             refactor_extreme_values,
@@ -195,6 +195,7 @@ def refactor_dataframe(df, field1):
         ]
         task_id = 0  # Initialize task_id
         for method in refactoring_methods:
+            print("in ",method.__name__)
             # Emit the start status for the current method
             socketio.emit('refactoring_update', {'index': task_id, 'method': method.__name__, 'status': 'start'})
             socketio.sleep(1)
@@ -206,9 +207,9 @@ def refactor_dataframe(df, field1):
             socketio.sleep(1)
             # Increment task_id for the next method
             task_id += 1
-
+        print("hi")
         # Disconnect the socket after all methods are completed
-        socketio.disconnect()
+        #socketio.disconnect()
 
         # Convert the DataFrame to a CSV file in memory
         csv_buffer = io.StringIO()
@@ -219,6 +220,7 @@ def refactor_dataframe(df, field1):
         
         return csv_contents
     except Exception as e:
+        print("error occured")
         return {'error': str(e)}
 
 @app.route('/upload', methods=['POST'])

@@ -7,8 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { useNavigate,useLocation } from 'react-router-dom';
 import axios from "axios";
 import  { useState } from "react";
-import socket from "./common_socket"
-
+// import socket from "./common_socket"
 
 const useStyles = makeStyles((theme) => ({
   root: {

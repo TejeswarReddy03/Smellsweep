@@ -141,6 +141,10 @@ const handleUpload_refactor = () => {
         document.body.removeChild(a);
 
         setIsLoading(false);
+        if (socket) {
+          socket.disconnect();
+          // Additional logic after disconnection, if needed
+        }
         navigate("/refactoring_finished")
       })
       .catch((error) => {
